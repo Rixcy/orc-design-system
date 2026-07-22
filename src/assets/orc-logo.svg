@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 160" width="360" height="160" role="img" aria-label="/orc">
   <defs>
     <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#6fae4f"/>
-      <stop offset="1" stop-color="#4f8a36"/>
+      <stop offset="0" stop-color="#9dc76b"/>
+      <stop offset="1" stop-color="#53743a"/>
     </linearGradient>
   </defs>
 
   <!-- emblem -->
   <g transform="translate(80 80)">
     <!-- ears -->
-    <path d="M-52 -14 L-78 -34 L-58 2 Z" fill="#4f8a36"/>
-    <path d="M52 -14 L78 -34 L58 2 Z" fill="#4f8a36"/>
+    <path d="M-52 -14 L-78 -34 L-58 2 Z" fill="#53743a"/>
+    <path d="M52 -14 L78 -34 L58 2 Z" fill="#53743a"/>
     <!-- head -->
     <path d="M-54 -18
              C-54 -52 -30 -64 0 -64
@@ -19,28 +19,28 @@
              C14 49 10 52 0 52
              C-10 52 -14 49 -26 40
              C-40 30 -54 10 -54 -18 Z"
-          fill="url(#skin)" stroke="#2f5a1f" stroke-width="4"/>
+          fill="url(#skin)" stroke="#202722" stroke-width="4"/>
     <!-- brow -->
-    <path d="M-40 -24 L-8 -14 L-8 -4 L-42 -12 Z" fill="#2f5a1f"/>
-    <path d="M40 -24 L8 -14 L8 -4 L42 -12 Z" fill="#2f5a1f"/>
+    <path d="M-40 -24 L-8 -14 L-8 -4 L-42 -12 Z" fill="#202722"/>
+    <path d="M40 -24 L8 -14 L8 -4 L42 -12 Z" fill="#202722"/>
     <!-- eyes -->
-    <circle cx="-24" cy="0" r="6.5" fill="#fff"/>
-    <circle cx="24" cy="0" r="6.5" fill="#fff"/>
-    <circle cx="-23" cy="1" r="3" fill="#1c1c1c"/>
-    <circle cx="25" cy="1" r="3" fill="#1c1c1c"/>
+    <circle cx="-24" cy="0" r="6.5" fill="#eceeec"/>
+    <circle cx="24" cy="0" r="6.5" fill="#eceeec"/>
+    <circle cx="-23" cy="1" r="3" fill="#16181b"/>
+    <circle cx="25" cy="1" r="3" fill="#16181b"/>
     <!-- nose -->
-    <path d="M0 8 L-9 24 L9 24 Z" fill="#2f5a1f"/>
+    <path d="M0 8 L-9 24 L9 24 Z" fill="#202722"/>
     <!-- mouth line -->
-    <path d="M-16 36 Q0 44 16 36" fill="none" stroke="#2f5a1f" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-16 36 Q0 44 16 36" fill="none" stroke="#202722" stroke-width="4" stroke-linecap="round"/>
     <!-- tusks -->
-    <path d="M-16 40 L-22 14 L-9 36 Z" fill="#f4f1e8" stroke="#2f5a1f" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="M16 40 L22 14 L9 36 Z" fill="#f4f1e8" stroke="#2f5a1f" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M-16 40 L-22 14 L-9 36 Z" fill="#eceeec" stroke="#202722" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M16 40 L22 14 L9 36 Z" fill="#eceeec" stroke="#202722" stroke-width="2.5" stroke-linejoin="round"/>
   </g>
 
   <!-- wordmark -->
   <text x="158" y="96"
         font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
         font-size="54" font-weight="700">
-    <tspan fill="#6fae4f">/</tspan><tspan fill="#2f5a1f">orc</tspan>
+    <tspan fill="#53743a">/</tspan><tspan fill="#202722">orc</tspan>
   </text>
 </svg>

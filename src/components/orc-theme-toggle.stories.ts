@@ -7,6 +7,7 @@ import {
   type ThemeController,
   type ThemeMode,
 } from "../theme/controller";
+import tokens from "../theme/orc-tokens.json";
 
 defineOrcElements();
 
@@ -35,7 +36,7 @@ function startController(mode: ThemeMode = "system"): ThemeController {
   activeController = createThemeController({
     document,
     storageKey: "orcTheme",
-    themeColor: { light: "#e1e2e7", dark: "#1a1b26" },
+    themeColor: { light: tokens.day.bg, dark: tokens.night.bg },
     announce: true,
   });
   activeController.setMode(mode);
@@ -250,10 +251,15 @@ export const OperatingSystemChange: Story = {
     await userEvent.click(simulation as HTMLButtonElement);
     await expect(output).toHaveTextContent("system resolves to dark");
     await waitFor(() =>
-      expect(getComputedStyle(getButton(toggle)).backgroundColor).toBe("rgb(41, 46, 66)"),
+      expect(getComputedStyle(getButton(toggle)).backgroundColor).toBe(hexToRgb(tokens.night["accent-soft"])),
     );
   },
 };
+
+function hexToRgb(value: string): string {
+  const channels = [1, 3, 5].map((offset) => Number.parseInt(value.slice(offset, offset + 2), 16));
+  return `rgb(${channels.join(", ")})`;
+}
 
 export const NoController: Story = {
   render: (args) => {

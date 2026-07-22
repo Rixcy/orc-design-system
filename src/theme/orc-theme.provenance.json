@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "https://github.com/Rixcy/orc",
+    "commit": "d6c5b8279668ca215114f0e662150c58e4bdc38b"
+  },
+  "artifacts": {
+    "src/theme/orc-tokens.json": {
+      "sourcePath": "theme/orc-tokens.json",
+      "sha256": "f2f5c91dabc1189abb409a72cb73efe908bbb9ab10da422aff2e0651888e4a49"
+    },
+    "src/assets/orc-logo.svg": {
+      "sourcePath": "assets/orc-logo.svg",
+      "sha256": "c37fcee66cfef7a827005213c56f330927f218f447a9f45196a0bf86b1ec0796"
+    },
+    "src/assets/orc-icon.svg": {
+      "sourcePath": "assets/orc-icon.svg",
+      "sha256": "1c8baf6bace1e6ec2b615caa9568ead402327b3728423aa1e19075580a27a920"
+    }
+  }
+}

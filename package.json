@@ -31,16 +31,20 @@
       "import": "./dist/controller.js",
       "default": "./dist/controller.js"
     },
+    "./tokens.json": "./dist/tokens.json",
     "./tokens.css": "./dist/tokens.css",
     "./components.css": "./dist/components.css",
     "./fonts.css": "./dist/fonts.css",
     "./preflight.js": "./dist/preflight.js",
     "./assets/orc-logo.svg": "./dist/assets/orc-logo.svg",
+    "./assets/orc-icon.svg": "./dist/assets/orc-icon.svg",
     "./fonts/inter-latin-wght-normal.woff2": "./dist/fonts/inter-latin-wght-normal.woff2",
     "./fonts/jetbrains-mono-latin-wght-normal.woff2": "./dist/fonts/jetbrains-mono-latin-wght-normal.woff2"
   },
   "scripts": {
-    "build": "vite build && node scripts/copy-static-assets.mjs && node scripts/verify-package.mjs",
+    "theme:check": "node scripts/sync-theme.mjs --check",
+    "theme:write": "node scripts/sync-theme.mjs --write",
+    "build": "npm run theme:check && vite build && node scripts/copy-static-assets.mjs && node scripts/verify-package.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run --config vitest.config.ts",
     "test:reduced-motion": "vitest run --config vitest.reduced-motion.config.ts",
@@ -48,7 +52,7 @@
     "build-storybook": "storybook build -o storybook-static",
     "test-storybook": "vitest run --config vitest.storybook.config.ts",
     "pack:proof": "node scripts/pack-proof.mjs",
-    "consumer:proof": "npm run pack:proof && npm install --prefix fixtures/vite-consumer --no-audit --no-fund && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
+    "consumer:proof": "npm run pack:proof && node scripts/install-consumer-package.mjs && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
     "prepack": "npm run build"
   },
   "devDependencies": {

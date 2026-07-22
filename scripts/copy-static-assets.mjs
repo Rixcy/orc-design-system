@@ -3,11 +3,13 @@ import { dirname, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 const copies = [
+  ['src/theme/orc-tokens.json', 'dist/tokens.json'],
   ['src/styles/tokens.css', 'dist/tokens.css'],
   ['src/styles/components.css', 'dist/components.css'],
   ['src/styles/fonts.css', 'dist/fonts.css'],
   ['src/theme/preflight.js', 'dist/preflight.js'],
   ['src/assets/orc-logo.svg', 'dist/assets/orc-logo.svg'],
+  ['src/assets/orc-icon.svg', 'dist/assets/orc-icon.svg'],
   ['src/assets/ASSETS.md', 'dist/assets/ASSETS.md'],
   ['src/assets/fonts/inter-latin-wght-normal.woff2', 'dist/fonts/inter-latin-wght-normal.woff2'],
   ['src/assets/fonts/jetbrains-mono-latin-wght-normal.woff2', 'dist/fonts/jetbrains-mono-latin-wght-normal.woff2'],
