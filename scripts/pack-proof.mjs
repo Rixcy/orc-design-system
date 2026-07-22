@@ -42,11 +42,13 @@ const requiredPaths = [
   'dist/define.d.ts',
   'dist/controller.js',
   'dist/controller.d.ts',
+  'dist/tokens.json',
   'dist/tokens.css',
   'dist/components.css',
   'dist/fonts.css',
   'dist/preflight.js',
   'dist/assets/orc-logo.svg',
+  'dist/assets/orc-icon.svg',
   'dist/assets/ASSETS.md',
   'dist/fonts/inter-latin-wght-normal.woff2',
   'dist/fonts/jetbrains-mono-latin-wght-normal.woff2',
@@ -56,6 +58,37 @@ const requiredPaths = [
 const missing = requiredPaths.filter((path) => !packedPaths.has(path));
 if (missing.length > 0) {
   throw new Error(`Packed tarball is missing: ${missing.join(', ')}.`);
+}
+
+const generatedPaths = [
+  'dist/controller.d.ts.map',
+  'dist/controller.js.map',
+  'dist/define.d.ts.map',
+  'dist/index.d.ts.map',
+  'dist/components/orc-navbar.d.ts',
+  'dist/components/orc-navbar.d.ts.map',
+  'dist/components/orc-theme-toggle.d.ts',
+  'dist/components/orc-theme-toggle.d.ts.map',
+  'dist/theme/controller.d.ts',
+  'dist/theme/controller.d.ts.map',
+  'dist/theme/registry.d.ts',
+  'dist/theme/registry.d.ts.map',
+];
+const exactPaths = new Set([...requiredPaths, ...generatedPaths]);
+const chunkPattern = /^dist\/(define|registry)-[A-Za-z0-9_-]+\.js$/u;
+const unexpected = [...packedPaths].filter((path) => (
+  !exactPaths.has(path)
+  && !chunkPattern.test(path)
+  && !chunkPattern.test(path.replace(/\.map$/u, ''))
+));
+if (unexpected.length > 0) {
+  throw new Error(`Packed tarball has unexpected files: ${unexpected.join(', ')}.`);
+}
+for (const prefix of ['define', 'registry']) {
+  const chunks = [...packedPaths].filter((path) => path.match(chunkPattern)?.[1] === prefix);
+  if (chunks.length !== 1 || !packedPaths.has(`${chunks[0]}.map`)) {
+    throw new Error(`Packed tarball must contain one ${prefix} chunk and its source map.`);
+  }
 }
 
 console.log(JSON.stringify({

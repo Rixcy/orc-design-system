@@ -8,11 +8,13 @@ const expectedExports = [
   '.',
   './define',
   './controller',
+  './tokens.json',
   './tokens.css',
   './components.css',
   './fonts.css',
   './preflight.js',
   './assets/orc-logo.svg',
+  './assets/orc-icon.svg',
   './fonts/inter-latin-wght-normal.woff2',
   './fonts/jetbrains-mono-latin-wght-normal.woff2',
 ];
@@ -29,11 +31,13 @@ const expectedFiles = [
   'dist/define.d.ts',
   'dist/controller.js',
   'dist/controller.d.ts',
+  'dist/tokens.json',
   'dist/tokens.css',
   'dist/components.css',
   'dist/fonts.css',
   'dist/preflight.js',
   'dist/assets/orc-logo.svg',
+  'dist/assets/orc-icon.svg',
   'dist/assets/ASSETS.md',
   'dist/fonts/inter-latin-wght-normal.woff2',
   'dist/fonts/jetbrains-mono-latin-wght-normal.woff2',
@@ -73,7 +77,7 @@ const tokenNames = [
   'bg', 'panel', 'border', 'text', 'heading', 'muted', 'accent', 'accent-soft', 'chip', 'code',
   'green', 'yellow', 'red', 'purple', 'cyan', 'orange', 'gate', 'muted-strong',
   'accent-text', 'red-text', 'yellow-text', 'green-text', 'purple-text', 'accent-strong',
-  'button-hover', 'button-hover-chip', 'button-hover-strong',
+  'control-border', 'button-hover', 'button-hover-chip', 'button-hover-strong',
 ];
 const missingTokens = tokenNames.filter((name) => !tokens.includes(`--orc-${name}:`));
 if (missingTokens.length > 0) {
@@ -83,8 +87,9 @@ if (tokens.includes('@font-face') || tokens.includes('"Inter"') || tokens.includ
   throw new Error('tokens.css must retain platform-font defaults; packaged fonts belong in opt-in fonts.css.');
 }
 
+const themeProvenance = JSON.parse(await readFile(resolve(root, 'src/theme/orc-theme.provenance.json'), 'utf8'));
 const sourceHashes = new Map([
-  ['src/assets/orc-logo.svg', 'e4cb124125e337f9b127c31b7e65597b54c9ba0be8b706e1095a95fea4dea143'],
+  ...Object.entries(themeProvenance.artifacts).map(([file, record]) => [file, record.sha256]),
   ['src/assets/fonts/inter-latin-wght-normal.woff2', '3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62'],
   ['src/assets/fonts/jetbrains-mono-latin-wght-normal.woff2', '18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e'],
   ['src/assets/fonts/LICENSE.txt', '8dc31394ae6cedbd627afec44c752a2733e5b036d69d5215b078ef976e95db6e'],
@@ -94,6 +99,11 @@ for (const [file, expectedHash] of sourceHashes) {
   if (hash !== expectedHash) {
     throw new Error(`${file} no longer matches its recorded Orc source (${hash}).`);
   }
+}
+
+const packagedTokens = JSON.parse(await readFile(resolve(root, 'dist/tokens.json'), 'utf8'));
+if (JSON.stringify(Object.keys(packagedTokens)) !== JSON.stringify(['day', 'night'])) {
+  throw new Error('tokens.json must expose ordered day and night palettes.');
 }
 
 console.log(`Verified ${actualExports.length} exports, ${expectedFiles.length} package files, curated design guidance, and source provenance.`);

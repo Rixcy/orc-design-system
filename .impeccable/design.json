@@ -3,28 +3,38 @@
   "title": "Design System: Orc",
   "extensions": {
     "colorMeta": {
-      "accent-day": { "role": "primary", "displayName": "Signal Blue (day)", "canonical": "#2e7de9" },
-      "accent-night": { "role": "primary", "displayName": "Signal Blue (night)", "canonical": "#7aa2f7" },
-      "canvas-day": { "role": "neutral", "displayName": "Canvas (day)", "canonical": "#e1e2e7" },
-      "canvas-night": { "role": "neutral", "displayName": "Canvas (night)", "canonical": "#1a1b26" },
-      "panel-day": { "role": "neutral", "displayName": "Panel (day)", "canonical": "#e9e9ec" },
-      "panel-night": { "role": "neutral", "displayName": "Panel (night)", "canonical": "#16161e" },
-      "border-day": { "role": "neutral", "displayName": "Border (day)", "canonical": "#a8aecb" },
-      "border-night": { "role": "neutral", "displayName": "Border (night)", "canonical": "#3b4261" },
-      "text-day": { "role": "neutral", "displayName": "Body Blue-Ink (day)", "canonical": "#3760bf" },
-      "text-night": { "role": "neutral", "displayName": "Body Blue-Ink (night)", "canonical": "#c0caf5" },
-      "heading-day": { "role": "neutral", "displayName": "Heading Ink (day)", "canonical": "#1e2030" },
-      "heading-night": { "role": "neutral", "displayName": "Heading Ink (night)", "canonical": "#c0caf5" },
-      "muted-day": { "role": "neutral", "displayName": "Muted (day)", "canonical": "#848cb5" },
-      "muted-night": { "role": "neutral", "displayName": "Muted (night)", "canonical": "#565f89" },
-      "pass-green-day": { "role": "tertiary", "displayName": "Pass Green (day)", "canonical": "#587539" },
-      "pass-green-night": { "role": "tertiary", "displayName": "Pass Green (night)", "canonical": "#9ece6a" },
-      "warn-yellow-day": { "role": "tertiary", "displayName": "Warn Yellow (day)", "canonical": "#8c6c3e" },
-      "warn-yellow-night": { "role": "tertiary", "displayName": "Warn Yellow (night)", "canonical": "#e0af68" },
-      "fail-red-day": { "role": "tertiary", "displayName": "Fail Red (day)", "canonical": "#f52a65" },
-      "fail-red-night": { "role": "tertiary", "displayName": "Fail Red (night)", "canonical": "#f7768e" },
-      "gate-orange-day": { "role": "tertiary", "displayName": "Gate Orange (day)", "canonical": "#b15c00" },
-      "gate-orange-night": { "role": "tertiary", "displayName": "Gate Orange (night)", "canonical": "#ff9e64" }
+      "accent-day": { "role": "primary", "displayName": "Interaction Blue (day)", "canonical": "#2d6983" },
+      "accent-night": { "role": "primary", "displayName": "Interaction Blue (night)", "canonical": "#78a9c2" },
+      "canvas-day": { "role": "neutral", "displayName": "Slate Canvas (day)", "canonical": "#e3e5e4" },
+      "canvas-night": { "role": "neutral", "displayName": "Slate Canvas (night)", "canonical": "#1a1c20" },
+      "panel-day": { "role": "neutral", "displayName": "Panel (day)", "canonical": "#eceeec" },
+      "panel-night": { "role": "neutral", "displayName": "Panel (night)", "canonical": "#16181b" },
+      "border-day": { "role": "neutral", "displayName": "Moss Border (day)", "canonical": "#a8b0aa" },
+      "border-night": { "role": "neutral", "displayName": "Moss Border (night)", "canonical": "#3b4540" },
+      "text-day": { "role": "neutral", "displayName": "Body Ink (day)", "canonical": "#38423c" },
+      "text-night": { "role": "neutral", "displayName": "Body Ink (night)", "canonical": "#c7cfca" },
+      "heading-day": { "role": "neutral", "displayName": "Heading Ink (day)", "canonical": "#202722" },
+      "heading-night": { "role": "neutral", "displayName": "Heading Ink (night)", "canonical": "#e0e5e2" },
+      "muted-day": { "role": "neutral", "displayName": "Muted Ink (day)", "canonical": "#6e7971" },
+      "muted-night": { "role": "neutral", "displayName": "Muted Ink (night)", "canonical": "#707a73" },
+      "accent-soft-day": { "role": "secondary", "displayName": "Quiet Interaction (day)", "canonical": "#cbd1cc" },
+      "accent-soft-night": { "role": "secondary", "displayName": "Quiet Interaction (night)", "canonical": "#29312c" },
+      "chip-day": { "role": "secondary", "displayName": "Chip Surface (day)", "canonical": "#cbd1cc" },
+      "chip-night": { "role": "secondary", "displayName": "Chip Surface (night)", "canonical": "#29312c" },
+      "code-day": { "role": "secondary", "displayName": "Code Surface (day)", "canonical": "#d4d8d5" },
+      "code-night": { "role": "secondary", "displayName": "Code Surface (night)", "canonical": "#1f2422" },
+      "pass-green-day": { "role": "tertiary", "displayName": "Pass Green (day)", "canonical": "#53743a" },
+      "pass-green-night": { "role": "tertiary", "displayName": "Pass Green (night)", "canonical": "#9dc76b" },
+      "warn-yellow-day": { "role": "tertiary", "displayName": "Warn Yellow (day)", "canonical": "#8a6a2f" },
+      "warn-yellow-night": { "role": "tertiary", "displayName": "Warn Yellow (night)", "canonical": "#d5b05c" },
+      "fail-red-day": { "role": "tertiary", "displayName": "Fail Red (day)", "canonical": "#b83f50" },
+      "fail-red-night": { "role": "tertiary", "displayName": "Fail Red (night)", "canonical": "#e87878" },
+      "lineage-purple-day": { "role": "tertiary", "displayName": "Lineage Purple (day)", "canonical": "#76518f" },
+      "lineage-purple-night": { "role": "tertiary", "displayName": "Lineage Purple (night)", "canonical": "#b497d6" },
+      "info-cyan-day": { "role": "tertiary", "displayName": "Informational Cyan (day)", "canonical": "#256f72" },
+      "info-cyan-night": { "role": "tertiary", "displayName": "Informational Cyan (night)", "canonical": "#77b8b1" },
+      "gate-orange-day": { "role": "tertiary", "displayName": "Gate Orange (day)", "canonical": "#9a5a25" },
+      "gate-orange-night": { "role": "tertiary", "displayName": "Gate Orange (night)", "canonical": "#e69257" }
     },
     "typographyMeta": {
       "body": {
@@ -49,24 +59,25 @@
     ]
   },
   "narrative": {
-    "northStar": "The Editor Theme",
-    "overview": "Orc uses Tokyo Night day and night palettes so its interface feels like another pane of a developer's tools. Flat bordered surfaces frame the content; color stays semantic and state is the loudest thing on screen.",
+    "northStar": "The Orc Swamp",
+    "overview": "Orc uses a restrained day and night swamp palette. Slate-neutral canvases and quiet moss surfaces keep content calm; neutral ink carries prose, blue marks interaction, and semantic color makes workflow state the loudest thing on screen.",
     "keyCharacteristics": [
-      "Two first-class themes: Tokyo Night day and night, selected by system preference or explicit data-theme.",
+      "Two first-class Orc swamp themes: day and night, selected by system preference or explicit data-theme.",
       "Flat, border-defined surfaces with tonal depth and no drop shadows.",
-      "Semantic status color: green means pass, yellow warn, red fail, orange gate, and blue active or interactive.",
+      "Neutral ink carries prose; blue is reserved for active or interactive UI.",
+      "Semantic status color: green means pass, yellow warn, red fail, orange gate, purple lineage, and cyan informational data.",
       "Compact editor-grade typography using platform fonts by default, with licensed Inter and JetBrains Mono available through an opt-in stylesheet.",
       "Motion is limited to meaningful state and always respects reduced-motion preferences."
     ],
     "rules": [
       {
-        "name": "The Editor Palette Rule",
-        "body": "UI colors come from the packaged Tokyo Night tokens. Derived tints use color-mix instead of adding palette colors. Logo artwork may retain its own brand colors but does not define UI tokens.",
+        "name": "The Swamp Palette Rule",
+        "body": "UI colors come from the packaged Orc swamp tokens. Derived tints use color-mix instead of adding palette colors. First-party logo and icon artwork may compose palette hues but does not define UI token meaning.",
         "section": "colors"
       },
       {
         "name": "The Status Voice Rule",
-        "body": "Green means pass, yellow warn, red fail, orange gate, and blue active or interactive. Every state also names itself in text so color is never the only signal.",
+        "body": "Green means pass, yellow warn, red fail, orange gate, purple lineage, cyan informational data, and blue active or interactive. Every state also names itself in text so color is never the only signal.",
         "section": "colors"
       },
       {

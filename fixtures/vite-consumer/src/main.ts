@@ -1,7 +1,9 @@
 import "@orc/design-system-preview/tokens.css";
 import "@orc/design-system-preview/components.css";
 import "@orc/design-system-preview/fonts.css";
+import iconUrl from "@orc/design-system-preview/assets/orc-icon.svg";
 import logoUrl from "@orc/design-system-preview/assets/orc-logo.svg";
+import tokens from "@orc/design-system-preview/tokens.json";
 import { createThemeController } from "@orc/design-system-preview/controller";
 import { defineOrcElements } from "@orc/design-system-preview/define";
 
@@ -9,6 +11,11 @@ import "./orc-flags-aliases.css";
 import "./styles.css";
 
 defineOrcElements();
+
+const favicon = document.createElement("link");
+favicon.rel = "icon";
+favicon.href = iconUrl;
+document.head.append(favicon);
 
 const app = document.querySelector<HTMLDivElement>("#app");
 if (!app) throw new Error("Missing fixture app root.");
@@ -56,7 +63,7 @@ app.append(skipLink, navbar, main);
 const controller = createThemeController({
   document,
   storageKey: "orcTheme",
-  themeColor: { light: "#e1e2e7", dark: "#1a1b26" },
+  themeColor: { light: tokens.day.bg, dark: tokens.night.bg },
   announce: true,
 });
 
