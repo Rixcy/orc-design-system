@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" width="640" height="220" role="img" aria-labelledby="title desc">
+  <title id="title">Orc Design System</title>
+  <desc id="desc">The green Orc mascot beside the /orc Design System wordmark and a row of design-token color swatches.</desc>
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9dc76b"/>
+      <stop offset="1" stop-color="#53743a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Self-contained card so the wordmark reads on both light and dark READMEs. -->
+  <rect x="8" y="8" width="624" height="204" rx="24" fill="#eceeec" stroke="#a8b0aa" stroke-width="2"/>
+
+  <!-- Original Orc emblem geometry, adapted from src/assets/orc-logo.svg. -->
+  <g transform="translate(112 108)">
+    <path d="M-52 -14 L-78 -34 L-58 2 Z" fill="#53743a"/>
+    <path d="M52 -14 L78 -34 L58 2 Z" fill="#53743a"/>
+    <path d="M-54 -18 C-54 -52 -30 -64 0 -64 C30 -64 54 -52 54 -18 C54 10 40 30 26 40 C14 49 10 52 0 52 C-10 52 -14 49 -26 40 C-40 30 -54 10 -54 -18 Z" fill="url(#skin)" stroke="#202722" stroke-width="4"/>
+    <path d="M-40 -24 L-8 -14 L-8 -4 L-42 -12 Z" fill="#202722"/>
+    <path d="M40 -24 L8 -14 L8 -4 L42 -12 Z" fill="#202722"/>
+    <circle cx="-24" cy="0" r="6.5" fill="#eceeec"/>
+    <circle cx="24" cy="0" r="6.5" fill="#eceeec"/>
+    <circle cx="-23" cy="1" r="3" fill="#16181b"/>
+    <circle cx="25" cy="1" r="3" fill="#16181b"/>
+    <path d="M0 8 L-9 24 L9 24 Z" fill="#202722"/>
+    <path d="M-16 36 Q0 44 16 36" fill="none" stroke="#202722" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-16 40 L-22 14 L-9 36 Z" fill="#eceeec" stroke="#202722" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M16 40 L22 14 L9 36 Z" fill="#eceeec" stroke="#202722" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <text x="212" y="102" font-size="58" font-weight="700">
+      <tspan fill="#53743a">/</tspan><tspan fill="#202722">orc</tspan>
+    </text>
+    <text x="214" y="136" fill="#38423c" font-size="24" font-weight="650" letter-spacing="3.5">DESIGN SYSTEM</text>
+
+    <!-- The semantic palette this package owns, shown as design-token swatches. -->
+    <g transform="translate(214 154)" font-size="12" font-weight="700">
+      <g>
+        <rect width="88" height="30" rx="7" fill="#53743a" stroke="#3f5a2c"/>
+        <text x="44" y="20" fill="#eceeec" text-anchor="middle">green</text>
+      </g>
+      <g transform="translate(94)">
+        <rect width="88" height="30" rx="7" fill="#8a6a2f" stroke="#6e5325"/>
+        <text x="44" y="20" fill="#f4efe4" text-anchor="middle">yellow</text>
+      </g>
+      <g transform="translate(188)">
+        <rect width="72" height="30" rx="7" fill="#b83f50" stroke="#933240"/>
+        <text x="36" y="20" fill="#fcecef" text-anchor="middle">red</text>
+      </g>
+      <g transform="translate(266)">
+        <rect width="88" height="30" rx="7" fill="#76518f" stroke="#5d4172"/>
+        <text x="44" y="20" fill="#f2ecf6" text-anchor="middle">purple</text>
+      </g>
+    </g>
+  </g>
+</svg>

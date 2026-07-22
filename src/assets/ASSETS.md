@@ -7,6 +7,12 @@ The Orc marks are exact copies from the swamp-identity authority:
 - `orc-logo.svg` source: `assets/orc-logo.svg`; SHA-256: `c37fcee66cfef7a827005213c56f330927f218f447a9f45196a0bf86b1ec0796`
 - `orc-icon.svg` source: `assets/orc-icon.svg`; SHA-256: `1c8baf6bace1e6ec2b615caa9568ead402327b3728423aa1e19075580a27a920`
 
+`orc-design-system-logo.svg` is a first-party project mascot lockup for this
+repo's README. It reuses the canonical emblem geometry from `orc-logo.svg`
+(unchanged) and adds the `DESIGN SYSTEM` wordmark and a row of palette-token
+swatches. Its swatch fills use the day-palette green/yellow/red/purple hues as
+artwork; like the other marks, they do not define interface token meaning.
+
 Logo and icon artwork retain their first-party colors. Those colors may compose
 palette hues as art, but do not define interface token meaning. Ordinary UI
 color must continue through the semantic `--orc-*` tokens.
