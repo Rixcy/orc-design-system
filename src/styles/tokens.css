@@ -1,0 +1,132 @@
+:root {
+  color-scheme: light dark;
+
+  /* Tokyo Night day */
+  --orc-bg: #e1e2e7;
+  --orc-panel: #e9e9ec;
+  --orc-border: #a8aecb;
+  --orc-text: #3760bf;
+  --orc-heading: #1e2030;
+  --orc-muted: #848cb5;
+  --orc-accent: #2e7de9;
+  --orc-accent-soft: #c4c8da;
+  --orc-chip: #c4c8da;
+  --orc-code: #d0d5e3;
+  --orc-green: #587539;
+  --orc-yellow: #8c6c3e;
+  --orc-red: #f52a65;
+  --orc-purple: #9854f1;
+  --orc-cyan: #007197;
+  --orc-orange: #b15c00;
+  --orc-gate: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
+
+  /* AA-oriented small-text variants for the light surface. */
+  --orc-muted-strong: color-mix(in srgb, var(--orc-muted) 45%, var(--orc-heading));
+  --orc-accent-text: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
+  --orc-red-text: color-mix(in srgb, var(--orc-red) 60%, var(--orc-heading));
+  --orc-yellow-text: color-mix(in srgb, var(--orc-yellow) 70%, var(--orc-heading));
+  --orc-green-text: color-mix(in srgb, var(--orc-green) 70%, var(--orc-heading));
+  --orc-purple-text: color-mix(in srgb, var(--orc-purple) 70%, var(--orc-heading));
+  --orc-accent-strong: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
+  --orc-button-hover: color-mix(in srgb, var(--orc-accent) 10%, var(--orc-bg));
+  --orc-button-hover-chip: color-mix(in srgb, var(--orc-accent) 12%, var(--orc-chip));
+  --orc-button-hover-strong: color-mix(in srgb, var(--orc-accent-strong) 86%, var(--orc-heading));
+
+  --orc-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --orc-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --orc-space-1: 4px;
+  --orc-space-2: 8px;
+  --orc-space-3: 12px;
+  --orc-space-4: 16px;
+  --orc-space-5: 24px;
+  --orc-radius-sm: 4px;
+  --orc-radius-md: 8px;
+  --orc-radius-pill: 999px;
+  --orc-focus-ring: 2px solid var(--orc-accent);
+  --orc-focus-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --orc-bg: #1a1b26;
+    --orc-panel: #16161e;
+    --orc-border: #3b4261;
+    --orc-text: #c0caf5;
+    --orc-heading: #c0caf5;
+    --orc-muted: #565f89;
+    --orc-accent: #7aa2f7;
+    --orc-accent-soft: #292e42;
+    --orc-chip: #292e42;
+    --orc-code: #1f2335;
+    --orc-green: #9ece6a;
+    --orc-yellow: #e0af68;
+    --orc-red: #f7768e;
+    --orc-purple: #bb9af7;
+    --orc-cyan: #7dcfff;
+    --orc-orange: #ff9e64;
+    --orc-gate: var(--orc-orange);
+    --orc-muted-strong: color-mix(in srgb, var(--orc-muted) 45%, var(--orc-text));
+    --orc-accent-text: var(--orc-accent);
+    --orc-red-text: var(--orc-red);
+    --orc-yellow-text: var(--orc-yellow);
+    --orc-green-text: var(--orc-green);
+    --orc-purple-text: var(--orc-purple);
+    --orc-accent-strong: var(--orc-accent);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --orc-bg: #1a1b26;
+  --orc-panel: #16161e;
+  --orc-border: #3b4261;
+  --orc-text: #c0caf5;
+  --orc-heading: #c0caf5;
+  --orc-muted: #565f89;
+  --orc-accent: #7aa2f7;
+  --orc-accent-soft: #292e42;
+  --orc-chip: #292e42;
+  --orc-code: #1f2335;
+  --orc-green: #9ece6a;
+  --orc-yellow: #e0af68;
+  --orc-red: #f7768e;
+  --orc-purple: #bb9af7;
+  --orc-cyan: #7dcfff;
+  --orc-orange: #ff9e64;
+  --orc-gate: var(--orc-orange);
+  --orc-muted-strong: color-mix(in srgb, var(--orc-muted) 45%, var(--orc-text));
+  --orc-accent-text: var(--orc-accent);
+  --orc-red-text: var(--orc-red);
+  --orc-yellow-text: var(--orc-yellow);
+  --orc-green-text: var(--orc-green);
+  --orc-purple-text: var(--orc-purple);
+  --orc-accent-strong: var(--orc-accent);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --orc-bg: #e1e2e7;
+  --orc-panel: #e9e9ec;
+  --orc-border: #a8aecb;
+  --orc-text: #3760bf;
+  --orc-heading: #1e2030;
+  --orc-muted: #848cb5;
+  --orc-accent: #2e7de9;
+  --orc-accent-soft: #c4c8da;
+  --orc-chip: #c4c8da;
+  --orc-code: #d0d5e3;
+  --orc-green: #587539;
+  --orc-yellow: #8c6c3e;
+  --orc-red: #f52a65;
+  --orc-purple: #9854f1;
+  --orc-cyan: #007197;
+  --orc-orange: #b15c00;
+  --orc-gate: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
+  --orc-muted-strong: color-mix(in srgb, var(--orc-muted) 45%, var(--orc-heading));
+  --orc-accent-text: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
+  --orc-red-text: color-mix(in srgb, var(--orc-red) 60%, var(--orc-heading));
+  --orc-yellow-text: color-mix(in srgb, var(--orc-yellow) 70%, var(--orc-heading));
+  --orc-green-text: color-mix(in srgb, var(--orc-green) 70%, var(--orc-heading));
+  --orc-purple-text: color-mix(in srgb, var(--orc-purple) 70%, var(--orc-heading));
+  --orc-accent-strong: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
+}

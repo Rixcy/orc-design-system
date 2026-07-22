@@ -1,0 +1,13 @@
+node_modules/
+dist/
+storybook-static/
+artifacts/
+.vitest-attachments/
+coverage/
+playwright-report/
+test-results/
+fixtures/vite-consumer/node_modules/
+fixtures/vite-consumer/dist/
+fixtures/vite-consumer/public/orc-preflight.js
+*.log
+.DS_Store

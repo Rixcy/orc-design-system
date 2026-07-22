@@ -1,0 +1,66 @@
+import { mkdir, readFile, rm } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
+
+const root = resolve(import.meta.dirname, '..');
+const artifacts = resolve(root, 'artifacts');
+const packageJson = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
+const tarballStem = packageJson.name.replace(/^@/u, '').replaceAll('/', '-');
+const tarballName = `${tarballStem}-${packageJson.version}.tgz`;
+const tarballPath = resolve(artifacts, tarballName);
+
+await mkdir(artifacts, { recursive: true });
+await rm(tarballPath, { force: true });
+
+const result = spawnSync(
+  'npm',
+  ['pack', '--json', '--silent', '--pack-destination', artifacts],
+  { cwd: root, encoding: 'utf8' },
+);
+
+if (result.status !== 0) {
+  throw new Error(`npm pack failed:\n${result.stderr.trim()}`);
+}
+
+// npm includes prepack lifecycle output before its JSON even with --silent.
+const jsonMarker = '[\n  {\n    "id":';
+const jsonStart = result.stdout.lastIndexOf(jsonMarker);
+if (jsonStart === -1) {
+  throw new Error(`npm pack did not return its JSON manifest:\n${result.stdout.trim()}`);
+}
+const packResult = JSON.parse(result.stdout.slice(jsonStart).trim())[0];
+if (packResult.filename !== tarballName) {
+  throw new Error(`Unexpected tarball ${packResult.filename}; expected ${tarballName}.`);
+}
+
+const packedPaths = new Set(packResult.files.map(({ path }) => path));
+const requiredPaths = [
+  'package.json',
+  'dist/index.js',
+  'dist/index.d.ts',
+  'dist/define.js',
+  'dist/define.d.ts',
+  'dist/controller.js',
+  'dist/controller.d.ts',
+  'dist/tokens.css',
+  'dist/components.css',
+  'dist/fonts.css',
+  'dist/preflight.js',
+  'dist/assets/orc-logo.svg',
+  'dist/assets/ASSETS.md',
+  'dist/fonts/inter-latin-wght-normal.woff2',
+  'dist/fonts/jetbrains-mono-latin-wght-normal.woff2',
+  'dist/fonts/LICENSE.txt',
+  'dist/fonts/PROVENANCE.md',
+];
+const missing = requiredPaths.filter((path) => !packedPaths.has(path));
+if (missing.length > 0) {
+  throw new Error(`Packed tarball is missing: ${missing.join(', ')}.`);
+}
+
+console.log(JSON.stringify({
+  filename: `artifacts/${tarballName}`,
+  files: packResult.entryCount,
+  size: packResult.size,
+  integrity: packResult.integrity,
+}, null, 2));

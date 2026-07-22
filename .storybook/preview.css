@@ -1,0 +1,114 @@
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../src/assets/fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("../src/assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+html,
+body {
+  min-width: 320px;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--orc-bg);
+  color: var(--orc-text);
+  font: 14px/1.55 var(--orc-font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--orc-accent) 20%, transparent);
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+.story-surface {
+  min-height: 180px;
+  padding: clamp(20px, 5vw, 56px);
+  background: var(--orc-bg);
+}
+
+.story-surface[data-width="narrow"] {
+  width: min(100%, 320px);
+  padding: 16px 0;
+  margin: 0 auto;
+}
+
+.story-stack {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+}
+
+.story-note {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--orc-muted-strong);
+  text-wrap: pretty;
+}
+
+.story-output {
+  padding: 6px 10px;
+  border: 1px solid var(--orc-border);
+  border-radius: var(--orc-radius-md);
+  background: var(--orc-panel);
+  color: var(--orc-heading);
+  font-family: var(--orc-font-mono);
+}
+
+.story-nav-link,
+.story-action {
+  border-radius: var(--orc-radius-sm);
+  color: var(--orc-heading);
+}
+
+.story-nav-link {
+  padding: 8px;
+  text-decoration: none;
+}
+
+.story-nav-link:hover {
+  background: var(--orc-button-hover);
+}
+
+.story-action {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--orc-border);
+  background: var(--orc-panel);
+  cursor: pointer;
+}
+
+.story-action:hover {
+  border-color: var(--orc-accent);
+  background: var(--orc-button-hover);
+}
+
+.story-nav-link:focus-visible,
+.story-action:focus-visible {
+  outline: var(--orc-focus-ring);
+  outline-offset: var(--orc-focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

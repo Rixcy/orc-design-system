@@ -1,0 +1,29 @@
+:root {
+  --bg: var(--orc-bg);
+  --panel: var(--orc-panel);
+  --border: var(--orc-border);
+  --text: var(--orc-text);
+  --heading: var(--orc-heading);
+  --muted: var(--orc-muted);
+  --accent: var(--orc-accent);
+  --accent-soft: var(--orc-accent-soft);
+  --chip: var(--orc-chip);
+  --code: var(--orc-code);
+  --green: var(--orc-green);
+  --yellow: var(--orc-yellow);
+  --red: var(--orc-red);
+  --purple: var(--orc-purple);
+  --cyan: var(--orc-cyan);
+  --orange: var(--orc-orange);
+  --gate: var(--orc-gate);
+  --muted-strong: var(--orc-muted-strong);
+  --accent-text: var(--orc-accent-text);
+  --red-text: var(--orc-red-text);
+  --yellow-text: var(--orc-yellow-text);
+  --green-text: var(--orc-green-text);
+  --purple-text: var(--orc-purple-text);
+  --accent-strong: var(--orc-accent-strong);
+  --button-hover: var(--orc-button-hover);
+  --button-hover-chip: var(--orc-button-hover-chip);
+  --button-hover-strong: var(--orc-button-hover-strong);
+}

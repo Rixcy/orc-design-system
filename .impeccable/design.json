@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "title": "Design System: Orc",
+  "extensions": {
+    "colorMeta": {
+      "accent-day": { "role": "primary", "displayName": "Signal Blue (day)", "canonical": "#2e7de9" },
+      "accent-night": { "role": "primary", "displayName": "Signal Blue (night)", "canonical": "#7aa2f7" },
+      "canvas-day": { "role": "neutral", "displayName": "Canvas (day)", "canonical": "#e1e2e7" },
+      "canvas-night": { "role": "neutral", "displayName": "Canvas (night)", "canonical": "#1a1b26" },
+      "panel-day": { "role": "neutral", "displayName": "Panel (day)", "canonical": "#e9e9ec" },
+      "panel-night": { "role": "neutral", "displayName": "Panel (night)", "canonical": "#16161e" },
+      "border-day": { "role": "neutral", "displayName": "Border (day)", "canonical": "#a8aecb" },
+      "border-night": { "role": "neutral", "displayName": "Border (night)", "canonical": "#3b4261" },
+      "text-day": { "role": "neutral", "displayName": "Body Blue-Ink (day)", "canonical": "#3760bf" },
+      "text-night": { "role": "neutral", "displayName": "Body Blue-Ink (night)", "canonical": "#c0caf5" },
+      "heading-day": { "role": "neutral", "displayName": "Heading Ink (day)", "canonical": "#1e2030" },
+      "heading-night": { "role": "neutral", "displayName": "Heading Ink (night)", "canonical": "#c0caf5" },
+      "muted-day": { "role": "neutral", "displayName": "Muted (day)", "canonical": "#848cb5" },
+      "muted-night": { "role": "neutral", "displayName": "Muted (night)", "canonical": "#565f89" },
+      "pass-green-day": { "role": "tertiary", "displayName": "Pass Green (day)", "canonical": "#587539" },
+      "pass-green-night": { "role": "tertiary", "displayName": "Pass Green (night)", "canonical": "#9ece6a" },
+      "warn-yellow-day": { "role": "tertiary", "displayName": "Warn Yellow (day)", "canonical": "#8c6c3e" },
+      "warn-yellow-night": { "role": "tertiary", "displayName": "Warn Yellow (night)", "canonical": "#e0af68" },
+      "fail-red-day": { "role": "tertiary", "displayName": "Fail Red (day)", "canonical": "#f52a65" },
+      "fail-red-night": { "role": "tertiary", "displayName": "Fail Red (night)", "canonical": "#f7768e" },
+      "gate-orange-day": { "role": "tertiary", "displayName": "Gate Orange (day)", "canonical": "#b15c00" },
+      "gate-orange-night": { "role": "tertiary", "displayName": "Gate Orange (night)", "canonical": "#ff9e64" }
+    },
+    "typographyMeta": {
+      "body": {
+        "displayName": "Body",
+        "purpose": "All interface copy and prose. Use the platform sans stack by default; Inter is an opt-in packaged alternative."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Status tags, controls, chips, and captions at 600 weight."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Code and terminal-born content. Use the platform mono stack by default; JetBrains Mono is opt-in."
+      }
+    },
+    "motion": [
+      {
+        "name": "state-only",
+        "value": "transform and opacity only; no decorative motion",
+        "purpose": "Motion communicates state, remains interruptible, and is disabled under prefers-reduced-motion: reduce."
+      }
+    ]
+  },
+  "narrative": {
+    "northStar": "The Editor Theme",
+    "overview": "Orc uses Tokyo Night day and night palettes so its interface feels like another pane of a developer's tools. Flat bordered surfaces frame the content; color stays semantic and state is the loudest thing on screen.",
+    "keyCharacteristics": [
+      "Two first-class themes: Tokyo Night day and night, selected by system preference or explicit data-theme.",
+      "Flat, border-defined surfaces with tonal depth and no drop shadows.",
+      "Semantic status color: green means pass, yellow warn, red fail, orange gate, and blue active or interactive.",
+      "Compact editor-grade typography using platform fonts by default, with licensed Inter and JetBrains Mono available through an opt-in stylesheet.",
+      "Motion is limited to meaningful state and always respects reduced-motion preferences."
+    ],
+    "rules": [
+      {
+        "name": "The Editor Palette Rule",
+        "body": "UI colors come from the packaged Tokyo Night tokens. Derived tints use color-mix instead of adding palette colors. Logo artwork may retain its own brand colors but does not define UI tokens.",
+        "section": "colors"
+      },
+      {
+        "name": "The Status Voice Rule",
+        "body": "Green means pass, yellow warn, red fail, orange gate, and blue active or interactive. Every state also names itself in text so color is never the only signal.",
+        "section": "colors"
+      },
+      {
+        "name": "The AA Text Variant Rule",
+        "body": "Small colored text uses the dedicated --orc-*-text and --orc-muted-strong variants; raw hues remain available for fills, borders, and icons.",
+        "section": "colors"
+      },
+      {
+        "name": "The Opt-In Font Rule",
+        "body": "tokens.css uses platform sans and mono stacks. Consumers may import fonts.css to adopt the packaged Inter and JetBrains Mono files; components must work without that import.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Shadow Rule",
+        "body": "Use a border, panel background, or soft token tint for separation. Drop shadows are prohibited.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Reduced-Motion Rule",
+        "body": "Animate only meaningful state with transform or opacity, and provide a no-motion result under prefers-reduced-motion: reduce.",
+        "section": "motion"
+      }
+    ],
+    "dos": [
+      "Style system, explicit light, and explicit dark modes together.",
+      "Use native semantics, visible focus, accessible names, and text labels for state.",
+      "Verify contrast and responsive behavior at runtime in both themes.",
+      "Keep the package usable with its default platform fonts."
+    ],
+    "donts": [
+      "Do not add gradients, marketing typography, decorative workflow diagrams, or drop shadows.",
+      "Do not use raw status hues for small text when a dedicated text variant exists.",
+      "Do not make webfonts or logo colors implicit global defaults.",
+      "Do not animate decorative details or ignore reduced-motion preferences."
+    ]
+  }
+}

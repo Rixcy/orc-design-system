@@ -1,0 +1,12 @@
+orc-navbar {
+  display: block;
+}
+
+orc-theme-toggle {
+  display: inline-block;
+}
+
+orc-navbar:not(:defined),
+orc-theme-toggle:not(:defined) {
+  visibility: hidden;
+}

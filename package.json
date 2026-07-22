@@ -1,0 +1,76 @@
+{
+  "name": "@orc/design-system-preview",
+  "version": "0.0.0-development",
+  "description": "Framework-neutral Orc design system foundations and Web Components.",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "./dist/preflight.js"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./define": {
+      "types": "./dist/define.d.ts",
+      "import": "./dist/define.js",
+      "default": "./dist/define.js"
+    },
+    "./controller": {
+      "types": "./dist/controller.d.ts",
+      "import": "./dist/controller.js",
+      "default": "./dist/controller.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./components.css": "./dist/components.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./preflight.js": "./dist/preflight.js",
+    "./assets/orc-logo.svg": "./dist/assets/orc-logo.svg",
+    "./fonts/inter-latin-wght-normal.woff2": "./dist/fonts/inter-latin-wght-normal.woff2",
+    "./fonts/jetbrains-mono-latin-wght-normal.woff2": "./dist/fonts/jetbrains-mono-latin-wght-normal.woff2"
+  },
+  "scripts": {
+    "build": "vite build && node scripts/copy-static-assets.mjs && node scripts/verify-package.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --config vitest.config.ts",
+    "test:reduced-motion": "vitest run --config vitest.reduced-motion.config.ts",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static",
+    "test-storybook": "vitest run --config vitest.storybook.config.ts",
+    "pack:proof": "node scripts/pack-proof.mjs",
+    "consumer:proof": "npm run pack:proof && npm install --prefix fixtures/vite-consumer --no-audit --no-fund && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "10.5.3",
+    "@storybook/addon-docs": "10.5.3",
+    "@storybook/addon-vitest": "10.5.3",
+    "@storybook/web-components-vite": "10.5.3",
+    "@types/node": "24.10.1",
+    "@typescript/typescript6": "6.0.2",
+    "@vitest/browser": "4.1.10",
+    "@vitest/browser-playwright": "4.1.10",
+    "happy-dom": "20.11.0",
+    "playwright": "1.61.1",
+    "storybook": "10.5.3",
+    "typescript": "7.0.2",
+    "vite": "8.1.5",
+    "vite-plugin-dts": "5.0.3",
+    "vitest": "4.1.10"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.2": true,
+    "fsevents@2.3.3": true
+  }
+}
