@@ -34,24 +34,14 @@
     </text>
     <text x="214" y="136" fill="#38423c" font-size="24" font-weight="650" letter-spacing="3.5">DESIGN SYSTEM</text>
 
-    <!-- The semantic palette this package owns, shown as design-token swatches. -->
-    <g transform="translate(214 154)" font-size="12" font-weight="700">
-      <g>
-        <rect width="88" height="30" rx="7" fill="#53743a" stroke="#3f5a2c"/>
-        <text x="44" y="20" fill="#eceeec" text-anchor="middle">green</text>
-      </g>
-      <g transform="translate(94)">
-        <rect width="88" height="30" rx="7" fill="#8a6a2f" stroke="#6e5325"/>
-        <text x="44" y="20" fill="#f4efe4" text-anchor="middle">yellow</text>
-      </g>
-      <g transform="translate(188)">
-        <rect width="72" height="30" rx="7" fill="#b83f50" stroke="#933240"/>
-        <text x="36" y="20" fill="#fcecef" text-anchor="middle">red</text>
-      </g>
-      <g transform="translate(266)">
-        <rect width="88" height="30" rx="7" fill="#76518f" stroke="#5d4172"/>
-        <text x="44" y="20" fill="#f2ecf6" text-anchor="middle">purple</text>
-      </g>
+    <!-- The restrained swamp scale this package owns: a neutral ramp closing on the interaction accent. -->
+    <g transform="translate(214 154)">
+      <rect x="0"   width="56" height="30" rx="7" fill="#e3e5e4" stroke="#a8b0aa"/>
+      <rect x="60"  width="56" height="30" rx="7" fill="#a8b0aa" stroke="#8f978f"/>
+      <rect x="120" width="56" height="30" rx="7" fill="#6e7971" stroke="#586158"/>
+      <rect x="180" width="56" height="30" rx="7" fill="#38423c" stroke="#2a322d"/>
+      <rect x="240" width="56" height="30" rx="7" fill="#202722" stroke="#202722"/>
+      <rect x="300" width="56" height="30" rx="7" fill="#2d6983" stroke="#245566"/>
     </g>
   </g>
 </svg>
