@@ -42,6 +42,7 @@ describe("defineOrcElements", () => {
   it("is idempotent", () => {
     expect(() => defineOrcElements()).not.toThrow();
     expect(() => defineOrcElements()).not.toThrow();
+    expect(customElements.get("orc-glow-field")).toBeDefined();
     expect(customElements.get("orc-navbar")).toBeDefined();
     expect(customElements.get("orc-theme-toggle")).toBeDefined();
   });
@@ -112,5 +113,43 @@ describe("orc-theme-toggle", () => {
     expect(button.getAttribute("aria-label")).toMatch(/^Color theme:/);
 
     controller.dispose();
+  });
+});
+
+describe("orc-glow-field", () => {
+  it("exposes a labelled native textarea with a value round-trip", () => {
+    const field = document.createElement("orc-glow-field");
+    field.setAttribute("placeholder", "Describe the task");
+    field.setAttribute("label", "Task prompt");
+    document.body.append(field);
+
+    const textarea = field.shadowRoot!.querySelector("textarea")!;
+    expect(textarea.placeholder).toBe("Describe the task");
+    expect(textarea.getAttribute("aria-label")).toBe("Task prompt");
+
+    field.value = "hello";
+    expect(textarea.value).toBe("hello");
+    textarea.value = "edited";
+    expect(field.value).toBe("edited");
+  });
+
+  it("reflects disabled and reveals the footer only when slotted", async () => {
+    const field = document.createElement("orc-glow-field");
+    field.setAttribute("disabled", "");
+    document.body.append(field);
+
+    const textarea = field.shadowRoot!.querySelector("textarea")!;
+    expect(textarea.disabled).toBe(true);
+    field.removeAttribute("disabled");
+    expect(textarea.disabled).toBe(false);
+
+    const footer = field.shadowRoot!.querySelector("footer")!;
+    expect(footer.hidden).toBe(true);
+    const hint = document.createElement("span");
+    hint.slot = "footer";
+    hint.textContent = "Shift+Enter for a new line";
+    field.append(hint);
+    await Promise.resolve();
+    expect(footer.hidden).toBe(false);
   });
 });

@@ -25,4 +25,12 @@ describe("reduced motion", () => {
     if (!button) throw new Error("Expected theme toggle button.");
     expect(getComputedStyle(button).transitionDuration).toBe("0s");
   });
+
+  it("replaces the glow-field beam animation with a static gradient", () => {
+    const field = document.createElement("orc-glow-field");
+    document.body.append(field);
+    const wrapper = field.shadowRoot?.querySelector(".field");
+    if (!wrapper) throw new Error("Expected glow field wrapper.");
+    expect(getComputedStyle(wrapper, "::before").animationName).toBe("none");
+  });
 });
