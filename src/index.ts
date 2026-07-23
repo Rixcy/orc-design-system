@@ -1,4 +1,4 @@
-export { OrcNavbar, OrcThemeToggle, defineOrcElements } from "./define";
+export { OrcGlowField, OrcNavbar, OrcThemeToggle, defineOrcElements } from "./define";
 export {
   createThemeController,
   type ResolvedTheme,
