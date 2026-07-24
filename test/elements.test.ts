@@ -86,14 +86,19 @@ describe("orc-theme-toggle", () => {
     expect(firstButton.disabled).toBe(true);
     expect(secondButton.disabled).toBe(true);
 
+    const visibleIcon = (button: HTMLButtonElement): string | undefined =>
+      button.querySelector<SVGElement>("svg[data-mode]:not([hidden])")?.dataset.mode;
+
     const controller = createThemeController({ document, announce: false });
     expect(firstButton.disabled).toBe(false);
-    expect(secondButton.textContent).toContain("System");
+    expect(visibleIcon(secondButton)).toBe("system");
+    expect(secondButton.getAttribute("aria-label")).toContain("Theme: system");
 
     firstButton.click();
     expect(controller.mode).toBe("light");
-    expect(firstButton.textContent).toContain("Light");
-    expect(secondButton.textContent).toContain("Light");
+    expect(visibleIcon(firstButton)).toBe("light");
+    expect(visibleIcon(secondButton)).toBe("light");
+    expect(secondButton.getAttribute("aria-label")).toContain("Theme: light");
 
     controller.dispose();
     expect(firstButton.disabled).toBe(true);

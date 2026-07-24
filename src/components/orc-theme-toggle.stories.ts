@@ -55,6 +55,10 @@ function getButton(toggle: Element | null | undefined): HTMLButtonElement {
   return button;
 }
 
+function visibleIcon(button: HTMLButtonElement): string | undefined {
+  return button.querySelector<SVGElement>("svg[data-mode]:not([hidden])")?.dataset.mode;
+}
+
 function renderToggle(args: ToggleArgs, mode: ThemeMode = "system"): HTMLElement {
   startController(mode);
   const surface = document.createElement("div");
@@ -131,9 +135,8 @@ export const System: Story = {
     const toggle = canvasElement.querySelector("orc-theme-toggle");
     const button = getButton(toggle);
     await expect(button).toBeEnabled();
-    await expect(button).toHaveAccessibleName(
-      "Theme: System. Activate to switch theme.",
-    );
+    await expect(visibleIcon(button)).toBe("system");
+    await expect(button).toHaveAccessibleName("Theme: system — switch to light");
   },
 };
 
@@ -141,9 +144,9 @@ export const ExplicitLight: Story = {
   globals: { theme: "light" },
   render: (args) => renderToggle(args, "light"),
   play: async ({ canvasElement }) => {
-    await expect(getButton(canvasElement.querySelector("orc-theme-toggle"))).toHaveTextContent(
-      "Theme: Light",
-    );
+    const button = getButton(canvasElement.querySelector("orc-theme-toggle"));
+    await expect(visibleIcon(button)).toBe("light");
+    await expect(button).toHaveAccessibleName("Theme: light — switch to dark");
   },
 };
 
@@ -151,9 +154,9 @@ export const ExplicitDark: Story = {
   globals: { theme: "dark" },
   render: (args) => renderToggle(args, "dark"),
   play: async ({ canvasElement }) => {
-    await expect(getButton(canvasElement.querySelector("orc-theme-toggle"))).toHaveTextContent(
-      "Theme: Dark",
-    );
+    const button = getButton(canvasElement.querySelector("orc-theme-toggle"));
+    await expect(visibleIcon(button)).toBe("dark");
+    await expect(button).toHaveAccessibleName("Theme: dark — switch to system");
   },
 };
 
@@ -195,8 +198,10 @@ export const MultipleInstancesStayInSync: Story = {
     const second = getButton(toggles[1]);
 
     await userEvent.click(first);
-    await expect(first).toHaveTextContent("Theme A: Light");
-    await expect(second).toHaveTextContent("Theme B: Light");
+    await expect(visibleIcon(first)).toBe("light");
+    await expect(first).toHaveAccessibleName("Theme A: light — switch to dark");
+    await expect(visibleIcon(second)).toBe("light");
+    await expect(second).toHaveAccessibleName("Theme B: light — switch to dark");
     await expect(activeController?.mode).toBe("light");
   },
 };
@@ -213,7 +218,7 @@ export const PersistenceFailureIsNonFatal: Story = {
     try {
       await userEvent.click(button);
       await expect(activeController?.mode).toBe("light");
-      await expect(button).toHaveTextContent("Theme: Light");
+      await expect(visibleIcon(button)).toBe("light");
     } finally {
       storagePrototype.setItem = originalSetItem;
     }
@@ -250,16 +255,10 @@ export const OperatingSystemChange: Story = {
     await expect(output).toHaveTextContent("system resolves to light");
     await userEvent.click(simulation as HTMLButtonElement);
     await expect(output).toHaveTextContent("system resolves to dark");
-    await waitFor(() =>
-      expect(getComputedStyle(getButton(toggle)).backgroundColor).toBe(hexToRgb(tokens.night["accent-soft"])),
-    );
+    // Mode stays "system" (monitor icon) even as the OS resolves to dark.
+    await waitFor(() => expect(visibleIcon(getButton(toggle))).toBe("system"));
   },
 };
-
-function hexToRgb(value: string): string {
-  const channels = [1, 3, 5].map((offset) => Number.parseInt(value.slice(offset, offset + 2), 16));
-  return `rgb(${channels.join(", ")})`;
-}
 
 export const NoController: Story = {
   render: (args) => {
@@ -272,9 +271,8 @@ export const NoController: Story = {
   play: async ({ canvasElement }) => {
     const button = getButton(canvasElement.querySelector("orc-theme-toggle"));
     await expect(button).toBeDisabled();
-    await expect(button).toHaveAccessibleName(
-      "Theme: System. Activate to switch theme.",
-    );
+    await expect(visibleIcon(button)).toBe("system");
+    await expect(button).toHaveAccessibleName("Theme: system — switch to light");
   },
 };
 
