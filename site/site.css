@@ -88,7 +88,15 @@ kbd {
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: -0.01em;
   color: var(--orc-heading);
+}
+
+.brand-slash {
+  color: var(--orc-green-text, var(--orc-green));
+  font-weight: 600;
 }
 
 .brand-dim {
@@ -100,10 +108,10 @@ kbd {
    above — so they resolve in dev (site/ root) and build alike, unlike a raw
    <img src="../src/assets/…"> which the dev server can't reach. */
 .brand-mark {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   flex: none;
-  background: url("../src/assets/orc-icon.svg") center / contain no-repeat;
+  background: url("../src/assets/orc-emblem.svg") center / contain no-repeat;
 }
 
 orc-navbar nav {
