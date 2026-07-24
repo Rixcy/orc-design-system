@@ -3,6 +3,7 @@ export {
   OrcChip,
   OrcDialog,
   OrcGlowField,
+  OrcLogomark,
   OrcNavbar,
   OrcSegmented,
   OrcStatusDot,

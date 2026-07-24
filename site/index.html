@@ -40,10 +40,7 @@ world, no concept tournament (direction settled at the Orc plan gate).
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <orc-navbar brand-label="Orc Design System" home-href="#top">
-      <span slot="brand" class="brand">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span class="brand-word"><span class="brand-slash">/</span>orc <span class="brand-dim">design-system</span></span>
-      </span>
+      <orc-logomark slot="brand" product="design-system"></orc-logomark>
       <nav slot="nav" aria-label="Sections">
         <a href="#foundations">Foundations</a>
         <a href="#components">Components</a>
@@ -151,6 +148,21 @@ world, no concept tournament (direction settled at the Orc plan gate).
           </div>
           <pre class="demo-code"><code>&lt;orc-button&gt;Primary&lt;/orc-button&gt;
 &lt;orc-button variant="ghost"&gt;Ghost&lt;/orc-button&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-logomark">
+          <div class="demo-head">
+            <h3 id="d-logomark">Logomark</h3>
+            <p>The lockup itself: emblem, the green slash, the product word. The navbar above is this component.</p>
+          </div>
+          <div class="demo-stage demo-stage-marks">
+            <orc-logomark size="sm" product="design-system"></orc-logomark>
+            <orc-logomark product="design-system"></orc-logomark>
+            <orc-logomark size="lg" product="design-system"></orc-logomark>
+            <orc-logomark size="lg"></orc-logomark>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-logomark product="design-system"&gt;&lt;/orc-logomark&gt;
+&lt;orc-logomark size="lg"&gt;&lt;/orc-logomark&gt;</code></pre>
         </article>
 
         <article class="demo" aria-labelledby="d-textarea">
