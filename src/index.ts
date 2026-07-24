@@ -4,6 +4,7 @@ export {
   OrcDialog,
   OrcGlowField,
   OrcNavbar,
+  OrcSegmented,
   OrcStatusDot,
   OrcStepper,
   OrcTabs,

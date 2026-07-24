@@ -3,6 +3,7 @@ import { OrcChip } from "./components/orc-chip";
 import { OrcDialog } from "./components/orc-dialog";
 import { OrcGlowField } from "./components/orc-glow-field";
 import { OrcNavbar } from "./components/orc-navbar";
+import { OrcSegmented } from "./components/orc-segmented";
 import { OrcStatusDot } from "./components/orc-status-dot";
 import { OrcStepper } from "./components/orc-stepper";
 import { OrcTabs } from "./components/orc-tabs";
@@ -15,6 +16,7 @@ export {
   OrcDialog,
   OrcGlowField,
   OrcNavbar,
+  OrcSegmented,
   OrcStatusDot,
   OrcStepper,
   OrcTabs,
@@ -28,6 +30,7 @@ const ELEMENTS: ReadonlyArray<[string, CustomElementConstructor]> = [
   ["orc-dialog", OrcDialog],
   ["orc-glow-field", OrcGlowField],
   ["orc-navbar", OrcNavbar],
+  ["orc-segmented", OrcSegmented],
   ["orc-status-dot", OrcStatusDot],
   ["orc-stepper", OrcStepper],
   ["orc-tabs", OrcTabs],
