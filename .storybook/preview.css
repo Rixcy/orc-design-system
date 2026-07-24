@@ -35,8 +35,7 @@ a {
 }
 
 .story-surface {
-  min-height: 180px;
-  padding: clamp(20px, 5vw, 56px);
+  padding: clamp(16px, 3vw, 32px);
   background: var(--orc-bg);
 }
 
