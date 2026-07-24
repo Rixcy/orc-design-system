@@ -55,6 +55,7 @@ const meta = {
     wrap.className = "story-surface story-stack";
     wrap.style.display = "flex";
     wrap.style.flexWrap = "wrap";
+    wrap.style.alignItems = "flex-start";
     wrap.style.gap = "8px";
 
     wrap.append(
