@@ -1,6 +1,6 @@
 {
   "name": "@orc/design-system-preview",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Framework-neutral Orc design system foundations and Web Components.",
   "private": true,
   "type": "module",
@@ -56,10 +56,13 @@
     "pack:proof": "node scripts/pack-proof.mjs",
     "consumer:proof": "npm run pack:proof && node scripts/install-consumer-package.mjs && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
     "prepack": "npm run build",
+    "prepare": "npm run build",
+    "release": "commit-and-tag-version",
     "dev": "vite --config vite.site.config.ts",
     "build:site": "vite build --config vite.site.config.ts"
   },
   "devDependencies": {
+    "commit-and-tag-version": "^12.5.1",
     "@storybook/addon-a11y": "10.5.3",
     "@storybook/addon-docs": "10.5.3",
     "@storybook/addon-vitest": "10.5.3",
