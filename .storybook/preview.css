@@ -44,14 +44,10 @@ a {
 }
 
 /*
- * Docs prose keeps Storybook's own chrome colours; token-themed content on the
- * Foundations pages opts back in with `.token-panel`, so a dark preview theme
- * never leaves light-on-light text on the docs background.
+ * Docs prose keeps the docs theme's own colours; token-themed content on the
+ * Foundations pages opts back in with `.token-panel`, so a preview theme that
+ * disagrees with the chrome never leaves text on a same-tone background.
  */
-.sbdocs-wrapper {
-  color: #2e3438;
-}
-
 .docs-story,
 .token-panel {
   background: var(--orc-bg);
@@ -65,8 +61,7 @@ a {
 }
 
 .story-surface {
-  min-height: 180px;
-  padding: clamp(20px, 5vw, 56px);
+  padding: clamp(16px, 3vw, 32px);
   background: var(--orc-bg);
 }
 
@@ -78,6 +73,7 @@ a {
 
 .story-stack {
   display: grid;
+  align-content: start;
   justify-items: start;
   gap: 16px;
 }

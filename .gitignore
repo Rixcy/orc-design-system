@@ -12,3 +12,4 @@ fixtures/vite-consumer/public/orc-preflight.js
 *.log
 .DS_Store
 site-dist/
+fixtures/vite-consumer/bun.lock

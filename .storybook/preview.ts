@@ -9,6 +9,7 @@ import "../src/styles/tokens.css";
 import "../src/styles/components.css";
 import "../src/styles/typography.css";
 import "./preview.css";
+import { orcTheme } from "./orc-theme";
 
 setCustomElementsManifest(customElements);
 
@@ -57,10 +58,10 @@ const preview: Preview = {
     controls: {
       expanded: true,
     },
-    // ponytail: docs chrome stays on Storybook's default light theme — the
-    // branded dark manager theme fights the day token palette the preview
-    // renders stories with.
+    // Docs pages render inside the preview but wear the manager's chrome, so
+    // they take the same token-derived theme.
     docs: {
+      theme: orcTheme(),
       toc: true,
     },
     layout: "fullscreen",

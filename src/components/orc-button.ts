@@ -53,15 +53,30 @@ const template = `
       border-color: color-mix(in srgb, var(--orc-green, #9dc76b) 86%, var(--orc-heading, #e0e5e2));
     }
 
+    /* Ghost holds the same visual weight as primary without the fill: a faint
+       neutral surface and a control-strength edge at rest, an accent-tinted
+       surface on hover, a deeper one while pressed. Tints mix into
+       \`transparent\` rather than a background token so the button composites
+       correctly on panels as well as on the page background. */
     :host([variant="ghost"]) button {
-      background: transparent;
-      border-color: var(--orc-border, #3b4540);
-      color: var(--orc-text, #c7cfca);
+      background: color-mix(in srgb, var(--orc-text, #c7cfca) 6%, transparent);
+      border-color: var(--orc-control-border, var(--orc-border, #3b4540));
+      color: var(--orc-heading, #e0e5e2);
     }
 
     :host([variant="ghost"]) button:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--orc-accent, #78a9c2) 12%, transparent);
       border-color: var(--orc-accent, #78a9c2);
       color: var(--orc-accent-text, var(--orc-accent, #78a9c2));
+    }
+
+    :host([variant="ghost"]) button:active:not(:disabled) {
+      background: color-mix(in srgb, var(--orc-accent, #78a9c2) 20%, transparent);
+      border-color: var(--orc-accent, #78a9c2);
+    }
+
+    :host([variant="ghost"]) button:disabled {
+      background: transparent;
     }
 
     button:focus-visible {

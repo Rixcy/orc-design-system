@@ -24,7 +24,7 @@ if (!["--check", "--write"].includes(mode) || process.argv.length > 3) {
     await writeFile(targetPath, desired);
     console.log("Synchronized src/styles/tokens.css.");
   } else {
-    console.error("src/styles/tokens.css has drifted. Run `npm run theme:write`.");
+    console.error("src/styles/tokens.css has drifted. Run `bun run theme:write`.");
     process.exitCode = 1;
   }
 }

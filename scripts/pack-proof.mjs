@@ -1,6 +1,7 @@
 import { mkdir, readFile, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 
 const root = resolve(import.meta.dirname, '..');
 const artifacts = resolve(root, 'artifacts');
@@ -13,27 +14,36 @@ await mkdir(artifacts, { recursive: true });
 await rm(tarballPath, { force: true });
 
 const result = spawnSync(
-  'npm',
-  ['pack', '--json', '--silent', '--pack-destination', artifacts],
+  'bun',
+  ['pm', 'pack', '--quiet', '--destination', artifacts],
   { cwd: root, encoding: 'utf8' },
 );
 
 if (result.status !== 0) {
-  throw new Error(`npm pack failed:\n${result.stderr.trim()}`);
+  throw new Error(`bun pm pack failed:\n${result.stderr.trim()}`);
 }
 
-// npm includes prepack lifecycle output before its JSON even with --silent.
-const jsonMarker = '[\n  {\n    "id":';
-const jsonStart = result.stdout.lastIndexOf(jsonMarker);
-if (jsonStart === -1) {
-  throw new Error(`npm pack did not return its JSON manifest:\n${result.stdout.trim()}`);
-}
-const packResult = JSON.parse(result.stdout.slice(jsonStart).trim())[0];
-if (packResult.filename !== tarballName) {
-  throw new Error(`Unexpected tarball ${packResult.filename}; expected ${tarballName}.`);
+const packed = result.stdout.trim().split('\n').at(-1);
+if (packed !== tarballPath) {
+  throw new Error(`Unexpected tarball ${packed}; expected ${tarballName}.`);
 }
 
-const packedPaths = new Set(packResult.files.map(({ path }) => path));
+// ponytail: bun pm pack has no --json, so read the tarball back for its manifest.
+const listing = spawnSync('tar', ['-tzf', tarballPath], { encoding: 'utf8' });
+if (listing.status !== 0) {
+  throw new Error(`Could not list ${tarballName}:\n${listing.stderr.trim()}`);
+}
+const packedPaths = new Set(
+  listing.stdout.split('\n')
+    .filter((path) => path && !path.endsWith('/'))
+    .map((path) => path.replace(/^package\//u, '')),
+);
+const tarball = await readFile(tarballPath);
+const packResult = {
+  entryCount: packedPaths.size,
+  size: tarball.byteLength,
+  integrity: `sha512-${createHash('sha512').update(tarball).digest('base64')}`,
+};
 const requiredPaths = [
   'package.json',
   'dist/index.js',

@@ -46,7 +46,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<StepperArgs>;
 
-export const MidProgress: Story = {
+export const Complete: Story = {
+  args: {
+    steps: "plan,build,review,qa",
+    current: "4",
+  },
   play: async ({ canvasElement }) => {
     const stepper = getStepper(canvasElement);
     const items = [
@@ -54,26 +58,8 @@ export const MidProgress: Story = {
     ] as HTMLLIElement[];
 
     await expect(items).toHaveLength(4);
-    await expect(items[1]).toHaveAttribute("aria-current", "step");
-    await expect(items[0]?.querySelector(".step")).toHaveClass("done");
-    await expect(items[2]?.querySelector(".step")).toHaveClass("pending");
-    await expect(items[3]?.querySelector(".step")).toHaveClass("pending");
-  },
-};
-
-export const Complete: Story = {
-  args: {
-    steps: "plan,build,review,qa",
-    current: "qa",
-  },
-  play: async ({ canvasElement }) => {
-    const stepper = getStepper(canvasElement);
-    const items = [
-      ...(stepper.shadowRoot?.querySelectorAll("li") ?? []),
-    ] as HTMLLIElement[];
-
-    await expect(items[3]).toHaveAttribute("aria-current", "step");
-    for (const item of items.slice(0, 3)) {
+    for (const item of items) {
+      await expect(item).not.toHaveAttribute("aria-current");
       await expect(item.querySelector(".step")).toHaveClass("done");
     }
   },
