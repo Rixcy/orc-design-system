@@ -56,6 +56,11 @@ const template = `
       block-size: 1rem;
     }
 
+    /* The UA [hidden] rule is HTML-only, so SVG icons need this explicitly. */
+    svg[hidden] {
+      display: none;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       button {
         transition: none;
