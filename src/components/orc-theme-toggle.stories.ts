@@ -56,7 +56,16 @@ function getButton(toggle: Element | null | undefined): HTMLButtonElement {
 }
 
 function visibleIcon(button: HTMLButtonElement): string | undefined {
-  return button.querySelector<SVGElement>("svg[data-mode]:not([hidden])")?.dataset.mode;
+  // Rendered, not merely unmarked: `hidden` alone does not hide an SVG.
+  const rendered = [...button.querySelectorAll<SVGElement>("svg[data-mode]")].filter((icon) =>
+    icon.checkVisibility(),
+  );
+  if (rendered.length > 1) {
+    throw new Error(
+      `Expected one visible theme icon, saw ${rendered.map((icon) => icon.dataset.mode).join(", ")}.`,
+    );
+  }
+  return rendered[0]?.dataset.mode;
 }
 
 function renderToggle(args: ToggleArgs, mode: ThemeMode = "system"): HTMLElement {

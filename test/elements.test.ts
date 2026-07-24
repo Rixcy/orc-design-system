@@ -86,8 +86,14 @@ describe("orc-theme-toggle", () => {
     expect(firstButton.disabled).toBe(true);
     expect(secondButton.disabled).toBe(true);
 
-    const visibleIcon = (button: HTMLButtonElement): string | undefined =>
-      button.querySelector<SVGElement>("svg[data-mode]:not([hidden])")?.dataset.mode;
+    // Rendered, not merely unmarked: `hidden` alone does not hide an SVG.
+    const visibleIcon = (button: HTMLButtonElement): string | undefined => {
+      const rendered = [...button.querySelectorAll<SVGElement>("svg[data-mode]")].filter(
+        (icon) => window.getComputedStyle(icon).display !== "none",
+      );
+      expect(rendered).toHaveLength(1);
+      return rendered[0]?.dataset.mode;
+    };
 
     const controller = createThemeController({ document, announce: false });
     expect(firstButton.disabled).toBe(false);
