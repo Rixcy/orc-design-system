@@ -45,7 +45,8 @@ const template = `
         var(--orc-green, #9dc76b) 73%,
         color-mix(in srgb, var(--orc-yellow, #d5b05c) 76%, var(--orc-green, #9dc76b)) 78%,
         color-mix(in srgb, var(--orc-green, #9dc76b) 34%, transparent) 85%,
-        transparent 92% 100%);
+        transparent 92% 100%),
+        linear-gradient(var(--orc-beam-underlay, transparent) 0 0);
       -webkit-mask: linear-gradient(currentColor 0 0) content-box, linear-gradient(currentColor 0 0);
       -webkit-mask-composite: xor;
       mask: linear-gradient(currentColor 0 0) content-box, linear-gradient(currentColor 0 0);
@@ -60,6 +61,14 @@ const template = `
       border-color: var(--orc-accent, #78a9c2);
       outline: var(--orc-focus-ring, 2px solid #78a9c2);
       outline-offset: var(--orc-focus-offset, 2px);
+    }
+
+    /* Soft always-on focus cue that lives in the beam itself: focus lights a
+       faint green rim under the sweeping gradient (plus the speed-up in the
+       reduced-motion block below). Keyboard focus still gets the full ring
+       above. */
+    .field:has(textarea:focus) {
+      --orc-beam-underlay: color-mix(in srgb, var(--orc-green, #9dc76b) 45%, transparent);
     }
 
     textarea {
@@ -101,7 +110,8 @@ const template = `
       .field::before {
         animation: none;
         background: linear-gradient(112deg, transparent 12%, var(--orc-green, #9dc76b) 48%,
-          color-mix(in srgb, var(--orc-yellow, #d5b05c) 70%, var(--orc-green, #9dc76b)) 58%, transparent 88%);
+          color-mix(in srgb, var(--orc-yellow, #d5b05c) 70%, var(--orc-green, #9dc76b)) 58%, transparent 88%),
+          linear-gradient(var(--orc-beam-underlay, transparent) 0 0);
       }
     }
 

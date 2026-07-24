@@ -1,0 +1,61 @@
+/*
+ * Orc typography utility (opt-in).
+ *
+ * The documented Orc type scale (see orc/DESIGN.md, "3. Typography"):
+ * one sans (Inter) in three weights plus one mono (JetBrains Mono), six
+ * named roles — display, headline, title, body, label, mono.
+ *
+ *   display  700 / 24px   / 1.6   — page/H1 titles
+ *   headline 600 / 17px   / 1.3   — section/run titles
+ *   title    600 / 15px   / 1.3   — sidebar/H2-level titles
+ *   body     400 / 14px   / 1.55  — UI and prose
+ *   label    600 / 11px   / 1.4   — tags, chips, captions, uppercase-tracked
+ *   mono     400 / 12.5px / 1.7   — inline/block code, logs
+ *
+ * Font stacks match src/styles/fonts.css: --orc-font-sans resolves to
+ * "Inter" (falling back to the platform sans stack) once fonts.css is
+ * imported, otherwise it stays on the platform stack defined in
+ * tokens.css; --orc-font-mono works the same way for "JetBrains Mono".
+ *
+ * Usage: import this file for the --orc-type-* custom properties (font
+ * shorthand: weight/size/line-height family), the .orc-type-* utility
+ * classes, or both. Requires src/styles/tokens.css to be loaded for
+ * --orc-font-sans / --orc-font-mono; import src/styles/fonts.css as well
+ * to get the packaged Inter / JetBrains Mono faces.
+ */
+
+:root {
+  --orc-type-display: 700 24px/1.6 var(--orc-font-sans);
+  --orc-type-headline: 600 17px/1.3 var(--orc-font-sans);
+  --orc-type-title: 600 15px/1.3 var(--orc-font-sans);
+  --orc-type-body: 400 14px/1.55 var(--orc-font-sans);
+  --orc-type-label: 600 11px/1.4 var(--orc-font-sans);
+  --orc-type-mono: 400 12.5px/1.7 var(--orc-font-mono);
+}
+
+.orc-type-display {
+  font: var(--orc-type-display);
+  text-wrap: balance;
+}
+
+.orc-type-headline {
+  font: var(--orc-type-headline);
+}
+
+.orc-type-title {
+  font: var(--orc-type-title);
+}
+
+.orc-type-body {
+  font: var(--orc-type-body);
+}
+
+.orc-type-label {
+  font: var(--orc-type-label);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.orc-type-mono {
+  font: var(--orc-type-mono);
+}

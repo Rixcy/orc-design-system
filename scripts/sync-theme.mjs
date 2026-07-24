@@ -114,6 +114,8 @@ ${indent}--orc-red-text: color-mix(in srgb, var(--orc-red) 60%, var(--orc-headin
 ${indent}--orc-yellow-text: color-mix(in srgb, var(--orc-yellow) 70%, var(--orc-heading));
 ${indent}--orc-green-text: color-mix(in srgb, var(--orc-green) 70%, var(--orc-heading));
 ${indent}--orc-purple-text: color-mix(in srgb, var(--orc-purple) 65%, var(--orc-heading));
+${indent}--orc-cyan-text: color-mix(in srgb, var(--orc-cyan) 60%, var(--orc-heading));
+${indent}--orc-orange-text: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
 ${indent}--orc-accent-strong: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));`;
 }
 
@@ -125,6 +127,8 @@ ${indent}--orc-red-text: var(--orc-red);
 ${indent}--orc-yellow-text: var(--orc-yellow);
 ${indent}--orc-green-text: var(--orc-green);
 ${indent}--orc-purple-text: var(--orc-purple);
+${indent}--orc-cyan-text: var(--orc-cyan);
+${indent}--orc-orange-text: var(--orc-orange);
 ${indent}--orc-accent-strong: var(--orc-accent);`;
 }
 

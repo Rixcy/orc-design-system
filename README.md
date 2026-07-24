@@ -19,8 +19,12 @@ values around.
   an explicit `data-theme="light"` / `data-theme="dark"` on the root wins either
   way. A parser-time `preflight.js` avoids the first-paint flash for persisted
   choices.
-- **Web Components** — `<orc-navbar>` and `<orc-theme-toggle>`, defined via
+- **Web Components** — `<orc-button>`, `<orc-chip>`, `<orc-dialog>`,
+  `<orc-glow-field>`, `<orc-navbar>`, `<orc-status-dot>`, `<orc-stepper>`,
+  `<orc-tabs>`, `<orc-textarea>`, and `<orc-theme-toggle>`, defined via
   `defineOrcElements()` and driven by an exported `createThemeController()`.
+- **Utility CSS** — opt-in `scrollbar.css` (`.orc-scrollbar`) and
+  `typography.css` (`--orc-type-*` variables + `.orc-type-*` classes).
 - **Fonts** — opt-in Inter (body) and JetBrains Mono (code); the platform sans
   and mono stacks are the default so nothing is required.
 - **Preflight & assets** — the theme preflight snippet plus the packaged Orc

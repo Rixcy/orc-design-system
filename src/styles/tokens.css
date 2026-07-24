@@ -28,6 +28,8 @@
   --orc-yellow-text: color-mix(in srgb, var(--orc-yellow) 70%, var(--orc-heading));
   --orc-green-text: color-mix(in srgb, var(--orc-green) 70%, var(--orc-heading));
   --orc-purple-text: color-mix(in srgb, var(--orc-purple) 65%, var(--orc-heading));
+  --orc-cyan-text: color-mix(in srgb, var(--orc-cyan) 60%, var(--orc-heading));
+  --orc-orange-text: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
   --orc-accent-strong: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
   --orc-control-border: color-mix(in srgb, var(--orc-border) 65%, var(--orc-heading));
   --orc-button-hover: color-mix(in srgb, var(--orc-accent) 10%, var(--orc-bg));
@@ -75,6 +77,8 @@
     --orc-yellow-text: var(--orc-yellow);
     --orc-green-text: var(--orc-green);
     --orc-purple-text: var(--orc-purple);
+    --orc-cyan-text: var(--orc-cyan);
+    --orc-orange-text: var(--orc-orange);
     --orc-accent-strong: var(--orc-accent);
   }
 }
@@ -104,6 +108,8 @@
   --orc-yellow-text: var(--orc-yellow);
   --orc-green-text: var(--orc-green);
   --orc-purple-text: var(--orc-purple);
+  --orc-cyan-text: var(--orc-cyan);
+  --orc-orange-text: var(--orc-orange);
   --orc-accent-strong: var(--orc-accent);
 }
 
@@ -132,5 +138,7 @@
   --orc-yellow-text: color-mix(in srgb, var(--orc-yellow) 70%, var(--orc-heading));
   --orc-green-text: color-mix(in srgb, var(--orc-green) 70%, var(--orc-heading));
   --orc-purple-text: color-mix(in srgb, var(--orc-purple) 65%, var(--orc-heading));
+  --orc-cyan-text: color-mix(in srgb, var(--orc-cyan) 60%, var(--orc-heading));
+  --orc-orange-text: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
   --orc-accent-strong: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
 }

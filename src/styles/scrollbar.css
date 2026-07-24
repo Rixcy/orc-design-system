@@ -1,0 +1,41 @@
+/*
+ * Orc scrollbar utility (opt-in).
+ *
+ * Ported from orc/ui (ui/index.html, `::-webkit-scrollbar` rules): a 16px
+ * webkit scrollbar with a bordered thumb using --orc-border and a track
+ * matching --orc-panel, plus the standard scrollbar-color/scrollbar-width
+ * properties for Firefox.
+ *
+ * orc/ui applies these rules globally (unscoped, at document scope). This
+ * package ships to arbitrary consumers, so the rules are scoped under a
+ * single `.orc-scrollbar` class instead of being unscoped by default —
+ * apply the class wherever you want the styled scrollbar:
+ *
+ *   - On the document root for the orc/ui-style global effect:
+ *       <html class="orc-scrollbar"> or document.documentElement.classList.add('orc-scrollbar')
+ *   - On any scrollable container to opt in locally:
+ *       <div class="orc-scrollbar" style="overflow: auto"> ... </div>
+ *
+ * Requires src/styles/tokens.css (or equivalent --orc-border / --orc-panel
+ * custom properties) to be loaded.
+ */
+
+.orc-scrollbar {
+  scrollbar-color: var(--orc-border) transparent;
+  scrollbar-width: auto;
+}
+
+.orc-scrollbar::-webkit-scrollbar {
+  width: 16px;
+  background: transparent;
+}
+
+.orc-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.orc-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--orc-border);
+  border: 4px solid var(--orc-panel);
+  border-radius: 8px;
+}

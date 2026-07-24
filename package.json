@@ -35,6 +35,8 @@
     "./tokens.css": "./dist/tokens.css",
     "./components.css": "./dist/components.css",
     "./fonts.css": "./dist/fonts.css",
+    "./scrollbar.css": "./dist/scrollbar.css",
+    "./typography.css": "./dist/typography.css",
     "./preflight.js": "./dist/preflight.js",
     "./assets/orc-logo.svg": "./dist/assets/orc-logo.svg",
     "./assets/orc-icon.svg": "./dist/assets/orc-icon.svg",
@@ -53,7 +55,9 @@
     "test-storybook": "vitest run --config vitest.storybook.config.ts",
     "pack:proof": "node scripts/pack-proof.mjs",
     "consumer:proof": "npm run pack:proof && node scripts/install-consumer-package.mjs && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "site": "vite --config vite.site.config.ts",
+    "build:site": "vite build --config vite.site.config.ts"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "10.5.3",

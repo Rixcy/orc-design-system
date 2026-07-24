@@ -17,11 +17,13 @@
   },
   "include": [
     "src/**/*.ts",
+    "site/**/*.ts",
     "stories/**/*.ts",
     "test/**/*.ts",
     "tests/**/*.ts",
     ".storybook/**/*.ts",
     "vite.config.ts",
+    "vite.site.config.ts",
     "vitest.config.ts",
     "vitest.storybook.config.ts",
     "vitest.reduced-motion.config.ts"
