@@ -82,6 +82,12 @@ interface Segment {
  * `value` selects the active segment and stays in sync with the selection. A
  * `change` CustomEvent (composed, bubbles) fires on selection with
  * `detail: { value, label }`. `label` sets the group's accessible name.
+ *
+ * @customElement orc-segmented
+ * @attr {string} value - Selected segment value; stays in sync with selection.
+ * @attr {string} label - Accessible name for the radiogroup.
+ * @slot - Elements carrying a `value` attribute, read as segment data.
+ * @fires change - `CustomEvent<{ value: string; label: string }>` on selection.
  */
 export class OrcSegmented extends HTMLElementBase {
   static get observedAttributes(): string[] {

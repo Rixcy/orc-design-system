@@ -106,6 +106,15 @@ const VARIANTS = new Set([
   "accent",
 ]);
 
+/**
+ * `<orc-chip>` is a compact status pill in one of the token colour families,
+ * optionally preceded by a status dot.
+ *
+ * @customElement orc-chip
+ * @attr {"neutral"|"green"|"yellow"|"red"|"purple"|"cyan"|"orange"|"accent"} variant - Colour family. Unknown values fall back to `neutral`.
+ * @attr {boolean} dot - Shows the leading status dot.
+ * @slot - Chip label content.
+ */
 export class OrcChip extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["variant", "dot"];

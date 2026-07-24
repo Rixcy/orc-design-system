@@ -14,6 +14,15 @@
   src: url("../src/assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2-variations");
 }
 
+/*
+ * src/styles/fonts.css resolves its faces relative to the published package,
+ * so the preview declares the same faces above and re-points the stacks here.
+ */
+:root {
+  --orc-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --orc-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
 html,
 body {
   min-width: 320px;
@@ -32,6 +41,27 @@ body {
 button,
 a {
   touch-action: manipulation;
+}
+
+/*
+ * Docs prose keeps Storybook's own chrome colours; token-themed content on the
+ * Foundations pages opts back in with `.token-panel`, so a dark preview theme
+ * never leaves light-on-light text on the docs background.
+ */
+.sbdocs-wrapper {
+  color: #2e3438;
+}
+
+.docs-story,
+.token-panel {
+  background: var(--orc-bg);
+  color: var(--orc-text);
+}
+
+.token-panel {
+  padding: 16px;
+  border: 1px solid var(--orc-border);
+  border-radius: var(--orc-radius-md);
 }
 
 .story-surface {

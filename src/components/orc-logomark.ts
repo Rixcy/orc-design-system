@@ -79,6 +79,14 @@ const template = `
 
 const SIZES = new Set(["sm", "md", "lg"]);
 
+/**
+ * `<orc-logomark>` renders the Orc mark plus wordmark lockup, optionally
+ * suffixed with a product name.
+ *
+ * @customElement orc-logomark
+ * @attr {string} product - Product name shown after the wordmark.
+ * @attr {"sm"|"md"|"lg"} size - Lockup size. Unknown values fall back to `md`.
+ */
 export class OrcLogomark extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["product", "size"];

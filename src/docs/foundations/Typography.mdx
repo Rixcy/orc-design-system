@@ -1,0 +1,83 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Typography" />
+
+export const ROLES = [
+  ["display", "Page and H1 titles", "The lazy path is the right path"],
+  ["headline", "Section and run titles", "Grilling, plan, build, review"],
+  ["title", "Sidebar and H2-level titles", "Build contract"],
+  ["body", "UI copy and prose", "Every component is a plain custom element, styled entirely from CSS custom properties."],
+  ["label", "Tags, chips, captions", "In progress"],
+  ["mono", "Inline and block code, logs", "orc-quick --mode quick"],
+];
+
+export const Specimen = () => (
+  <div className="token-panel" style={{ display: "grid", gap: "28px" }}>
+    {ROLES.map(([role, use, sample]) => {
+      const font = getComputedStyle(document.documentElement)
+        .getPropertyValue(`--orc-type-${role}`)
+        .trim();
+      return (
+        <div key={role}>
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+              alignItems: "baseline",
+              marginBottom: "6px",
+              opacity: 0.75,
+            }}
+          >
+            <code style={{ fontSize: "12px" }}>.orc-type-{role}</code>
+            <span style={{ fontSize: "12px" }}>{use}</span>
+          </div>
+          <div className={`orc-type-${role}`}>{sample}</div>
+          <code style={{ display: "block", fontSize: "11px", marginTop: "6px", opacity: 0.6 }}>
+            {font || `--orc-type-${role}`}
+          </code>
+        </div>
+      );
+    })}
+  </div>
+);
+
+<div style={{ padding: "clamp(20px, 5vw, 56px)", maxWidth: "90ch" }}>
+
+# Typography
+
+Two families, six roles. Inter carries the interface; JetBrains Mono carries
+anything the machine wrote. The scale below is read live from
+`--orc-type-*` in `src/styles/typography.css`.
+
+<Specimen />
+
+## Using it
+
+`src/styles/typography.css` is opt-in — import it for the custom properties,
+the `.orc-type-*` utility classes, or both:
+
+```js
+import "@orc/design-system/tokens.css";     // --orc-font-sans / --orc-font-mono
+import "@orc/design-system/fonts.css";      // packaged Inter + JetBrains Mono
+import "@orc/design-system/typography.css"; // --orc-type-* + .orc-type-*
+```
+
+```css
+.run-title {
+  font: var(--orc-type-headline);
+}
+```
+
+Prefer a role over ad-hoc sizes. If a piece of text does not fit one of the six,
+that is usually a sign the layout wants rethinking rather than a seventh role.
+
+## Families
+
+- `--orc-font-sans` — Inter, then the platform sans stack
+- `--orc-font-mono` — JetBrains Mono, then the platform mono stack
+
+Both faces ship as variable `woff2` files and are only loaded when
+`fonts.css` is imported; without it, the stacks fall back to system fonts and
+nothing breaks.
+
+</div>

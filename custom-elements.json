@@ -1,0 +1,798 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-button.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-button>` is the primary action element: a filled `primary` button and a\nbordered `ghost` button sharing size, focus-ring, and disabled behaviour.",
+          "name": "OrcButton",
+          "slots": [
+            {
+              "description": "Button label content.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the inner native button."
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "\"button\"|\"submit\""
+              },
+              "description": "Native button type. Defaults to `button`."
+            },
+            {
+              "type": {
+                "text": "\"primary\"|\"ghost\""
+              },
+              "description": "Visual weight. Defaults to `primary`.",
+              "name": "variant"
+            },
+            {
+              "type": {
+                "text": "\"default\"|\"compact\""
+              },
+              "description": "Control density. Defaults to `default`.",
+              "name": "size"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-button.ts"
+          },
+          "tagName": "orc-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcButton",
+          "declaration": {
+            "name": "OrcButton",
+            "module": "src/components/orc-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-chip.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-chip>` is a compact status pill in one of the token colour families,\noptionally preceded by a status dot.",
+          "name": "OrcChip",
+          "slots": [
+            {
+              "description": "Chip label content.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "\"neutral\"|\"green\"|\"yellow\"|\"red\"|\"purple\"|\"cyan\"|\"orange\"|\"accent\""
+              },
+              "description": "Colour family. Unknown values fall back to `neutral`."
+            },
+            {
+              "name": "dot",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Shows the leading status dot."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-chip.ts"
+          },
+          "tagName": "orc-chip",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcChip",
+          "declaration": {
+            "name": "OrcChip",
+            "module": "src/components/orc-chip.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-dialog.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-dialog>` wraps the native `<dialog>` element: modal by default, with a\nheading row, a close button, light-dismiss, and focus handling.",
+          "name": "OrcDialog",
+          "cssProperties": [
+            {
+              "description": "Maximum dialog width.",
+              "name": "--orc-dialog-max-width",
+              "default": "32rem"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Dialog body content.",
+              "name": ""
+            },
+            {
+              "description": "Footer actions; the footer row stays hidden while empty.",
+              "name": "footer"
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "show",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "returnValue",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "description": "Fired after the dialog closes.",
+              "name": "close"
+            },
+            {
+              "description": "Cancelable; fired on Escape or light dismiss, before closing.",
+              "name": "cancel"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflects and controls visibility; setting it shows the modal."
+            },
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "description": "Heading text, also used as the dialog's accessible name."
+            },
+            {
+              "name": "no-light-dismiss",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Keeps the dialog open on backdrop click."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-dialog.ts"
+          },
+          "tagName": "orc-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcDialog",
+          "declaration": {
+            "name": "OrcDialog",
+            "module": "src/components/orc-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-glow-field.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-glow-field>` is the composer textarea with an animated beam border —\n`<orc-textarea>`'s expressive sibling for primary input surfaces.",
+          "name": "OrcGlowField",
+          "cssProperties": [
+            {
+              "description": "Current beam rotation angle (animated).",
+              "name": "--orc-beam-angle"
+            },
+            {
+              "description": "Beam underlay colour behind the field.",
+              "name": "--orc-beam-underlay"
+            },
+            {
+              "description": "Border colour of the resting field.",
+              "name": "--orc-control-border"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Actions below the input; the footer row stays hidden while empty.",
+              "name": "footer"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "description": "Native placeholder text."
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for the textarea."
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the inner textarea and stops the beam."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-glow-field.ts"
+          },
+          "tagName": "orc-glow-field",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcGlowField",
+          "declaration": {
+            "name": "OrcGlowField",
+            "module": "src/components/orc-glow-field.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-logomark.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-logomark>` renders the Orc mark plus wordmark lockup, optionally\nsuffixed with a product name.",
+          "name": "OrcLogomark",
+          "members": [],
+          "attributes": [
+            {
+              "name": "product",
+              "type": {
+                "text": "string"
+              },
+              "description": "Product name shown after the wordmark."
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\"|\"md\"|\"lg\""
+              },
+              "description": "Lockup size. Unknown values fall back to `md`."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-logomark.ts"
+          },
+          "tagName": "orc-logomark",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcLogomark",
+          "declaration": {
+            "name": "OrcLogomark",
+            "module": "src/components/orc-logomark.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-navbar.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-navbar>` is the top-level application bar: brand link on the left,\nnavigation in the middle, actions on the right.",
+          "name": "OrcNavbar",
+          "slots": [
+            {
+              "description": "Replaces the default brand link entirely.",
+              "name": "brand"
+            },
+            {
+              "description": "Navigation links.",
+              "name": "nav"
+            },
+            {
+              "description": "Trailing actions, e.g. `<orc-theme-toggle>`.",
+              "name": "actions"
+            }
+          ],
+          "members": [],
+          "attributes": [
+            {
+              "name": "brand-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Brand text for the default brand link. Defaults to `Orc`."
+            },
+            {
+              "name": "home-href",
+              "type": {
+                "text": "string"
+              },
+              "description": "Href for the default brand link. Defaults to `/`."
+            },
+            {
+              "name": "home-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for the brand link. Defaults to `<brand-label> home`."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-navbar.ts"
+          },
+          "tagName": "orc-navbar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcNavbar",
+          "declaration": {
+            "name": "OrcNavbar",
+            "module": "src/components/orc-navbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-segmented.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-segmented>` is a single-select segmented control (WAI-ARIA radiogroup\npattern). Unlike `<orc-tabs>` it owns no panels — it just picks one value.\n\nContent API: provide direct child elements carrying a `value` attribute; each\nchild's text becomes the segment label. Children are read from light DOM as\ndata and re-rendered as accessible radios in the shadow root.\n\n```html\n<orc-segmented value=\"orc\" label=\"Orc mode\">\n  <button value=\"orc\">/orc</button>\n  <button value=\"orc-quick\">/orc-quick</button>\n</orc-segmented>\n```\n\n`value` selects the active segment and stays in sync with the selection. A\n`change` CustomEvent (composed, bubbles) fires on selection with\n`detail: { value, label }`. `label` sets the group's accessible name.",
+          "name": "OrcSegmented",
+          "slots": [
+            {
+              "description": "Elements carrying a `value` attribute, read as segment data.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "description": "The value of the currently selected segment, or \"\" when empty."
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "`CustomEvent<{ value: string; label: string }>` on selection."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "description": "Selected segment value; stays in sync with selection."
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for the radiogroup."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-segmented.ts"
+          },
+          "tagName": "orc-segmented",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcSegmented",
+          "declaration": {
+            "name": "OrcSegmented",
+            "module": "src/components/orc-segmented.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-status-dot.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-status-dot>` is a small coloured status indicator with a\nscreen-reader-only label, optionally pulsing or announced live.",
+          "name": "OrcStatusDot",
+          "members": [],
+          "attributes": [
+            {
+              "name": "tone",
+              "type": {
+                "text": "\"accent\"|\"muted\"|\"red\"|\"green\"|\"yellow\""
+              },
+              "description": "Dot colour."
+            },
+            {
+              "name": "pulse",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Animates the dot; respects `prefers-reduced-motion`."
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Text exposed to assistive technology."
+            },
+            {
+              "name": "live",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Announces label changes via `role=\"status\"`."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-status-dot.ts"
+          },
+          "tagName": "orc-status-dot",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcStatusDot",
+          "declaration": {
+            "name": "OrcStatusDot",
+            "module": "src/components/orc-status-dot.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-stepper.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-stepper>` renders an ordered progress trail from a comma-separated\nstep list, marking one step as current.",
+          "name": "OrcStepper",
+          "cssParts": [
+            {
+              "description": "The ordered list wrapper.",
+              "name": "list"
+            },
+            {
+              "description": "Each step pill.",
+              "name": "step"
+            }
+          ],
+          "members": [],
+          "attributes": [
+            {
+              "name": "steps",
+              "type": {
+                "text": "string"
+              },
+              "description": "Comma-separated step labels."
+            },
+            {
+              "name": "current",
+              "type": {
+                "text": "string"
+              },
+              "description": "Current step, as a zero-based index or a step label."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-stepper.ts"
+          },
+          "tagName": "orc-stepper",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcStepper",
+          "declaration": {
+            "name": "OrcStepper",
+            "module": "src/components/orc-stepper.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-tabs.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-tabs>` implements the WAI-ARIA APG Tabs pattern.\n\nContent API: provide direct child elements marked with `data-tab=\"Label\"`.\nEach marked child becomes a tab panel; its `data-tab` value becomes the\ntab's accessible label. Children are read from light DOM and re-slotted\ninto shadow-rendered tabpanel wrappers so the tab/tabpanel ARIA\nrelationship (aria-controls/aria-labelledby) stays within a single root.\n\n```html\n<orc-tabs selected=\"0\">\n  <div data-tab=\"Overview\">Overview content</div>\n  <div data-tab=\"Details\">Details content</div>\n  <div data-tab=\"Settings\">Settings content</div>\n</orc-tabs>\n```\n\n`selected` accepts either a zero-based index or the tab's label text, and\nis kept in sync with the current selection. A `change` CustomEvent\n(composed, bubbles) fires on selection with `detail: { index, label }`.",
+          "name": "OrcTabs",
+          "slots": [
+            {
+              "description": "Elements marked with `data-tab=\"Label\"`, each becoming a tab panel.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "`CustomEvent<{ index: number; label: string }>` on selection."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "selected",
+              "type": {
+                "text": "string"
+              },
+              "description": "Selected tab, as a zero-based index or the tab label."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-tabs.ts"
+          },
+          "tagName": "orc-tabs",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcTabs",
+          "declaration": {
+            "name": "OrcTabs",
+            "module": "src/components/orc-tabs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-textarea.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-textarea>` is the plain labelled multi-line input — the quiet\ncounterpart to `<orc-glow-field>`.",
+          "name": "OrcTextarea",
+          "cssProperties": [
+            {
+              "description": "Minimum height of the textarea.",
+              "name": "--orc-textarea-min-height"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Visible label text, wired to the textarea."
+            },
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "description": "Native placeholder text."
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the inner textarea."
+            },
+            {
+              "name": "rows",
+              "type": {
+                "text": "number"
+              },
+              "description": "Native rows attribute."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-textarea.ts"
+          },
+          "tagName": "orc-textarea",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcTextarea",
+          "declaration": {
+            "name": "OrcTextarea",
+            "module": "src/components/orc-textarea.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-theme-toggle.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-theme-toggle>` cycles the theme controller through\nsystem -> light -> dark and mirrors the resolved mode in its icon.",
+          "name": "OrcThemeToggle",
+          "members": [],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the control."
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Base accessible name. Defaults to `Theme`."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-theme-toggle.ts"
+          },
+          "tagName": "orc-theme-toggle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcThemeToggle",
+          "declaration": {
+            "name": "OrcThemeToggle",
+            "module": "src/components/orc-theme-toggle.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

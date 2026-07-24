@@ -136,6 +136,19 @@ const template = `
   </div>
 `;
 
+/**
+ * `<orc-glow-field>` is the composer textarea with an animated beam border —
+ * `<orc-textarea>`'s expressive sibling for primary input surfaces.
+ *
+ * @customElement orc-glow-field
+ * @attr {string} label - Accessible name for the textarea.
+ * @attr {string} placeholder - Native placeholder text.
+ * @attr {boolean} disabled - Disables the inner textarea and stops the beam.
+ * @slot footer - Actions below the input; the footer row stays hidden while empty.
+ * @cssprop [--orc-beam-angle] - Current beam rotation angle (animated).
+ * @cssprop [--orc-beam-underlay] - Beam underlay colour behind the field.
+ * @cssprop [--orc-control-border] - Border colour of the resting field.
+ */
 export class OrcGlowField extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["placeholder", "label", "disabled"];

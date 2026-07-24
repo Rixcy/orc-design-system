@@ -73,6 +73,17 @@ const template = `
   <textarea></textarea>
 `;
 
+/**
+ * `<orc-textarea>` is the plain labelled multi-line input — the quiet
+ * counterpart to `<orc-glow-field>`.
+ *
+ * @customElement orc-textarea
+ * @attr {string} label - Visible label text, wired to the textarea.
+ * @attr {string} placeholder - Native placeholder text.
+ * @attr {boolean} disabled - Disables the inner textarea.
+ * @attr {number} rows - Native rows attribute.
+ * @cssprop [--orc-textarea-min-height] - Minimum height of the textarea.
+ */
 export class OrcTextarea extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["label", "placeholder", "disabled", "rows"];

@@ -141,6 +141,20 @@ const template = `
   </dialog>
 `;
 
+/**
+ * `<orc-dialog>` wraps the native `<dialog>` element: modal by default, with a
+ * heading row, a close button, light-dismiss, and focus handling.
+ *
+ * @customElement orc-dialog
+ * @attr {boolean} open - Reflects and controls visibility; setting it shows the modal.
+ * @attr {string} heading - Heading text, also used as the dialog's accessible name.
+ * @attr {boolean} no-light-dismiss - Keeps the dialog open on backdrop click.
+ * @slot - Dialog body content.
+ * @slot footer - Footer actions; the footer row stays hidden while empty.
+ * @fires close - Fired after the dialog closes.
+ * @fires cancel - Cancelable; fired on Escape or light dismiss, before closing.
+ * @cssprop [--orc-dialog-max-width=32rem] - Maximum dialog width.
+ */
 export class OrcDialog extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["open", "heading", "no-light-dismiss"];

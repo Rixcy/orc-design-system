@@ -50,8 +50,9 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run --config vitest.config.ts",
     "test:reduced-motion": "vitest run --config vitest.reduced-motion.config.ts",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o storybook-static",
+    "analyze": "cem analyze",
+    "storybook": "npm run analyze && storybook dev -p 6006",
+    "build-storybook": "npm run analyze && storybook build -o storybook-static",
     "test-storybook": "vitest run --config vitest.storybook.config.ts",
     "pack:proof": "node scripts/pack-proof.mjs",
     "consumer:proof": "npm run pack:proof && node scripts/install-consumer-package.mjs && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
@@ -62,7 +63,7 @@
     "build:site": "vite build --config vite.site.config.ts"
   },
   "devDependencies": {
-    "commit-and-tag-version": "^12.5.1",
+    "@custom-elements-manifest/analyzer": "^0.11.0",
     "@storybook/addon-a11y": "10.5.3",
     "@storybook/addon-docs": "10.5.3",
     "@storybook/addon-vitest": "10.5.3",
@@ -71,6 +72,7 @@
     "@typescript/typescript6": "6.0.2",
     "@vitest/browser": "4.1.10",
     "@vitest/browser-playwright": "4.1.10",
+    "commit-and-tag-version": "^12.5.1",
     "happy-dom": "20.11.0",
     "playwright": "1.61.1",
     "storybook": "10.5.3",
@@ -83,5 +85,6 @@
     "esbuild@0.28.1": true,
     "fsevents@2.3.2": true,
     "fsevents@2.3.3": true
-  }
+  },
+  "customElements": "custom-elements.json"
 }
