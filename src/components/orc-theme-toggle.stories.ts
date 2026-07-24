@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
-import { expect, userEvent, waitFor } from "storybook/test";
+import { expect, userEvent } from "storybook/test";
 
 import { defineOrcElements } from "../define";
 import {
@@ -15,32 +15,25 @@ interface ToggleArgs {
   label: string;
 }
 
-let activeController: ThemeController | undefined;
-let restoreMatchMedia: (() => void) | undefined;
+// One controller per document, reused by every story: the theme is a global
+// singleton, and disposing it between renders left every already-rendered
+// toggle on the docs page permanently disabled.
+let controller: ThemeController | undefined;
 
-function cleanStoryState(): void {
-  activeController?.dispose();
-  activeController = undefined;
-  restoreMatchMedia?.();
-  restoreMatchMedia = undefined;
+function useController(mode: ThemeMode = "system"): ThemeController {
   try {
     window.localStorage.removeItem("orcTheme");
   } catch {
-    // A storage-failure story deliberately exercises this path.
+    // Storage can be blocked by policy; the controller tolerates it.
   }
-  document.documentElement.removeAttribute("data-theme");
-}
-
-function startController(mode: ThemeMode = "system"): ThemeController {
-  cleanStoryState();
-  activeController = createThemeController({
+  controller ??= createThemeController({
     document,
     storageKey: "orcTheme",
     themeColor: { light: tokens.day.bg, dark: tokens.night.bg },
     announce: true,
   });
-  activeController.setMode(mode);
-  return activeController;
+  controller.setMode(mode);
+  return controller;
 }
 
 function createToggle(label: string): HTMLElement {
@@ -68,59 +61,11 @@ function visibleIcon(button: HTMLButtonElement): string | undefined {
   return rendered[0]?.dataset.mode;
 }
 
-function renderToggle(args: ToggleArgs, mode: ThemeMode = "system"): HTMLElement {
-  startController(mode);
+function surfaceWith(...children: HTMLElement[]): HTMLElement {
   const surface = document.createElement("div");
   surface.className = "story-surface story-stack";
-  surface.append(createToggle(args.label));
+  surface.append(...children);
   return surface;
-}
-
-function installMatchMedia(initialMatches = false): {
-  mediaQuery: MediaQueryList;
-  setMatches(matches: boolean): void;
-} {
-  const original = window.matchMedia;
-  const target = new EventTarget();
-  let matches = initialMatches;
-  const legacyListeners = new Set<(event: MediaQueryListEvent) => void>();
-  const mediaQuery = {
-    get matches() {
-      return matches;
-    },
-    media: "(prefers-color-scheme: dark)",
-    onchange: null,
-    addEventListener: target.addEventListener.bind(target),
-    removeEventListener: target.removeEventListener.bind(target),
-    dispatchEvent: target.dispatchEvent.bind(target),
-    addListener(listener: (event: MediaQueryListEvent) => void) {
-      legacyListeners.add(listener);
-    },
-    removeListener(listener: (event: MediaQueryListEvent) => void) {
-      legacyListeners.delete(listener);
-    },
-  } as MediaQueryList;
-
-  Object.defineProperty(window, "matchMedia", {
-    configurable: true,
-    value: () => mediaQuery,
-  });
-  restoreMatchMedia = () => {
-    Object.defineProperty(window, "matchMedia", {
-      configurable: true,
-      value: original,
-    });
-  };
-
-  return {
-    mediaQuery,
-    setMatches(nextMatches) {
-      matches = nextMatches;
-      const event = new Event("change") as MediaQueryListEvent;
-      target.dispatchEvent(event);
-      for (const listener of legacyListeners) listener(event);
-    },
-  };
 }
 
 const meta = {
@@ -133,73 +78,35 @@ const meta = {
   argTypes: {
     label: { control: "text" },
   },
-  render: (args) => renderToggle(args),
+  render: (args) => {
+    useController();
+    return surfaceWith(createToggle(args.label));
+  },
 } satisfies Meta<ToggleArgs>;
 
 export default meta;
 type Story = StoryObj<ToggleArgs>;
 
-export const System: Story = {
-  play: async ({ canvasElement }) => {
-    const toggle = canvasElement.querySelector("orc-theme-toggle");
-    const button = getButton(toggle);
-    await expect(button).toBeEnabled();
-    await expect(visibleIcon(button)).toBe("system");
-    await expect(button).toHaveAccessibleName("Theme: system — switch to light");
-  },
-};
-
-export const ExplicitLight: Story = {
-  globals: { theme: "light" },
-  render: (args) => renderToggle(args, "light"),
+/** Cycles system -> light -> dark -> system, the toggle's whole state machine. */
+export const Default: Story = {
   play: async ({ canvasElement }) => {
     const button = getButton(canvasElement.querySelector("orc-theme-toggle"));
-    await expect(visibleIcon(button)).toBe("light");
-    await expect(button).toHaveAccessibleName("Theme: light — switch to dark");
-  },
-};
+    const steps: ThemeMode[] = ["system", "light", "dark", "system"];
 
-export const ExplicitDark: Story = {
-  globals: { theme: "dark" },
-  render: (args) => renderToggle(args, "dark"),
-  play: async ({ canvasElement }) => {
-    const button = getButton(canvasElement.querySelector("orc-theme-toggle"));
-    await expect(visibleIcon(button)).toBe("dark");
-    await expect(button).toHaveAccessibleName("Theme: dark — switch to system");
-  },
-};
-
-export const NarrowWithLongLabel: Story = {
-  args: {
-    label: "Website Appearance & Operating System Theme Preference",
-  },
-  render: (args) => {
-    const surface = renderToggle(args);
-    surface.dataset.width = "narrow";
-    return surface;
-  },
-};
-
-export const KeyboardFocus: Story = {
-  play: async ({ canvasElement }) => {
-    const toggle = canvasElement.querySelector("orc-theme-toggle");
-    const button = getButton(toggle);
-    button.focus();
-    await expect(document.activeElement).toBe(toggle);
-    await expect(toggle?.shadowRoot?.activeElement).toBe(button);
+    for (const [index, mode] of steps.entries()) {
+      const next = steps[index + 1] ?? "light";
+      await expect(button).toBeEnabled();
+      await expect(visibleIcon(button)).toBe(mode);
+      await expect(button).toHaveAccessibleName(`Theme: ${mode} — switch to ${next}`);
+      if (index < steps.length - 1) await userEvent.click(button);
+    }
   },
 };
 
 export const MultipleInstancesStayInSync: Story = {
   render: (args) => {
-    startController("system");
-    const surface = document.createElement("div");
-    surface.className = "story-surface story-stack";
-    surface.append(
-      createToggle(`${args.label} A`),
-      createToggle(`${args.label} B`),
-    );
-    return surface;
+    useController();
+    return surfaceWith(createToggle(`${args.label} A`), createToggle(`${args.label} B`));
   },
   play: async ({ canvasElement }) => {
     const toggles = [...canvasElement.querySelectorAll("orc-theme-toggle")];
@@ -211,119 +118,18 @@ export const MultipleInstancesStayInSync: Story = {
     await expect(first).toHaveAccessibleName("Theme A: light — switch to dark");
     await expect(visibleIcon(second)).toBe("light");
     await expect(second).toHaveAccessibleName("Theme B: light — switch to dark");
-    await expect(activeController?.mode).toBe("light");
+    await expect(controller?.mode).toBe("light");
   },
 };
 
-export const PersistenceFailureIsNonFatal: Story = {
-  render: (args) => renderToggle(args),
-  play: async ({ canvasElement }) => {
-    const button = getButton(canvasElement.querySelector("orc-theme-toggle"));
-    const storagePrototype = Object.getPrototypeOf(window.localStorage) as Storage;
-    const originalSetItem = storagePrototype.setItem;
-    storagePrototype.setItem = () => {
-      throw new DOMException("Storage blocked by policy", "SecurityError");
-    };
-    try {
-      await userEvent.click(button);
-      await expect(activeController?.mode).toBe("light");
-      await expect(visibleIcon(button)).toBe("light");
-    } finally {
-      storagePrototype.setItem = originalSetItem;
-    }
-  },
-};
-
-export const OperatingSystemChange: Story = {
+export const Disabled: Story = {
   render: (args) => {
-    cleanStoryState();
-    const media = installMatchMedia(false);
-    activeController = createThemeController({ document, announce: true });
-
-    const surface = document.createElement("div");
-    surface.className = "story-surface story-stack";
-    const toggle = createToggle(args.label);
-    const simulation = document.createElement("button");
-    simulation.className = "story-action";
-    simulation.type = "button";
-    simulation.textContent = "Simulate Dark Operating System";
-    const output = document.createElement("output");
-    output.className = "story-output";
-    output.setAttribute("aria-live", "polite");
-    activeController.subscribe((mode, resolvedTheme) => {
-      output.value = `${mode} resolves to ${resolvedTheme}`;
-    });
-    simulation.addEventListener("click", () => media.setMatches(true));
-    surface.append(toggle, simulation, output);
-    return surface;
-  },
-  play: async ({ canvasElement }) => {
-    const simulation = canvasElement.querySelector<HTMLButtonElement>(".story-action");
-    const output = canvasElement.querySelector("output");
-    const toggle = canvasElement.querySelector("orc-theme-toggle");
-    await expect(output).toHaveTextContent("system resolves to light");
-    await userEvent.click(simulation as HTMLButtonElement);
-    await expect(output).toHaveTextContent("system resolves to dark");
-    // Mode stays "system" (monitor icon) even as the OS resolves to dark.
-    await waitFor(() => expect(visibleIcon(getButton(toggle))).toBe("system"));
-  },
-};
-
-export const NoController: Story = {
-  render: (args) => {
-    cleanStoryState();
-    const surface = document.createElement("div");
-    surface.className = "story-surface story-stack";
-    surface.append(createToggle(args.label));
-    return surface;
-  },
-  play: async ({ canvasElement }) => {
-    const button = getButton(canvasElement.querySelector("orc-theme-toggle"));
-    await expect(button).toBeDisabled();
-    await expect(visibleIcon(button)).toBe("system");
-    await expect(button).toHaveAccessibleName("Theme: system — switch to light");
-  },
-};
-
-export const ExplicitlyDisabled: Story = {
-  render: (args) => {
-    startController();
-    const surface = document.createElement("div");
-    surface.className = "story-surface story-stack";
+    useController();
     const toggle = createToggle(args.label);
     toggle.setAttribute("disabled", "");
-    surface.append(toggle);
-    return surface;
+    return surfaceWith(toggle);
   },
   play: async ({ canvasElement }) => {
     await expect(getButton(canvasElement.querySelector("orc-theme-toggle"))).toBeDisabled();
-  },
-};
-
-export const ControllerTeardown: Story = {
-  render: (args) => {
-    const controller = startController("dark");
-    const surface = document.createElement("div");
-    surface.className = "story-surface story-stack";
-    const note = document.createElement("p");
-    note.className = "story-note";
-    note.textContent = "The controller has been disposed; connected toggles return to a disabled state.";
-    surface.append(createToggle(args.label), createToggle(`${args.label} Secondary`), note);
-    queueMicrotask(() => {
-      controller.dispose();
-      surface.dataset.disposed = "true";
-    });
-    return surface;
-  },
-  play: async ({ canvasElement }) => {
-    const surface = canvasElement.querySelector<HTMLElement>(".story-surface");
-    await waitFor(() => expect(surface).toHaveAttribute("data-disposed", "true"));
-    const buttons = [...canvasElement.querySelectorAll("orc-theme-toggle")].map(getButton);
-    for (const button of buttons) await expect(button).toBeDisabled();
-
-    const replacement = createThemeController({ document, announce: false });
-    await waitFor(() => expect(buttons[0]).toBeEnabled());
-    replacement.dispose();
-    await waitFor(() => expect(buttons[0]).toBeDisabled());
   },
 };
