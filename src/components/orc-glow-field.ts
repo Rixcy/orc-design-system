@@ -58,8 +58,8 @@ const template = `
     }
 
     :host(:not([suppress-focus-ring])) .field:has(textarea:focus-visible) {
-      border-color: var(--orc-green, #9dc76b);
-      outline: 2px solid var(--orc-green, #9dc76b);
+      border-color: var(--orc-accent, #78a9c2);
+      outline: var(--orc-focus-ring, 2px solid #78a9c2);
       outline-offset: var(--orc-focus-offset, 2px);
     }
 

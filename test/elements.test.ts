@@ -163,4 +163,19 @@ describe("orc-glow-field", () => {
     await Promise.resolve();
     expect(footer.hidden).toBe(false);
   });
+
+  it("binds the keyboard focus ring to the accent token, not green", () => {
+    // Regression guard: the focus-visible outline must use --orc-accent so it
+    // reads as one blue ring over the green beam edge (matching orc's
+    // composer), never a second green ring concentric with the beam.
+    const field = document.createElement("orc-glow-field");
+    document.body.append(field);
+
+    const css = field.shadowRoot!.querySelector("style")!.textContent ?? "";
+    const focusRule = css
+      .slice(css.indexOf("textarea:focus-visible"))
+      .slice(0, css.slice(css.indexOf("textarea:focus-visible")).indexOf("}") + 1);
+    expect(focusRule).toContain("--orc-accent");
+    expect(focusRule).not.toContain("--orc-green");
+  });
 });
