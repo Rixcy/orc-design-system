@@ -96,6 +96,16 @@ kbd {
   font-weight: 400;
 }
 
+/* Brand marks load via CSS url() — same Vite-processed channel as the fonts
+   above — so they resolve in dev (site/ root) and build alike, unlike a raw
+   <img src="../src/assets/…"> which the dev server can't reach. */
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  background: url("../src/assets/orc-icon.svg") center / contain no-repeat;
+}
+
 orc-navbar nav {
   display: flex;
   gap: var(--orc-space-3, 0.75rem);
@@ -397,6 +407,12 @@ footer {
   gap: var(--orc-space-2, 0.5rem);
   color: var(--orc-muted-strong, var(--orc-muted));
   font-size: 12px;
+}
+
+.footer-logo {
+  width: 120px;
+  height: 40px;
+  background: url("../src/assets/orc-logo.svg") center / contain no-repeat;
 }
 
 /* ---- responsive ---- */
