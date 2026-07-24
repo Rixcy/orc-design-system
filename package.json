@@ -46,7 +46,7 @@
   "scripts": {
     "theme:check": "node scripts/sync-theme.mjs --check",
     "theme:write": "node scripts/sync-theme.mjs --write",
-    "build": "npm run theme:check && vite build && node scripts/copy-static-assets.mjs && node scripts/verify-package.mjs",
+    "build": "bun run theme:check && vite build && node scripts/copy-static-assets.mjs && node scripts/verify-package.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run --config vitest.config.ts",
     "test:reduced-motion": "vitest run --config vitest.reduced-motion.config.ts",
@@ -54,9 +54,9 @@
     "build-storybook": "storybook build -o storybook-static",
     "test-storybook": "vitest run --config vitest.storybook.config.ts",
     "pack:proof": "node scripts/pack-proof.mjs",
-    "consumer:proof": "npm run pack:proof && node scripts/install-consumer-package.mjs && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
-    "prepack": "npm run build",
-    "prepare": "npm run build",
+    "consumer:proof": "bun run pack:proof && node scripts/install-consumer-package.mjs && bun run --cwd fixtures/vite-consumer build && node scripts/verify-consumer-runtime.mjs",
+    "prepack": "bun run build",
+    "prepare": "bun run build",
     "release": "commit-and-tag-version",
     "dev": "vite --config vite.site.config.ts",
     "build:site": "vite build --config vite.site.config.ts"

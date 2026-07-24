@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prepare:preflight": "node scripts/copy-preflight.mjs",
-    "build": "npm run prepare:preflight && tsc --noEmit && vite build && node scripts/verify-csp.mjs"
+    "build": "bun run prepare:preflight && tsc --noEmit && vite build && node scripts/verify-csp.mjs"
   },
   "dependencies": {
     "@orc/design-system": "file:../../artifacts/orc-design-system-0.0.0-development.tgz"
