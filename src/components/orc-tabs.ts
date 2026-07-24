@@ -92,6 +92,11 @@ interface TabEntry {
  * `selected` accepts either a zero-based index or the tab's label text, and
  * is kept in sync with the current selection. A `change` CustomEvent
  * (composed, bubbles) fires on selection with `detail: { index, label }`.
+ *
+ * @customElement orc-tabs
+ * @attr {string} selected - Selected tab, as a zero-based index or the tab label.
+ * @slot - Elements marked with `data-tab="Label"`, each becoming a tab panel.
+ * @fires change - `CustomEvent<{ index: number; label: string }>` on selection.
  */
 export class OrcTabs extends HTMLElementBase {
   static get observedAttributes(): string[] {

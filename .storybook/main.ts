@@ -1,7 +1,7 @@
 import type { StorybookConfig } from "@storybook/web-components-vite";
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.stories.ts"],
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.ts"],
   addons: [
     "@storybook/addon-docs",
     "@storybook/addon-a11y",
@@ -11,6 +11,7 @@ const config: StorybookConfig = {
     name: "@storybook/web-components-vite",
     options: {},
   },
+  staticDirs: ["../src/assets"],
 };
 
 export default config;

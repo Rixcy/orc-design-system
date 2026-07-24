@@ -98,6 +98,18 @@ const template = `
   </nav>
 `;
 
+/**
+ * `<orc-navbar>` is the top-level application bar: brand link on the left,
+ * navigation in the middle, actions on the right.
+ *
+ * @customElement orc-navbar
+ * @attr {string} brand-label - Brand text for the default brand link. Defaults to `Orc`.
+ * @attr {string} home-href - Href for the default brand link. Defaults to `/`.
+ * @attr {string} home-label - Accessible name for the brand link. Defaults to `<brand-label> home`.
+ * @slot brand - Replaces the default brand link entirely.
+ * @slot nav - Navigation links.
+ * @slot actions - Trailing actions, e.g. `<orc-theme-toggle>`.
+ */
 export class OrcNavbar extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["brand-label", "home-href", "home-label"];

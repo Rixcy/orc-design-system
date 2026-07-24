@@ -65,6 +65,16 @@ const template = `
   <span class="sr-only"></span>
 `;
 
+/**
+ * `<orc-status-dot>` is a small coloured status indicator with a
+ * screen-reader-only label, optionally pulsing or announced live.
+ *
+ * @customElement orc-status-dot
+ * @attr {"accent"|"muted"|"red"|"green"|"yellow"} tone - Dot colour.
+ * @attr {boolean} pulse - Animates the dot; respects `prefers-reduced-motion`.
+ * @attr {string} label - Text exposed to assistive technology.
+ * @attr {boolean} live - Announces label changes via `role="status"`.
+ */
 export class OrcStatusDot extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["tone", "pulse", "label", "live"];

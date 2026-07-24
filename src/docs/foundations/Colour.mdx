@@ -1,0 +1,76 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+import tokens from "../../theme/orc-tokens.json";
+
+<Meta title="Foundations/Colour" />
+
+export const Swatches = ({ theme }) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+      gap: "12px",
+      padding: "16px",
+      borderRadius: "8px",
+      background: tokens[theme].bg,
+      color: tokens[theme].text,
+      border: `1px solid ${tokens[theme].border}`,
+    }}
+  >
+    {Object.entries(tokens[theme]).map(([name, value]) => (
+      <div key={name}>
+        <div
+          style={{
+            height: "48px",
+            borderRadius: "8px",
+            background: value,
+            border: `1px solid ${tokens[theme].border}`,
+          }}
+        />
+        <code style={{ display: "block", fontSize: "12px", marginTop: "6px" }}>
+          --orc-{name}
+        </code>
+        <code style={{ fontSize: "12px", opacity: 0.7 }}>{value}</code>
+      </div>
+    ))}
+  </div>
+);
+
+<div style={{ padding: "clamp(20px, 5vw, 56px)", maxWidth: "90ch" }}>
+
+# Colour
+
+Every colour ships as a CSS custom property on `:root`. `src/theme/orc-tokens.json`
+is the single source: `scripts/sync-theme.mjs` generates `src/styles/tokens.css`
+from it, and this page renders the same JSON — so nothing here can drift.
+
+Use the semantic name, never the hex. `--orc-accent` follows the theme;
+`#2d6983` does not.
+
+## Orc day
+
+<Swatches theme="day" />
+
+## Orc night
+
+<Swatches theme="night" />
+
+## Derived colours
+
+`tokens.css` also derives surface-aware values with `color-mix()`. These are
+the ones to reach for when text sits on a coloured surface:
+
+- `--orc-muted-strong` — `--orc-muted` mixed toward `--orc-heading`
+- `--orc-accent-text` — `--orc-accent` mixed toward `--orc-heading`
+- `--orc-green-text`, `--orc-red-text`, `--orc-yellow-text`, `--orc-purple-text` —
+  the matching hue mixed toward `--orc-heading`
+- `--orc-gate` — `--orc-orange` mixed toward `--orc-heading`
+
+## Theming
+
+`:root` carries Orc day. `[data-theme="dark"]` (or `prefers-color-scheme: dark`
+with no explicit `data-theme`) swaps in Orc night. Consumers switch themes with
+the exported theme controller, or by setting `data-theme` themselves — the
+components read only custom properties, so they follow automatically.
+
+</div>

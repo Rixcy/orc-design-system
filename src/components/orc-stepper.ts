@@ -102,6 +102,16 @@ function resolveCurrentIndex(steps: string[], current: string | null): number {
   return steps.findIndex((label) => label === trimmed);
 }
 
+/**
+ * `<orc-stepper>` renders an ordered progress trail from a comma-separated
+ * step list, marking one step as current.
+ *
+ * @customElement orc-stepper
+ * @attr {string} steps - Comma-separated step labels.
+ * @attr {string} current - Current step, as a zero-based index or a step label.
+ * @csspart list - The ordered list wrapper.
+ * @csspart step - Each step pill.
+ */
 export class OrcStepper extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["steps", "current"];

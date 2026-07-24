@@ -98,6 +98,17 @@ const template = `
   <button type="button"><slot></slot></button>
 `;
 
+/**
+ * `<orc-button>` is the primary action element: a filled `primary` button and a
+ * bordered `ghost` button sharing size, focus-ring, and disabled behaviour.
+ *
+ * @customElement orc-button
+ * @attr {"primary"|"ghost"} variant - Visual weight. Defaults to `primary`.
+ * @attr {"default"|"compact"} size - Control density. Defaults to `default`.
+ * @attr {boolean} disabled - Disables the inner native button.
+ * @attr {"button"|"submit"} type - Native button type. Defaults to `button`.
+ * @slot - Button label content.
+ */
 export class OrcButton extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["disabled", "type"];

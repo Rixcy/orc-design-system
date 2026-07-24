@@ -1,0 +1,98 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Space & radius" />
+
+export const read = (name) =>
+  getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+export const SPACE = ["1", "2", "3", "4", "5"];
+export const RADII = ["sm", "md", "pill"];
+
+export const Space = () => (
+  <div className="token-panel" style={{ display: "grid", gap: "10px" }}>
+    {SPACE.map((step) => {
+      const value = read(`--orc-space-${step}`);
+      return (
+        <div key={step} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <code style={{ fontSize: "12px", width: "13ch" }}>--orc-space-{step}</code>
+          <code style={{ fontSize: "12px", width: "6ch", opacity: 0.7 }}>{value}</code>
+          <div
+            style={{
+              width: value,
+              height: "16px",
+              background: "var(--orc-accent)",
+              borderRadius: "2px",
+            }}
+          />
+        </div>
+      );
+    })}
+  </div>
+);
+
+export const Radii = () => (
+  <div className="token-panel" style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+    {RADII.map((name) => {
+      const value = read(`--orc-radius-${name}`);
+      return (
+        <div key={name} style={{ textAlign: "center" }}>
+          <div
+            style={{
+              width: "96px",
+              height: "56px",
+              background: "var(--orc-panel)",
+              border: "1px solid var(--orc-border)",
+              borderRadius: value,
+            }}
+          />
+          <code style={{ display: "block", fontSize: "12px", marginTop: "6px" }}>
+            --orc-radius-{name}
+          </code>
+          <code style={{ fontSize: "12px", opacity: 0.7 }}>{value}</code>
+        </div>
+      );
+    })}
+  </div>
+);
+
+<div style={{ padding: "clamp(20px, 5vw, 56px)", maxWidth: "90ch" }}>
+
+# Space & radius
+
+A five-step 4px space scale and three radii. Values are read live from
+`src/styles/tokens.css`.
+
+## Space
+
+<Space />
+
+Steps are multiples of 4px: use `--orc-space-2` for control padding,
+`--orc-space-3` for gaps between controls, `--orc-space-4`/`5` for section
+rhythm. Anything that needs a value between two steps usually wants the
+smaller step.
+
+## Radius
+
+<Radii />
+
+`--orc-radius-sm` for small inline controls, `--orc-radius-md` for buttons,
+panels and dialogs, `--orc-radius-pill` for chips and anything capsule-shaped.
+
+## Focus
+
+Focus is a token too, so every component's focus ring matches:
+
+- `--orc-focus-ring` — `2px solid var(--orc-accent)`
+- `--orc-focus-offset` — `2px`
+
+```css
+.thing:focus-visible {
+  outline: var(--orc-focus-ring);
+  outline-offset: var(--orc-focus-offset);
+}
+```
+
+Components use `:focus-visible`, never `:focus`, and keep the ring visible in
+forced-colors mode by falling back to `Highlight`.
+
+</div>

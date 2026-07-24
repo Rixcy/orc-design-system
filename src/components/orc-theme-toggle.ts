@@ -79,6 +79,14 @@ const MODES: readonly ThemeMode[] = ["system", "light", "dark"];
 const nextMode = (mode: ThemeMode): ThemeMode =>
   MODES[(MODES.indexOf(mode) + 1) % MODES.length]!;
 
+/**
+ * `<orc-theme-toggle>` cycles the theme controller through
+ * system -> light -> dark and mirrors the resolved mode in its icon.
+ *
+ * @customElement orc-theme-toggle
+ * @attr {boolean} disabled - Disables the control.
+ * @attr {string} label - Base accessible name. Defaults to `Theme`.
+ */
 export class OrcThemeToggle extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["disabled", "label"];
