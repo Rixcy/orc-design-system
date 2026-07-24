@@ -66,13 +66,15 @@ const template = `
     }
 
     :host([variant="cyan"]) .chip {
-      color: var(--orc-cyan, #77b8b1);
+      /* No --orc-cyan-text role token exists; mix toward heading for AA on the tint. */
+      color: color-mix(in srgb, var(--orc-cyan, #77b8b1) 55%, var(--orc-heading, #e0e5e2));
       background: color-mix(in srgb, var(--orc-cyan, #77b8b1) 15%, transparent);
       border-color: transparent;
     }
 
     :host([variant="orange"]) .chip {
-      color: var(--orc-orange, #e69257);
+      /* No --orc-orange-text role token exists; mix toward heading for AA on the tint. */
+      color: color-mix(in srgb, var(--orc-orange, #e69257) 55%, var(--orc-heading, #e0e5e2));
       background: color-mix(in srgb, var(--orc-orange, #e69257) 15%, transparent);
       border-color: transparent;
     }

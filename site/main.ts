@@ -29,6 +29,14 @@ for (const [theme, set] of Object.entries(themes)) {
   }
 }
 
+// Hero actions
+document.querySelector("#hero-cta")?.addEventListener("click", () => {
+  document.querySelector("#components")?.scrollIntoView({ behavior: "smooth" });
+});
+document.querySelector("#hero-github")?.addEventListener("click", () => {
+  window.open("https://github.com/Rixcy/orc-design-system", "_blank", "noopener");
+});
+
 // Dialog demo
 const dialog = document.querySelector<OrcDialog>("#demo-dialog");
 document
