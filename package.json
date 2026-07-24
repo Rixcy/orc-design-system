@@ -55,7 +55,9 @@
     "test-storybook": "vitest run --config vitest.storybook.config.ts",
     "pack:proof": "node scripts/pack-proof.mjs",
     "consumer:proof": "npm run pack:proof && node scripts/install-consumer-package.mjs && npm run build --prefix fixtures/vite-consumer && node scripts/verify-consumer-runtime.mjs",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "site": "vite --config vite.site.config.ts",
+    "build:site": "vite build --config vite.site.config.ts"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "10.5.3",

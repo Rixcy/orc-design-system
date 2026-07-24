@@ -1,0 +1,251 @@
+<!doctype html>
+<!--
+THESIS: a design system that proves itself — every control on this page IS the
+system, live; it refuses the screenshot-grid landing every component library ships.
+OWN-WORLD: the orc swamp — slate-green canvas (#e3e5e4/#1a1c20), moss green
+primaries, tinted chips, 1px borders for depth (no shadows), Inter + JetBrains
+Mono, one animated artifact: the green conic beam.
+STORY: a developer arrives, recognizes orc's restrained field, watches the beam
+breathe, toggles the theme, prods real components, copies the import, leaves
+knowing consumption is one package away.
+FIRST VIEWPORT: navbar (live), display heading left with one-line offer, the
+glow-field composer right with its beam running — the system's signature
+artifact at full scale; primary action is the green send button inside it.
+FORM: single scrolling field guide, foundations before components, quickstart
+as a live stepper; chosen directly — surface sits inside the committed orc
+world, no concept tournament (direction settled at the Orc plan gate).
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orc Design System — components that carry the swamp</title>
+    <meta
+      name="description"
+      content="Framework-neutral Web Components, tokens, and utilities extracted from orc. Zero dependencies, native-first accessibility."
+    />
+    <script>
+      // Inline preflight: apply the persisted theme before first paint.
+      try {
+        var m = localStorage.getItem("orcTheme");
+        if (m === "light" || m === "dark")
+          document.documentElement.setAttribute("data-theme", m);
+      } catch (_) {}
+    </script>
+    <script type="module" src="./main.ts"></script>
+  </head>
+  <body>
+    <orc-navbar brand-label="Orc Design System" home-href="#top">
+      <span slot="brand" class="brand">
+        <img src="../src/assets/orc-icon.svg" alt="" width="28" height="28" />
+        <span>Orc<span class="brand-dim">/design-system</span></span>
+      </span>
+      <nav slot="nav" aria-label="Sections">
+        <a href="#foundations">Foundations</a>
+        <a href="#components">Components</a>
+        <a href="#utilities">Utilities</a>
+        <a href="#consume">Consume</a>
+      </nav>
+      <orc-theme-toggle slot="actions"></orc-theme-toggle>
+    </orc-navbar>
+
+    <header class="hero" id="top">
+      <div class="hero-copy">
+        <h1>Components that carry the&nbsp;swamp.</h1>
+        <p class="hero-lede">
+          The interface language of <a href="https://github.com/Rixcy/orc">orc</a>,
+          extracted: framework-neutral Web Components, a sixteen-color day/night
+          palette, and native-first accessibility. Zero runtime dependencies.
+        </p>
+        <p class="hero-actions">
+          <orc-button id="hero-cta">Browse components</orc-button>
+          <orc-button variant="ghost">View on GitHub</orc-button>
+        </p>
+      </div>
+      <div class="hero-demo">
+        <orc-glow-field
+          id="hero-field"
+          label="Try the composer"
+          placeholder="Everything on this page is a live component, including this one."
+        >
+          <span slot="footer" class="composer-footer">
+            <orc-status-dot tone="green" pulse label="System live"></orc-status-dot>
+            <span class="composer-hint">the beam is the focus cue</span>
+            <orc-button id="hero-send" size="compact">Send</orc-button>
+          </span>
+        </orc-glow-field>
+      </div>
+    </header>
+
+    <main>
+      <section id="foundations" aria-labelledby="foundations-h">
+        <h2 id="foundations-h">Foundations</h2>
+        <p class="section-lede">
+          Sixteen semantic colors per theme, rendered here straight from
+          <code>tokens.json</code>, so this page can't drift from the source.
+        </p>
+        <h3>Day</h3>
+        <div class="palette" data-palette="day"></div>
+        <h3>Night</h3>
+        <div class="palette" data-palette="night"></div>
+
+        <h3>Type</h3>
+        <div class="type-specimen">
+          <p class="orc-type-display">Display — restraint is a feature</p>
+          <p class="orc-type-headline">Headline — quiet parts done properly</p>
+          <p class="orc-type-title">Title — Inter carries the interface</p>
+          <p class="orc-type-body">Body — fourteen pixels of ordinary text, set for long reading in dense tools.</p>
+          <p class="orc-type-label">LABEL — chips, tags, captions</p>
+          <p class="orc-type-mono">mono — JetBrains for code, logs, and hex</p>
+        </div>
+      </section>
+
+      <section id="components" aria-labelledby="components-h">
+        <h2 id="components-h">Components</h2>
+        <p class="section-lede">
+          Live instances, not screenshots. Prod them. Each ships as a custom
+          element registered by <code>defineOrcElements()</code>.
+        </p>
+
+        <article class="demo" aria-labelledby="d-button">
+          <div class="demo-head">
+            <h3 id="d-button">Button</h3>
+            <p>Green is the primary action: orc's "more green" shift, ported.</p>
+          </div>
+          <div class="demo-stage">
+            <orc-button>Primary</orc-button>
+            <orc-button variant="ghost">Ghost</orc-button>
+            <orc-button size="compact">Compact</orc-button>
+            <orc-button disabled>Disabled</orc-button>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-button&gt;Primary&lt;/orc-button&gt;
+&lt;orc-button variant="ghost"&gt;Ghost&lt;/orc-button&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-textarea">
+          <div class="demo-head">
+            <h3 id="d-textarea">Textarea</h3>
+            <p>Plain form input with the green focus ring. For composing with ceremony, see the glow-field above.</p>
+          </div>
+          <div class="demo-stage demo-stage-block">
+            <orc-textarea
+              label="Release notes"
+              placeholder="Focus me. The border goes moss."
+            ></orc-textarea>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-textarea label="Release notes"&gt;&lt;/orc-textarea&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-chip">
+          <div class="demo-head">
+            <h3 id="d-chip">Chip &amp; status dot</h3>
+            <p>Run states as tinted pills; the dot pulses only when motion is welcome.</p>
+          </div>
+          <div class="demo-stage">
+            <orc-chip variant="green" dot>done</orc-chip>
+            <orc-chip variant="orange" dot>gate</orc-chip>
+            <orc-chip variant="accent" dot>working</orc-chip>
+            <orc-chip variant="purple" dot>merged</orc-chip>
+            <orc-chip variant="red" dot>escalated</orc-chip>
+            <orc-chip>neutral</orc-chip>
+            <span class="dot-row">
+              <orc-status-dot tone="green" pulse label="Build passing"></orc-status-dot>
+              <span>build passing</span>
+            </span>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-chip variant="green" dot&gt;done&lt;/orc-chip&gt;
+&lt;orc-status-dot tone="green" pulse label="Build passing"&gt;&lt;/orc-status-dot&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-tabs">
+          <div class="demo-head">
+            <h3 id="d-tabs">Tabs</h3>
+            <p>WAI-ARIA APG behavior hand-rolled: roving tabindex, arrow keys, Home/End.</p>
+          </div>
+          <div class="demo-stage demo-stage-block">
+            <orc-tabs selected="0">
+              <div data-tab="Plan">The plan tab. Try ArrowRight.</div>
+              <div data-tab="Build">The build tab. Selection follows focus.</div>
+              <div data-tab="Review">The review tab. Underline, never color alone.</div>
+            </orc-tabs>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-tabs selected="0"&gt;
+  &lt;div data-tab="Plan"&gt;…&lt;/div&gt;
+&lt;/orc-tabs&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-stepper">
+          <div class="demo-head">
+            <h3 id="d-stepper">Stepper</h3>
+            <p>Phase pills with <code>aria-current</code> and a text affix for done. Never color alone.</p>
+          </div>
+          <div class="demo-stage demo-stage-block">
+            <orc-stepper steps="plan,build,review,qa,ship" current="review"></orc-stepper>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-stepper steps="plan,build,review,qa,ship" current="review"&gt;&lt;/orc-stepper&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-dialog">
+          <div class="demo-head">
+            <h3 id="d-dialog">Dialog</h3>
+            <p>Native <code>&lt;dialog&gt;</code> underneath: Esc, focus trap, and inert background come from the platform, not a dependency.</p>
+          </div>
+          <div class="demo-stage">
+            <orc-button id="open-dialog">Open dialog</orc-button>
+            <orc-dialog id="demo-dialog" heading="Native under the hood">
+              <p>
+                Focus is trapped here and returns to the trigger on close.
+                Press <kbd>Esc</kbd> or click the backdrop.
+              </p>
+              <span slot="footer">
+                <orc-button id="close-dialog" variant="ghost">Close</orc-button>
+              </span>
+            </orc-dialog>
+          </div>
+          <pre class="demo-code"><code>dialog.show();  // native showModal() underneath</code></pre>
+        </article>
+      </section>
+
+      <section id="utilities" aria-labelledby="utilities-h">
+        <h2 id="utilities-h">Utilities</h2>
+        <p class="section-lede">
+          Opt-in CSS, exported from the package like everything else. This page
+          uses both.
+        </p>
+        <ul class="util-list">
+          <li>
+            <code>typography.css</code>: the six-role type scale above, as
+            <code>--orc-type-*</code> properties and <code>.orc-type-*</code> classes.
+          </li>
+          <li>
+            <code>scrollbar.css</code>: orc's bordered scrollbar; add
+            <code>.orc-scrollbar</code> to any scroll container.
+          </li>
+        </ul>
+      </section>
+
+      <section id="consume" aria-labelledby="consume-h">
+        <h2 id="consume-h">Consume</h2>
+        <orc-stepper steps="install,import,use" current="install"></orc-stepper>
+        <pre class="demo-code"><code>npm install @orc/design-system-preview
+
+import "@orc/design-system-preview/tokens.css";
+import "@orc/design-system-preview/components.css";
+import { defineOrcElements } from "@orc/design-system-preview";
+
+defineOrcElements();</code></pre>
+        <p>
+          This page is the primary reference. It imports the same source the
+          package builds from, so it is current by construction. Storybook
+          (<code>npm run storybook</code>) remains the secondary, per-component
+          workbench with autodocs and play tests.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <img src="../src/assets/orc-logo.svg" alt="Orc" width="120" height="40" />
+      <p>© <span id="year">2026</span> Orc. Slate, moss, and 1px borders.</p>
+    </footer>
+  </body>
+</html>

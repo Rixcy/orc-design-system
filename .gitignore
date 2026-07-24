@@ -11,3 +11,4 @@ fixtures/vite-consumer/dist/
 fixtures/vite-consumer/public/orc-preflight.js
 *.log
 .DS_Store
+site-dist/
