@@ -8,7 +8,7 @@
     "build": "npm run prepare:preflight && tsc --noEmit && vite build && node scripts/verify-csp.mjs"
   },
   "dependencies": {
-    "@orc/design-system-preview": "file:../../artifacts/orc-design-system-preview-0.0.0-development.tgz"
+    "@orc/design-system": "file:../../artifacts/orc-design-system-0.0.0-development.tgz"
   },
   "devDependencies": {
     "typescript": "7.0.2",

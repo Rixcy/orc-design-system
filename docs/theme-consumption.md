@@ -8,7 +8,7 @@ package surfaces instead of copying color values.
 Import tokens before application styles:
 
 ```css
-@import "@orc/design-system-preview/tokens.css";
+@import "@orc/design-system/tokens.css";
 ```
 
 Use the public `--orc-*` semantic roles. `--orc-bg` and `--orc-panel` are
@@ -28,7 +28,7 @@ consumer offers a persisted theme choice.
 Build tools and non-CSS consumers can import the raw palette:
 
 ```ts
-import tokens from "@orc/design-system-preview/tokens.json";
+import tokens from "@orc/design-system/tokens.json";
 
 const lightThemeColor = tokens.day.bg;
 const darkThemeColor = tokens.night.bg;

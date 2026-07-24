@@ -4,7 +4,7 @@ Orc Flags remains unchanged in this run. Validate adoption in a separate run aft
 
 ## Temporary alias layer
 
-Import `@orc/design-system-preview/tokens.css`, then map these 27 app names one-for-one to their `--orc-*` equivalents:
+Import `@orc/design-system/tokens.css`, then map these 27 app names one-for-one to their `--orc-*` equivalents:
 
 ```css
 --bg --panel --border --text --heading --muted --accent --accent-soft --chip --code

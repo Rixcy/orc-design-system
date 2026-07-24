@@ -15,7 +15,7 @@ identity
 
 ## Product Purpose
 
-`@orc/design-system-preview` is the single source of truth for Orc's visual
+`@orc/design-system` is the single source of truth for Orc's visual
 identity: a 16-color semantic swamp palette, type and motion rules, theming
 (day/night), and a small set of standards-based Web Components. Success means
 any Orc surface — regardless of framework — imports tokens and components
@@ -57,7 +57,7 @@ Current facts (not pinned as binding):
 - Stable raw token schema is `{ day, night }` JSON; derived CSS roles are
   generated, intentionally absent from JSON.
 - Components: `<orc-navbar>`, `<orc-theme-toggle>`, `<orc-glow-field>`.
-- Private, unlicensed preview package; not intended for third-party consumers.
+- Private, unlicensed package; not intended for third-party consumers.
 
 ## Brand Commitments
 

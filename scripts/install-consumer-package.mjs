@@ -5,7 +5,7 @@ import { spawnSync } from "node:child_process";
 
 const root = resolve(import.meta.dirname, "..");
 const fixture = resolve(root, "fixtures/vite-consumer");
-const installedPackage = resolve(fixture, "node_modules/@orc/design-system-preview");
+const installedPackage = resolve(fixture, "node_modules/@orc/design-system");
 const packageJson = JSON.parse(await readFile(resolve(root, "package.json"), "utf8"));
 const tarballName = `${packageJson.name.replace(/^@/u, "").replaceAll("/", "-")}-${packageJson.version}.tgz`;
 const tarball = resolve(root, "artifacts", tarballName);
