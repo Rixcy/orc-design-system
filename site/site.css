@@ -447,9 +447,18 @@ footer {
 }
 
 .footer-logo {
-  width: 120px;
-  height: 40px;
-  background: url("../src/assets/orc-logo.svg") center / contain no-repeat;
+  width: 132px;
+  height: auto;
+}
+
+/* Wordmark reads on both themes: the slash rides the theme-adaptive green
+   token, "orc" inherits the footer's own muted-strong text colour. */
+.footer-logo-slash {
+  fill: var(--orc-green);
+}
+
+.footer-logo-word {
+  fill: currentColor;
 }
 
 /* ---- responsive ---- */

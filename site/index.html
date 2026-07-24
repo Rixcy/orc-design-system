@@ -275,8 +275,72 @@ defineOrcElements();</code></pre>
     </main>
 
     <footer>
-      <span class="footer-logo" role="img" aria-label="Orc"></span>
-      <p>© <span id="year">2026</span> Orc. Slate, moss, and 1px borders.</p>
+      <!-- First-party footer lockup: reuses the canonical emblem geometry from
+           src/assets/orc-logo.svg (vendored, unchanged) but recolours the /orc
+           wordmark through theme tokens so it reads on both the light and dark
+           footer, and tightens the viewBox so the mark centres. -->
+      <svg
+        class="footer-logo"
+        viewBox="0 0 308 140"
+        role="img"
+        aria-label="/orc"
+      >
+        <defs>
+          <linearGradient id="footerSkin" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#9dc76b" />
+            <stop offset="1" stop-color="#53743a" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(88 76)">
+          <path d="M-52 -14 L-78 -34 L-58 2 Z" fill="#53743a" />
+          <path d="M52 -14 L78 -34 L58 2 Z" fill="#53743a" />
+          <path
+            d="M-54 -18 C-54 -52 -30 -64 0 -64 C30 -64 54 -52 54 -18 C54 10 40 30 26 40 C14 49 10 52 0 52 C-10 52 -14 49 -26 40 C-40 30 -54 10 -54 -18 Z"
+            fill="url(#footerSkin)"
+            stroke="#202722"
+            stroke-width="4"
+          />
+          <path d="M-40 -24 L-8 -14 L-8 -4 L-42 -12 Z" fill="#202722" />
+          <path d="M40 -24 L8 -14 L8 -4 L42 -12 Z" fill="#202722" />
+          <circle cx="-24" cy="0" r="6.5" fill="#eceeec" />
+          <circle cx="24" cy="0" r="6.5" fill="#eceeec" />
+          <circle cx="-23" cy="1" r="3" fill="#16181b" />
+          <circle cx="25" cy="1" r="3" fill="#16181b" />
+          <path d="M0 8 L-9 24 L9 24 Z" fill="#202722" />
+          <path
+            d="M-16 36 Q0 44 16 36"
+            fill="none"
+            stroke="#202722"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+          <path
+            d="M-16 40 L-22 14 L-9 36 Z"
+            fill="#eceeec"
+            stroke="#202722"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M16 40 L22 14 L9 36 Z"
+            fill="#eceeec"
+            stroke="#202722"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+          />
+        </g>
+        <text
+          x="168"
+          y="96"
+          font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+          font-size="54"
+          font-weight="700"
+        >
+          <tspan class="footer-logo-slash">/</tspan
+          ><tspan class="footer-logo-word">orc</tspan>
+        </text>
+      </svg>
+      <p>© <span id="year">2026</span> Rixcy. Slate, moss, and 1px borders.</p>
     </footer>
   </body>
 </html>
