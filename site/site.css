@@ -83,36 +83,8 @@ kbd {
 
 /* ---- navbar ---- */
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: var(--orc-heading);
-}
-
-.brand-slash {
-  color: var(--orc-green-text, var(--orc-green));
-  font-weight: 600;
-}
-
-.brand-dim {
-  color: var(--orc-muted);
-  font-weight: 400;
-}
-
-/* Brand marks load via CSS url() — same Vite-processed channel as the fonts
-   above — so they resolve in dev (site/ root) and build alike, unlike a raw
-   <img src="../src/assets/…"> which the dev server can't reach. */
-.brand-mark {
-  width: 30px;
-  height: 30px;
-  flex: none;
-  background: url("../src/assets/orc-emblem.svg") center / contain no-repeat;
-}
+/* The brand lockup is <orc-logomark> now — it inlines the emblem and colours
+   the wordmark through the same tokens, so the page needs no .brand* CSS. */
 
 orc-navbar nav {
   display: flex;
@@ -385,6 +357,13 @@ h3 {
 
 .demo-stage-block {
   display: block;
+}
+
+/* Lockups stack so the size ramp reads as a ramp, not a row of near-twins. */
+.demo-stage-marks {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--orc-space-4, 1.25rem);
 }
 
 .demo-stage orc-textarea {
