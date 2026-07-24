@@ -1,6 +1,7 @@
 export {
   OrcButton,
   OrcChip,
+  OrcDialog,
   OrcGlowField,
   OrcNavbar,
   OrcStatusDot,

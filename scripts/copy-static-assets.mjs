@@ -7,6 +7,8 @@ const copies = [
   ['src/styles/tokens.css', 'dist/tokens.css'],
   ['src/styles/components.css', 'dist/components.css'],
   ['src/styles/fonts.css', 'dist/fonts.css'],
+  ['src/styles/scrollbar.css', 'dist/scrollbar.css'],
+  ['src/styles/typography.css', 'dist/typography.css'],
   ['src/theme/preflight.js', 'dist/preflight.js'],
   ['src/assets/orc-logo.svg', 'dist/assets/orc-logo.svg'],
   ['src/assets/orc-icon.svg', 'dist/assets/orc-icon.svg'],
