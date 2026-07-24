@@ -30,23 +30,21 @@ function createStory(args: DialogArgs): HTMLElement {
   body.textContent = args.body;
   dialog.append(body);
 
-  const cancelButton = document.createElement("button");
-  cancelButton.type = "button";
+  const cancelButton = document.createElement("orc-button");
+  cancelButton.setAttribute("variant", "ghost");
   cancelButton.slot = "footer";
   cancelButton.textContent = "Cancel";
   cancelButton.addEventListener("click", () => dialog.close("cancel"));
 
-  const confirmButton = document.createElement("button");
-  confirmButton.type = "button";
+  const confirmButton = document.createElement("orc-button");
   confirmButton.slot = "footer";
   confirmButton.textContent = "Confirm";
   confirmButton.addEventListener("click", () => dialog.close("confirm"));
 
   dialog.append(cancelButton, confirmButton);
 
-  const trigger = document.createElement("button");
-  trigger.type = "button";
-  trigger.className = "story-action";
+  const trigger = document.createElement("orc-button");
+  trigger.dataset.story = "trigger";
   trigger.textContent = "Open dialog";
   trigger.addEventListener("click", () => dialog.show());
 
@@ -77,7 +75,7 @@ type Story = StoryObj<DialogArgs>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const dialog = getDialog(canvasElement);
-    const trigger = canvasElement.querySelector<HTMLButtonElement>(".story-action");
+    const trigger = canvasElement.querySelector<HTMLElement>('[data-story="trigger"]');
     if (!trigger) throw new Error("Expected a trigger button.");
 
     await expect(dialog.hasAttribute("open")).toBe(false);
@@ -103,7 +101,7 @@ export const Default: Story = {
 export const CloseButton: Story = {
   play: async ({ canvasElement }) => {
     const dialog = getDialog(canvasElement);
-    const trigger = canvasElement.querySelector<HTMLButtonElement>(".story-action");
+    const trigger = canvasElement.querySelector<HTMLElement>('[data-story="trigger"]');
     if (!trigger) throw new Error("Expected a trigger button.");
 
     await userEvent.click(trigger);
@@ -121,7 +119,7 @@ export const CloseButton: Story = {
 export const FooterActions: Story = {
   play: async ({ canvasElement }) => {
     const dialog = getDialog(canvasElement);
-    const trigger = canvasElement.querySelector<HTMLButtonElement>(".story-action");
+    const trigger = canvasElement.querySelector<HTMLElement>('[data-story="trigger"]');
     if (!trigger) throw new Error("Expected a trigger button.");
 
     await userEvent.click(trigger);
@@ -130,7 +128,7 @@ export const FooterActions: Story = {
     const footer = dialog.shadowRoot?.querySelector("footer");
     await expect(footer).not.toHaveAttribute("hidden");
 
-    const confirmButton = [...dialog.querySelectorAll<HTMLButtonElement>('[slot="footer"]')].find(
+    const confirmButton = [...dialog.querySelectorAll<HTMLElement>('[slot="footer"]')].find(
       (button) => button.textContent === "Confirm",
     );
     if (!confirmButton) throw new Error("Expected a slotted Confirm button.");
@@ -152,7 +150,7 @@ export const NoLightDismiss: Story = {
   },
   play: async ({ canvasElement }) => {
     const dialog = getDialog(canvasElement);
-    const trigger = canvasElement.querySelector<HTMLButtonElement>(".story-action");
+    const trigger = canvasElement.querySelector<HTMLElement>('[data-story="trigger"]');
     if (!trigger) throw new Error("Expected a trigger button.");
 
     await userEvent.click(trigger);
