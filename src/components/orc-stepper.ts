@@ -94,8 +94,9 @@ function resolveCurrentIndex(steps: string[], current: string | null): number {
   if (trimmed.length === 0) return -1;
 
   if (/^\d+$/.test(trimmed)) {
+    // An index past the last step means every step is done and none is current.
     const index = Number.parseInt(trimmed, 10);
-    return index >= 0 && index < steps.length ? index : -1;
+    return Math.min(index, steps.length);
   }
 
   return steps.findIndex((label) => label === trimmed);
