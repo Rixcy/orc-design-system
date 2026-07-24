@@ -26,6 +26,16 @@ describe("reduced motion", () => {
     expect(getComputedStyle(button).transitionDuration).toBe("0s");
   });
 
+  it("suppresses the status-dot pulse animation", () => {
+    const dot = document.createElement("orc-status-dot");
+    dot.setAttribute("pulse", "");
+    dot.setAttribute("label", "Build passing");
+    document.body.append(dot);
+    const el = dot.shadowRoot?.querySelector(".dot");
+    if (!el) throw new Error("Expected status dot element.");
+    expect(getComputedStyle(el).animationName).toBe("none");
+  });
+
   it("replaces the glow-field beam animation with a static gradient", () => {
     const field = document.createElement("orc-glow-field");
     document.body.append(field);

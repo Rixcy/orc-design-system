@@ -36,7 +36,7 @@ const template = `
       font: inherit;
       font-size: 13px;
       line-height: 1.5;
-      transition: border-color 0.16s ease-out, box-shadow 0.16s ease-out;
+      transition: border-color 0.16s ease-out;
     }
 
     textarea::placeholder {
@@ -44,9 +44,9 @@ const template = `
     }
 
     textarea:focus-visible {
-      outline: none;
       border-color: var(--orc-green, #9dc76b);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--orc-green, #9dc76b) 30%, transparent);
+      outline: 2px solid color-mix(in srgb, var(--orc-green, #9dc76b) 45%, transparent);
+      outline-offset: 1px;
     }
 
     textarea:disabled {
@@ -64,7 +64,6 @@ const template = `
     @media (forced-colors: active) {
       textarea:focus-visible {
         border-color: Highlight;
-        box-shadow: none;
         outline: 2px solid Highlight;
         outline-offset: 2px;
       }

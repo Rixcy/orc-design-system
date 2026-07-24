@@ -60,6 +60,27 @@ kbd {
   padding: 0.1em 0.35em;
 }
 
+/* ---- skip link ---- */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10;
+  padding: 8px 14px;
+  background: var(--orc-panel);
+  color: var(--orc-heading);
+  border: 1px solid var(--orc-border);
+  border-radius: var(--orc-radius-md, 8px);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  left: 8px;
+  top: 8px;
+}
+
 /* ---- navbar ---- */
 
 .brand {
