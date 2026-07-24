@@ -45,7 +45,7 @@ const template = `
 
     textarea:focus-visible {
       border-color: var(--orc-green, #9dc76b);
-      outline: 2px solid color-mix(in srgb, var(--orc-green, #9dc76b) 45%, transparent);
+      outline: 2px solid var(--orc-green, #9dc76b);
       outline-offset: 1px;
     }
 

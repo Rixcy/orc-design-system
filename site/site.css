@@ -150,6 +150,55 @@ orc-navbar nav a:hover {
   margin-top: var(--orc-space-4, 1.25rem);
 }
 
+/* Hero CTAs are real links (navigation semantics) styled in orc-button's
+   vocabulary. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: var(--orc-space-2, 0.5rem) var(--orc-space-3, 0.75rem);
+  border-radius: var(--orc-radius-md, 8px);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.cta:focus-visible {
+  outline: var(--orc-focus-ring, 2px solid var(--orc-accent));
+  outline-offset: var(--orc-focus-offset, 2px);
+}
+
+.cta-primary {
+  background: var(--orc-green);
+  border-color: var(--orc-green);
+  color: var(--orc-panel);
+}
+
+.cta-primary:hover {
+  background: color-mix(in srgb, var(--orc-green) 86%, var(--orc-heading));
+  border-color: color-mix(in srgb, var(--orc-green) 86%, var(--orc-heading));
+}
+
+.cta-ghost {
+  border-color: var(--orc-border);
+  color: var(--orc-text);
+  background: transparent;
+}
+
+.cta-ghost:hover {
+  border-color: var(--orc-accent);
+  color: var(--orc-accent-text, var(--orc-accent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta {
+    transition: none;
+  }
+}
+
 .composer-footer {
   display: flex;
   align-items: center;
