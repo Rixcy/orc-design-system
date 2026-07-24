@@ -100,13 +100,34 @@ world, no concept tournament (direction settled at the Orc plan gate).
         <div class="palette" data-palette="night"></div>
 
         <h3>Type</h3>
+        <!-- Each row's .type-spec is filled at runtime from the matching
+             --orc-type-* custom property (see site/main.ts), so the specs
+             render straight from typography.css and can't drift. -->
         <div class="type-specimen">
-          <p class="orc-type-display">Display — restraint is a feature</p>
-          <p class="orc-type-headline">Headline — quiet parts done properly</p>
-          <p class="orc-type-title">Title — Inter carries the interface</p>
-          <p class="orc-type-body">Body — fourteen pixels of ordinary text, set for long reading in dense tools.</p>
-          <p class="orc-type-label">LABEL — chips, tags, captions</p>
-          <p class="orc-type-mono">mono — JetBrains for code, logs, and hex</p>
+          <div class="type-row" data-role="display">
+            <p class="orc-type-display">Display — restraint is a feature</p>
+            <span class="type-spec"></span>
+          </div>
+          <div class="type-row" data-role="headline">
+            <p class="orc-type-headline">Headline — quiet parts done properly</p>
+            <span class="type-spec"></span>
+          </div>
+          <div class="type-row" data-role="title">
+            <p class="orc-type-title">Title — Inter carries the interface</p>
+            <span class="type-spec"></span>
+          </div>
+          <div class="type-row" data-role="body">
+            <p class="orc-type-body">Body — fourteen pixels of ordinary text, set for long reading in dense tools.</p>
+            <span class="type-spec"></span>
+          </div>
+          <div class="type-row" data-role="label">
+            <p class="orc-type-label">LABEL — chips, tags, captions</p>
+            <span class="type-spec"></span>
+          </div>
+          <div class="type-row" data-role="mono">
+            <p class="orc-type-mono">mono — JetBrains for code, logs, and hex</p>
+            <span class="type-spec"></span>
+          </div>
         </div>
       </section>
 

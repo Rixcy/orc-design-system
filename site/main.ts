@@ -29,6 +29,25 @@ for (const [theme, set] of Object.entries(themes)) {
   }
 }
 
+// Type specimen: annotate each role with its live spec, read from the
+// --orc-type-* custom properties so the sheet renders straight from
+// typography.css and can't drift. getComputedStyle resolves the font
+// shorthand to "<weight> <size>/<line-height> <family stack>".
+const rootStyle = getComputedStyle(document.documentElement);
+for (const row of document.querySelectorAll<HTMLElement>(
+  ".type-row[data-role]",
+)) {
+  const role = row.dataset.role;
+  const spec = row.querySelector(".type-spec");
+  if (!role || !spec) continue;
+  const shorthand = rootStyle.getPropertyValue(`--orc-type-${role}`).trim();
+  const parts = shorthand.match(/^(\d+)\s+([\d.]+px)\/([\d.]+)\s+(.+)$/);
+  if (!parts) continue;
+  const [, weight, size, lineHeight, familyStack] = parts;
+  const family = /mono/i.test(familyStack) ? "JetBrains Mono" : "Inter";
+  spec.textContent = `${weight} · ${size}/${lineHeight} · ${family}`;
+}
+
 // Dialog demo
 const dialog = document.querySelector<OrcDialog>("#demo-dialog");
 document

@@ -294,13 +294,50 @@ h3 {
 .type-specimen {
   border: 1px solid var(--orc-border);
   border-radius: var(--orc-radius-md, 8px);
-  padding: var(--orc-space-4, 1.25rem);
-  display: grid;
-  gap: var(--orc-space-2, 0.5rem);
+  overflow: hidden;
 }
 
-.type-specimen p {
+/* One row per role: the sample rendered in its own style on the left, its
+   live spec (weight · size/line-height · family) as a quiet mono annotation
+   on the right — the type equivalent of the palette's name + hex swatch. */
+.type-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: var(--orc-space-4, 1.25rem);
+  padding: var(--orc-space-3, 0.75rem) var(--orc-space-4, 1.25rem);
+}
+
+.type-row + .type-row {
+  border-top: 1px solid color-mix(in srgb, var(--orc-border) 55%, transparent);
+}
+
+.type-row p {
   margin: 0;
+  min-width: 0;
+}
+
+.type-spec {
+  justify-self: end;
+  font-family: var(--orc-font-mono, monospace);
+  font-size: 11px;
+  line-height: 1.4;
+  /* --orc-text (not --orc-muted): these are informational measurements, so
+     they must clear the 4.5:1 body-text floor; size + mono keep them quiet. */
+  color: var(--orc-text);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 520px) {
+  .type-row {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+
+  .type-spec {
+    justify-self: start;
+  }
 }
 
 /* ---- component demos ---- */
