@@ -47,6 +47,7 @@ a {
 
 .story-stack {
   display: grid;
+  align-content: start;
   justify-items: start;
   gap: 16px;
 }
