@@ -311,4 +311,13 @@ describe("orc-dialog", () => {
     button?.click();
     expect(host.open).toBe(false);
   });
+  // Regression: the description wrapper is always in the template, so the
+  // unqualified `.description + .body` rule padded every dialog with an empty
+  // description — including a bare one asking for a full-bleed body.
+  it("does not pad the body while the description slot is empty", () => {
+    const host = createDialog("No description");
+    const styleText = host.shadowRoot?.querySelector("style")?.textContent ?? "";
+    expect(styleText).toMatch(/\.description:not\(\[hidden\]\) \+ \.body/);
+    expect(styleText).not.toMatch(/(?<!\)\)\s)\.description \+ \.body/);
+  });
 });
