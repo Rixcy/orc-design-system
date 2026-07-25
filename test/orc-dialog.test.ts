@@ -245,4 +245,51 @@ describe("orc-dialog", () => {
     host.close();
     expect(host.open).toBe(false);
   });
+  // A command palette needs a name without a visible title bar. aria-label on
+  // the host never reaches the inner <dialog>, so the component owns it.
+  it("names the dialog from label when there is no heading", () => {
+    const host = document.createElement("orc-dialog") as OrcDialog;
+    host.setAttribute("label", "Command palette");
+    document.body.append(host);
+
+    const dialog = getDialogEl(host);
+    expect(dialog.getAttribute("aria-label")).toBe("Command palette");
+    expect(dialog.hasAttribute("aria-labelledby")).toBe(false);
+  });
+
+  it("lets a visible heading win over label so the two cannot disagree", () => {
+    const host = createDialog("Delete run?");
+    host.setAttribute("label", "Something else");
+
+    const dialog = getDialogEl(host);
+    expect(dialog.hasAttribute("aria-label")).toBe(false);
+    expect(dialog.getAttribute("aria-labelledby")).toBeTruthy();
+  });
+
+  it("drops the close button under no-close and collapses the empty chrome row", () => {
+    const host = document.createElement("orc-dialog") as OrcDialog;
+    host.setAttribute("no-close", "");
+    host.setAttribute("label", "Bare");
+    document.body.append(host);
+
+    expect(host.shadowRoot?.querySelector("button.close")).toBeNull();
+    // header:empty hides the row; with no heading and no button it is empty.
+    const header = host.shadowRoot?.querySelector("header");
+    expect(header?.children.length ?? 1).toBe(1); // the always-present <h2>
+    expect(header?.querySelector("h2")?.textContent).toBe("");
+  });
+
+  it("restores a working close button when no-close is removed", () => {
+    const host = createDialog("Toggling");
+    host.setAttribute("no-close", "");
+    expect(host.shadowRoot?.querySelector("button.close")).toBeNull();
+
+    host.removeAttribute("no-close");
+    const button = host.shadowRoot?.querySelector<HTMLButtonElement>("button.close");
+    expect(button).not.toBeNull();
+
+    host.show();
+    button?.click();
+    expect(host.open).toBe(false);
+  });
 });

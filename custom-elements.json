@@ -134,6 +134,25 @@
           "name": "OrcDialog",
           "cssProperties": [
             {
+              "description": "Minimum dialog height.",
+              "name": "--orc-dialog-min-height",
+              "default": "auto"
+            },
+            {
+              "description": "Maximum dialog height.",
+              "name": "--orc-dialog-max-height",
+              "default": "min(76vh, 720px)"
+            },
+            {
+              "description": "Placement inside the top layer; e.g. `12vh auto auto` anchors it below the top edge, centred.",
+              "name": "--orc-dialog-margin",
+              "default": "auto"
+            },
+            {
+              "description": "Body padding; zero it for full-bleed.",
+              "name": "--orc-dialog-body-padding"
+            },
+            {
               "description": "Maximum dialog width.",
               "name": "--orc-dialog-max-width",
               "default": "32rem"
@@ -215,11 +234,25 @@
               "description": "Heading text, also used as the dialog's accessible name."
             },
             {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for a dialog with no visible heading. Ignored when `heading` is set. Use this instead of `aria-label` on the host, which cannot reach the `<dialog>` inside the shadow root."
+            },
+            {
               "name": "no-light-dismiss",
               "type": {
                 "text": "boolean"
               },
               "description": "Keeps the dialog open on backdrop click."
+            },
+            {
+              "name": "no-close",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Drops the close button. With no heading the whole chrome row collapses, giving a bare surface."
             }
           ],
           "superclass": {

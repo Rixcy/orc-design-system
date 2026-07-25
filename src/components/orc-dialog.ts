@@ -7,6 +7,15 @@ let instanceCount = 0;
 // A native-first modal dialog: the native <dialog> element gives us Esc-to-close, a focus trap, an inert background, and a
 // top-layer stacking context for free via showModal(). We only add the
 // chrome (header, close button, light-dismiss) on top.
+// Hoisted so syncCloseButton() can put it back after a no-close removal.
+const CLOSE_BUTTON = `
+  <button type="button" class="close" aria-label="Close">
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3 3 L13 13 M13 3 L3 13" />
+    </svg>
+  </button>
+`;
+
 const template = `
   <style>
     :host {
@@ -18,8 +27,13 @@ const template = `
       box-sizing: border-box;
       width: min(var(--orc-dialog-max-width, 680px), calc(100vw - 32px));
       max-width: var(--orc-dialog-max-width, 680px);
-      max-height: min(76vh, 720px);
-      margin: auto;
+      min-height: var(--orc-dialog-min-height, auto);
+      max-height: var(--orc-dialog-max-height, min(76vh, 720px));
+      /* Positioning goes through margin rather than position/inset so a
+         top-anchored surface (a command palette, say) needs no escape hatch
+         into the shadow root: "12vh auto auto" sits it below the top edge and
+         keeps it horizontally centred, inside the top layer. */
+      margin: var(--orc-dialog-margin, auto);
       padding: 0;
       border: 1px solid var(--orc-border, #3b4540);
       border-radius: var(--orc-radius-md, 10px);
@@ -104,7 +118,9 @@ const template = `
     .body {
       flex: 1 1 auto;
       overflow-y: auto;
-      padding: var(--orc-space-4, 1rem);
+      /* Zero this for a full-bleed body — a search field that should meet the
+         dialog's edges, for instance. */
+      padding: var(--orc-dialog-body-padding, var(--orc-space-4, 1rem));
     }
 
     footer {
@@ -149,11 +165,7 @@ const template = `
   <dialog>
     <header>
       <h2></h2>
-      <button type="button" class="close" aria-label="Close">
-        <svg viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M3 3 L13 13 M13 3 L3 13" />
-        </svg>
-      </button>
+      ${CLOSE_BUTTON}
     </header>
     <div class="description" hidden><slot name="description"></slot></div>
     <div class="body"><slot></slot></div>
@@ -168,7 +180,17 @@ const template = `
  * @customElement orc-dialog
  * @attr {boolean} open - Reflects and controls visibility; setting it shows the modal.
  * @attr {string} heading - Heading text, also used as the dialog's accessible name.
+ * @attr {string} label - Accessible name for a dialog with no visible heading.
+ *   Ignored when `heading` is set. Use this instead of `aria-label` on the host,
+ *   which cannot reach the `<dialog>` inside the shadow root.
  * @attr {boolean} no-light-dismiss - Keeps the dialog open on backdrop click.
+ * @attr {boolean} no-close - Drops the close button. With no heading the whole
+ *   chrome row collapses, giving a bare surface.
+ * @cssprop [--orc-dialog-min-height=auto] - Minimum dialog height.
+ * @cssprop [--orc-dialog-max-height=min(76vh, 720px)] - Maximum dialog height.
+ * @cssprop [--orc-dialog-margin=auto] - Placement inside the top layer; e.g.
+ *   `12vh auto auto` anchors it below the top edge, centred.
+ * @cssprop [--orc-dialog-body-padding] - Body padding; zero it for full-bleed.
  * @slot - Dialog body content.
  * @slot description - Supporting copy under the heading, wired to the dialog's
  *   accessible description. Use this instead of `aria-describedby` on the host:
@@ -181,7 +203,7 @@ const template = `
  */
 export class OrcDialog extends HTMLElementBase {
   static get observedAttributes(): string[] {
-    return ["open", "heading", "no-light-dismiss"];
+    return ["open", "heading", "label", "no-light-dismiss", "no-close"];
   }
 
   private readonly elementId = `orc-dialog-${++instanceCount}`;
@@ -227,6 +249,7 @@ export class OrcDialog extends HTMLElementBase {
   }
 
   connectedCallback(): void {
+    this.syncCloseButton();
     this.renderHeading();
     this.syncFooter();
     this.syncDescription();
@@ -236,8 +259,10 @@ export class OrcDialog extends HTMLElementBase {
   attributeChangedCallback(name: string): void {
     if (name === "open") {
       this.syncOpenState();
-    } else if (name === "heading") {
+    } else if (name === "heading" || name === "label") {
       this.renderHeading();
+    } else if (name === "no-close") {
+      this.syncCloseButton();
     }
   }
 
@@ -317,6 +342,37 @@ export class OrcDialog extends HTMLElementBase {
     } else {
       dialog.removeAttribute("aria-labelledby");
     }
+
+    // A dialog with no visible heading still needs a name. `label` puts one on
+    // the inner <dialog> directly — aria-label on the host would never reach
+    // it across the shadow boundary. A visible heading always wins, so the two
+    // can never disagree.
+    const label = this.getAttribute("label")?.trim() ?? "";
+    if (label && !text) {
+      dialog.setAttribute("aria-label", label);
+    } else {
+      dialog.removeAttribute("aria-label");
+    }
+  }
+
+  // The close button is the only always-present child of <header>, so removing
+  // it lets the existing `header:empty` rule collapse the whole chrome row for
+  // a heading-less dialog — no separate "bare" mode to maintain.
+  private syncCloseButton(): void {
+    const existing = this.closeButton;
+    const wanted = !this.hasAttribute("no-close");
+    if (wanted === Boolean(existing)) return;
+
+    if (!wanted) {
+      existing?.removeEventListener("click", this.onCloseButtonClick);
+      existing?.remove();
+      return;
+    }
+
+    const header = this.shadowRoot?.querySelector("header");
+    if (!header) return;
+    header.insertAdjacentHTML("beforeend", CLOSE_BUTTON);
+    this.closeButton?.addEventListener("click", this.onCloseButtonClick);
   }
 
   private syncFooter(): void {
