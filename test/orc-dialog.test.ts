@@ -168,11 +168,57 @@ describe("orc-dialog", () => {
     expect(host.hasAttribute("open")).toBe(true);
   });
 
-  it("exposes default and footer slots", () => {
+  it("exposes default, description, and footer slots", () => {
     const host = createDialog();
     const slots = [...(host.shadowRoot?.querySelectorAll("slot") ?? [])];
     const names = slots.map((slot) => slot.getAttribute("name") ?? "");
     expect(names).toContain("");
+    expect(names).toContain("description");
     expect(names).toContain("footer");
+  });
+
+  // The description region has to live in the shadow tree: an aria-describedby
+  // IDREF does not resolve across a shadow boundary, so a consumer cannot
+  // describe the inner <dialog> from light DOM by id.
+  it("wires slotted description content to the dialog's accessible description", () => {
+    const host = createDialog("Delete run?");
+    const description = document.createElement("p");
+    description.slot = "description";
+    description.textContent = "This cannot be undone.";
+    host.append(description);
+
+    const dialog = getDialogEl(host);
+    const describedBy = dialog.getAttribute("aria-describedby");
+
+    expect(describedBy).toBeTruthy();
+    const target = host.shadowRoot?.getElementById(describedBy as string);
+    expect(target).not.toBeNull();
+    expect(target?.hidden).toBe(false);
+  });
+
+  it("leaves the dialog undescribed and the region hidden while the slot is empty", () => {
+    const host = createDialog("No description");
+    const dialog = getDialogEl(host);
+
+    expect(dialog.hasAttribute("aria-describedby")).toBe(false);
+    expect(host.shadowRoot?.querySelector<HTMLElement>(".description")?.hidden).toBe(true);
+  });
+
+  it("keeps the description id unique per instance", () => {
+    const first = createDialog("First");
+    const second = createDialog("Second");
+    for (const host of [first, second]) {
+      const paragraph = document.createElement("p");
+      paragraph.slot = "description";
+      paragraph.textContent = "Copy.";
+      host.append(paragraph);
+    }
+
+    const firstId = getDialogEl(first).getAttribute("aria-describedby");
+    const secondId = getDialogEl(second).getAttribute("aria-describedby");
+
+    expect(firstId).toBeTruthy();
+    expect(secondId).toBeTruthy();
+    expect(firstId).not.toBe(secondId);
   });
 });

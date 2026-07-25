@@ -8,6 +8,7 @@ defineOrcElements();
 
 interface DialogArgs {
   heading: string;
+  description: string;
   body: string;
   noLightDismiss: boolean;
 }
@@ -25,6 +26,13 @@ function createStory(args: DialogArgs): HTMLElement {
   const dialog = document.createElement("orc-dialog") as OrcDialog;
   dialog.setAttribute("heading", args.heading);
   if (args.noLightDismiss) dialog.setAttribute("no-light-dismiss", "");
+
+  if (args.description) {
+    const description = document.createElement("p");
+    description.slot = "description";
+    description.textContent = args.description;
+    dialog.append(description);
+  }
 
   const body = document.createElement("p");
   body.textContent = args.body;
@@ -58,11 +66,13 @@ const meta = {
   tags: ["autodocs", "test"],
   args: {
     heading: "Run history",
+    description: "",
     body: "This is the dialog body content, slotted into the default slot.",
     noLightDismiss: false,
   },
   argTypes: {
     heading: { control: "text" },
+    description: { control: "text" },
     body: { control: "text" },
     noLightDismiss: { control: "boolean" },
   },
@@ -164,5 +174,28 @@ export const NoLightDismiss: Story = {
     const closeButton = dialog.shadowRoot?.querySelector<HTMLButtonElement>("button.close");
     await userEvent.click(closeButton as HTMLButtonElement);
     await waitFor(() => expect(dialog.hasAttribute("open")).toBe(false));
+  },
+};
+
+export const Description: Story = {
+  args: {
+    heading: "Delete run?",
+    description: "This permanently removes the run folder and cannot be undone.",
+  },
+  play: async ({ canvasElement }) => {
+    const dialog = getDialog(canvasElement);
+    const trigger = canvasElement.querySelector<HTMLElement>('[data-story="trigger"]');
+    if (!trigger) throw new Error("Expected a trigger button.");
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(dialog.hasAttribute("open")).toBe(true));
+
+    // The description region is shadow-owned on purpose: aria-describedby is an
+    // IDREF and cannot point from the inner <dialog> into light DOM.
+    const nativeDialog = dialog.shadowRoot?.querySelector("dialog");
+    await waitFor(() => expect(nativeDialog).toHaveAttribute("aria-describedby"));
+    await expect(nativeDialog).toHaveAccessibleDescription(
+      "This permanently removes the run folder and cannot be undone.",
+    );
   },
 };
