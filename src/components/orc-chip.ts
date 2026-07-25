@@ -2,9 +2,8 @@ const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
 
-// A native-CSS port of the reference app's tag/chip family:
-// a small pill label with a
-// tinted background and an AA-contrast text token per variant. This is a
+// A native-CSS tag/chip: a small pill label with a tinted background and an
+// AA-contrast text token per variant. This is a
 // static label, not a control, so it renders a <span> with no button
 // semantics — status is always conveyed by the slotted text, never by the
 // leading dot alone.

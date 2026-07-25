@@ -12,7 +12,6 @@ Single maintainer, building and maintaining a set of personal web projects.
 Consumes the design system while building those surfaces and wants one
 identity 
 
-
 ## Product Purpose
 
 `@orc/design-system` is the single source of truth for Orc's visual
@@ -31,7 +30,6 @@ hex.
 ## Operating Context
 
 - Consuming apps are first-party web surfaces built by the same maintainer.
-
 - Bun is the package manager and script runner; Vite builds; Storybook (:6006)
   is the component workbench; Vitest (unit + browser + reduced-motion configs)
   tests.

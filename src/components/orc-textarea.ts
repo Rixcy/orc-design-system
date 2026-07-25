@@ -4,8 +4,7 @@ const HTMLElementBase = (
 
 let instanceCount = 0;
 
-// A native-CSS port of the reference app's feedback textarea — a plain
-// labelled form textarea with the repo's "more green" focus treatment
+// A plain labelled form textarea with the repo's "more green" focus treatment
 // (green border + soft ring instead of a drop shadow).
 const template = `
   <style>
