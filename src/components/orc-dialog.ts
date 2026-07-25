@@ -154,7 +154,11 @@ const template = `
       display: none;
     }
 
-    .description + .body {
+    /* :not([hidden]) matters — the wrapper is always in the template, and
+       "hidden" only sets display:none, so it stays an adjacent sibling. The
+       unqualified selector padded every dialog whose description was empty,
+       including one asking for a full-bleed body. */
+    .description:not([hidden]) + .body {
       padding-top: var(--orc-space-2, 0.5rem);
     }
 
