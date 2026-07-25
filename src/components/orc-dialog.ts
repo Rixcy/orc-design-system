@@ -120,6 +120,26 @@ const template = `
       display: none;
     }
 
+    /* The description sits at the top of the body and reads as supporting copy
+       under the heading. It lives in its own wrapper because the inner
+       <dialog> points aria-describedby at that wrapper's id: an IDREF only
+       resolves within one tree, so a consumer cannot describe the dialog from
+       light DOM by id. Slotting into a shadow-owned wrapper is what keeps the
+       association intact. */
+    .description {
+      color: var(--orc-muted-strong, #565f89);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .description[hidden] {
+      display: none;
+    }
+
+    .description + .body {
+      padding-top: var(--orc-space-2, 0.5rem);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       button.close {
         transition: none;
@@ -135,6 +155,7 @@ const template = `
         </svg>
       </button>
     </header>
+    <div class="description" hidden><slot name="description"></slot></div>
     <div class="body"><slot></slot></div>
     <footer hidden><slot name="footer"></slot></footer>
   </dialog>
@@ -149,6 +170,10 @@ const template = `
  * @attr {string} heading - Heading text, also used as the dialog's accessible name.
  * @attr {boolean} no-light-dismiss - Keeps the dialog open on backdrop click.
  * @slot - Dialog body content.
+ * @slot description - Supporting copy under the heading, wired to the dialog's
+ *   accessible description. Use this instead of `aria-describedby` on the host:
+ *   the real `<dialog>` lives in the shadow root and an IDREF cannot cross that
+ *   boundary. Stays hidden, and unwired, while empty.
  * @slot footer - Footer actions; the footer row stays hidden while empty.
  * @fires close - Fired after the dialog closes.
  * @fires cancel - Cancelable; fired on Escape or light dismiss, before closing.
@@ -195,11 +220,16 @@ export class OrcDialog extends HTMLElementBase {
     this.shadowRoot
       ?.querySelector('slot[name="footer"]')
       ?.addEventListener("slotchange", () => this.syncFooter());
+
+    this.shadowRoot
+      ?.querySelector('slot[name="description"]')
+      ?.addEventListener("slotchange", () => this.syncDescription());
   }
 
   connectedCallback(): void {
     this.renderHeading();
     this.syncFooter();
+    this.syncDescription();
     this.syncOpenState();
   }
 
@@ -283,6 +313,33 @@ export class OrcDialog extends HTMLElementBase {
     const slot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="footer"]');
     if (!footer || !slot) return;
     footer.hidden = slot.assignedNodes().length === 0;
+  }
+
+  // aria-describedby is only set while the slot actually has content: an IDREF
+  // pointing at an empty wrapper yields an empty description, which is worse
+  // than none because AT announces the dialog as described-by-nothing.
+  private syncDescription(): void {
+    const dialog = this.dialogEl;
+    const description = this.descriptionEl;
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(
+      'slot[name="description"]',
+    );
+    if (!dialog || !description || !slot) return;
+
+    const isEmpty = slot.assignedNodes().length === 0;
+    description.hidden = isEmpty;
+
+    if (isEmpty) {
+      dialog.removeAttribute("aria-describedby");
+      return;
+    }
+
+    description.id ||= `${this.elementId}-description`;
+    dialog.setAttribute("aria-describedby", description.id);
+  }
+
+  private get descriptionEl(): HTMLElement | null {
+    return this.shadowRoot?.querySelector(".description") ?? null;
   }
 }
 

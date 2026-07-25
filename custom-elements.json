@@ -137,6 +137,10 @@
               "name": ""
             },
             {
+              "description": "Supporting copy under the heading, wired to the dialog's accessible description. Use this instead of `aria-describedby` on the host: the real `<dialog>` lives in the shadow root and an IDREF cannot cross that boundary. Stays hidden, and unwired, while empty.",
+              "name": "description"
+            },
+            {
               "description": "Footer actions; the footer row stays hidden while empty.",
               "name": "footer"
             }
