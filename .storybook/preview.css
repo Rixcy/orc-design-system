@@ -71,11 +71,23 @@ a {
   margin: 0 auto;
 }
 
+/* Composer-scale surface: the same 640px centred column orc's new-conversation
+   composer uses, so the glow field is documented at the width it ships at. */
+.story-surface[data-width="composer"] {
+  width: min(100%, 640px);
+  margin: 0 auto;
+}
+
 .story-stack {
   display: grid;
   align-content: start;
   justify-items: start;
   gap: 16px;
+}
+
+/* The composer surface is the stack itself, so its children fill the column. */
+.story-surface[data-width="composer"].story-stack {
+  justify-items: stretch;
 }
 
 .story-note {
