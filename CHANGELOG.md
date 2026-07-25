@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.0](https://github.com/Rixcy/orc-design-system/compare/v1.3.0...v1.4.0) (2026-07-25)
+
+
+### Features
+
+* **orc-dialog:** allow a bare, positioned dialog surface ([4a6e618](https://github.com/Rixcy/orc-design-system/commit/4a6e61875e6a4d8d89e45254c2b8463d095a2f52))
+
 ## [1.3.0](https://github.com/Rixcy/orc-design-system/compare/v1.2.0...v1.3.0) (2026-07-25)
 
 
