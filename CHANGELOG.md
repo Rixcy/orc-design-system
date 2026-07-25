@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.5.0](https://github.com/Rixcy/orc-design-system/compare/v1.4.2...v1.5.0) (2026-07-25)
+
+
+### Features
+
+* **orc-chip,orc-dialog:** match the documented chip shape, size the close target ([861fae6](https://github.com/Rixcy/orc-design-system/commit/861fae648c52c831efa8678617fa2cddaad47618))
+
 ## [1.4.2](https://github.com/Rixcy/orc-design-system/compare/v1.4.1...v1.4.2) (2026-07-25)
 
 
