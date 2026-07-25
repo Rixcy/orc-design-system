@@ -2,9 +2,8 @@ const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
 
-// A native-CSS port of the reference app's action buttons: a filled
-// `primary` action and a bordered `ghost` action, both sharing size and
-// focus-ring rules.
+// A native-CSS action button: a filled `primary` action and a bordered
+// `ghost` action, both sharing size and focus-ring rules.
 const template = `
   <style>
     :host {

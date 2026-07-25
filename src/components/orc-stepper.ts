@@ -2,7 +2,7 @@ const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
 
-// A native-CSS port of the reference app's phase pills: small rounded steps
+// A native-CSS phase stepper: small rounded steps
 // joined by connector rules, with `done` (green tint) and `current` (accent
 // tint) states layered over a muted pending default. Presentational only —
 // an ordered progress indicator, not a navigation control.

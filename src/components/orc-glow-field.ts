@@ -2,8 +2,7 @@ const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
 
-// A native-CSS port of the reference app's glowing composer: the conic
-// gradient is masked down to a 1px edge and never sits over field content.
+// A native-CSS glowing input surround: the conic gradient is masked down to a 1px edge and never sits over field content.
 const template = `
   <style>
     :host {

@@ -4,8 +4,7 @@ const HTMLElementBase = (
 
 let instanceCount = 0;
 
-// A native-first port of the reference app's modal dialog: the native <dialog>
-// element gives us Esc-to-close, a focus trap, an inert background, and a
+// A native-first modal dialog: the native <dialog> element gives us Esc-to-close, a focus trap, an inert background, and a
 // top-layer stacking context for free via showModal(). We only add the
 // chrome (header, close button, light-dismiss) on top.
 const template = `

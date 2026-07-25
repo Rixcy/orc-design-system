@@ -2,7 +2,7 @@ const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
 
-// A native-CSS port of the reference app's status indicator: an 8px
+// A native-CSS status indicator: an 8px
 // tone-tinted dot with a required accessible label, since the dot itself is
 // decorative and status must never be conveyed by color alone.
 const template = `
