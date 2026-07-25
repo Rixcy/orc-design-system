@@ -148,6 +148,19 @@ export const NarrowWithLongLabels: Story = {
     await expect(hostBounds.left).toBeGreaterThanOrEqual(surfaceBounds.left);
     await expect(hostBounds.right).toBeLessThanOrEqual(surfaceBounds.right);
     await expect(nav?.scrollWidth).toBeLessThanOrEqual(nav?.clientWidth ?? 0);
+
+    // The old viewport media query never fired here — a wide viewport kept the
+    // three desktop columns and crushed each region to ~128 px. Reflow now
+    // follows the component's own inline size, so 320 px is a single column.
+    if (!nav) throw new Error("Expected navbar grid.");
+    const tracks = getComputedStyle(nav).gridTemplateColumns.split(" ");
+    await expect(tracks).toHaveLength(1);
+    for (const region of [".brand", ".navigation", ".actions"]) {
+      const bounds = host.shadowRoot
+        ?.querySelector<HTMLElement>(region)
+        ?.getBoundingClientRect();
+      await expect(bounds?.width).toBeGreaterThan(nav.clientWidth * 0.75);
+    }
   },
 };
 

@@ -6,6 +6,7 @@ const template = `
   <style>
     :host {
       display: block;
+      container-type: inline-size;
       color: var(--orc-text, #c0caf5);
       background: var(--orc-panel, #16161e);
       border-block-end: 1px solid var(--orc-border, #3b4261);
@@ -74,7 +75,9 @@ const template = `
       max-inline-size: 100%;
     }
 
-    @media (max-width: 40rem) {
+    /* The navbar reflows off its own inline size, not the viewport: it is just
+       as often placed in a narrow column as it is across a phone screen. */
+    @container (max-width: 40rem) {
       nav {
         grid-template-columns: minmax(0, 1fr) auto;
       }
@@ -82,6 +85,21 @@ const template = `
       .navigation {
         grid-column: 1 / -1;
         grid-row: 2;
+      }
+    }
+
+    @container (max-width: 24rem) {
+      nav {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .navigation {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .actions {
+        justify-content: flex-start;
       }
     }
   </style>
