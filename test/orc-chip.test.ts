@@ -35,6 +35,24 @@ describe("orc-chip", () => {
     expect(chip.getAttribute("variant")).toBe("neutral");
   });
 
+  it("is a soft-filled rounded rectangle with a hairline border, not a pill", () => {
+    // DESIGN.md: chips are Soft Fill background, 1px Border, 12px radius. Every
+    // coloured variant used to zero its own border out, which left a bare pill.
+    const chip = document.createElement("orc-chip");
+    chip.setAttribute("variant", "green");
+    document.body.append(chip);
+
+    const css = chip.shadowRoot?.querySelector("style")?.textContent ?? "";
+    expect(css).toContain("border-radius: var(--orc-radius-chip, 12px)");
+    expect(css).not.toContain("--orc-radius-pill");
+    expect(css).not.toContain("border-color: transparent");
+
+    const green = css.slice(css.indexOf('[variant="green"]'));
+    expect(green.slice(0, green.indexOf("}"))).toContain(
+      "border-color: color-mix(in srgb, var(--orc-green, #9dc76b) 40%, transparent)",
+    );
+  });
+
   it("renders as a static span, not a button", () => {
     const chip = document.createElement("orc-chip");
     document.body.append(chip);

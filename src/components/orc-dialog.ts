@@ -108,6 +108,17 @@ const template = `
       outline-offset: var(--orc-focus-offset, 2px);
     }
 
+    /* 2rem is comfortable under a mouse and short of the 44px minimum under a
+       thumb. The glyph does not change — only the box, and only where the
+       pointer is coarse, which is the only place the target matters. */
+    @media (pointer: coarse) {
+      button.close {
+        width: var(--orc-dialog-close-size, 44px);
+        height: var(--orc-dialog-close-size, 44px);
+        touch-action: manipulation;
+      }
+    }
+
     button.close svg {
       width: 16px;
       height: 16px;

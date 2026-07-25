@@ -45,6 +45,19 @@ describe("orc-dialog", () => {
     }
   });
 
+  it("gives the close button a 44px target on a coarse pointer", () => {
+    // 2rem is comfortable under a mouse and below the touch minimum under a
+    // thumb, and a consumer cannot fix it from outside — the button lives in
+    // the shadow root, where no light-DOM rule reaches.
+    const host = createDialog();
+    const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
+    const coarse = css.slice(css.indexOf("@media (pointer: coarse)"));
+
+    expect(css).toContain("@media (pointer: coarse)");
+    expect(coarse).toContain("button.close");
+    expect(coarse).toContain("var(--orc-dialog-close-size, 44px)");
+  });
+
   it("close() closes the dialog and removes the open attribute", () => {
     const host = createDialog();
     host.show();
