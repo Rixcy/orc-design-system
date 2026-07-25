@@ -46,6 +46,28 @@ const meta = {
 export default meta;
 type Story = StoryObj<StepperArgs>;
 
+export const InProgress: Story = {
+  args: {
+    steps: "plan,build,review,qa",
+    current: "1",
+  },
+  play: async ({ canvasElement }) => {
+    const stepper = getStepper(canvasElement);
+    const items = [
+      ...(stepper.shadowRoot?.querySelectorAll("li") ?? []),
+    ] as HTMLLIElement[];
+
+    await expect(items).toHaveLength(4);
+    await expect(items[0].querySelector(".step")).toHaveClass("done");
+    await expect(items[1]).toHaveAttribute("aria-current", "step");
+    await expect(items[1].querySelector(".step")).toHaveClass("current");
+    for (const item of items.slice(2)) {
+      await expect(item).not.toHaveAttribute("aria-current");
+      await expect(item.querySelector(".step")).toHaveClass("pending");
+    }
+  },
+};
+
 export const Complete: Story = {
   args: {
     steps: "plan,build,review,qa",
