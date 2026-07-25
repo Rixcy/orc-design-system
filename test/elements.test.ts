@@ -42,7 +42,7 @@ describe("defineOrcElements", () => {
   it("is idempotent", () => {
     expect(() => defineOrcElements()).not.toThrow();
     expect(() => defineOrcElements()).not.toThrow();
-    expect(customElements.get("orc-glow-field")).toBeDefined();
+    expect(customElements.get("orc-input")).toBeDefined();
     expect(customElements.get("orc-navbar")).toBeDefined();
     expect(customElements.get("orc-theme-toggle")).toBeDefined();
   });
@@ -127,16 +127,17 @@ describe("orc-theme-toggle", () => {
   });
 });
 
-describe("orc-glow-field", () => {
-  it("exposes a labelled native textarea with a value round-trip", () => {
-    const field = document.createElement("orc-glow-field");
+describe("orc-textarea as composer", () => {
+  it("names the textarea from aria-label and hides the empty visible label", () => {
+    const field = document.createElement("orc-textarea");
     field.setAttribute("placeholder", "Describe the task");
-    field.setAttribute("label", "Task prompt");
+    field.setAttribute("aria-label", "Task prompt");
     document.body.append(field);
 
     const textarea = field.shadowRoot!.querySelector("textarea")!;
     expect(textarea.placeholder).toBe("Describe the task");
     expect(textarea.getAttribute("aria-label")).toBe("Task prompt");
+    expect(field.shadowRoot!.querySelector("label")!.hidden).toBe(true);
 
     field.value = "hello";
     expect(textarea.value).toBe("hello");
@@ -144,8 +145,19 @@ describe("orc-glow-field", () => {
     expect(field.value).toBe("edited");
   });
 
+  it("prefers the visible label over aria-label so there is one accessible name", () => {
+    const field = document.createElement("orc-textarea");
+    field.setAttribute("label", "Feedback");
+    field.setAttribute("aria-label", "Task prompt");
+    document.body.append(field);
+
+    const textarea = field.shadowRoot!.querySelector("textarea")!;
+    expect(field.shadowRoot!.querySelector("label")!.hidden).toBe(false);
+    expect(textarea.hasAttribute("aria-label")).toBe(false);
+  });
+
   it("reflects disabled and reveals the footer only when slotted", async () => {
-    const field = document.createElement("orc-glow-field");
+    const field = document.createElement("orc-textarea");
     field.setAttribute("disabled", "");
     document.body.append(field);
 
@@ -163,19 +175,79 @@ describe("orc-glow-field", () => {
     await Promise.resolve();
     expect(footer.hidden).toBe(false);
   });
+});
 
-  it("binds the keyboard focus ring to the accent token, not green", () => {
-    // Regression guard: the focus-visible outline must use --orc-accent so it
-    // reads as one blue ring over the green beam edge (matching orc's
-    // composer), never a second green ring concentric with the beam.
-    const field = document.createElement("orc-glow-field");
+describe("field focus contract", () => {
+  // Focus is border-only: the border greens and the beam underlay lights, with
+  // no outline in any path — the resting look of orc's composer.
+  for (const [tag, control] of [
+    ["orc-textarea", "textarea"],
+    ["orc-input", "input"],
+  ] as const) {
+    it(`${tag} greens the border on focus with no outline anywhere`, () => {
+      const field = document.createElement(tag);
+      document.body.append(field);
+      const css = field.shadowRoot!.querySelector("style")!.textContent ?? "";
+
+      const start = css.indexOf(`.field:has(${control}:focus)`);
+      expect(start).toBeGreaterThan(-1);
+      const focusRule = css.slice(start, css.indexOf("}", start) + 1);
+      expect(focusRule).toContain("--orc-green");
+      expect(focusRule).toContain("--orc-beam-underlay");
+      expect(focusRule).not.toContain("outline");
+
+      // Regression guard for the whole point of this change: no rule anywhere
+      // in the field's chrome may draw a focus ring.
+      expect(css).not.toContain("--orc-focus-ring");
+      expect(css).not.toContain("focus-visible {\n      outline: var");
+      expect(css).not.toContain("suppress-focus-ring");
+    });
+
+    it(`${tag} keeps a forced-colors focus cue`, () => {
+      // --orc-green is a custom token forced-colors discards, so the system
+      // Highlight has to carry the cue there.
+      const field = document.createElement(tag);
+      document.body.append(field);
+      const css = field.shadowRoot!.querySelector("style")!.textContent ?? "";
+
+      const forced = css.slice(css.indexOf("@media (forced-colors: active)"));
+      const start = forced.indexOf(`.field:has(${control}:focus)`);
+      expect(start).toBeGreaterThan(-1);
+      expect(forced.slice(start, forced.indexOf("}", start) + 1)).toContain(
+        "Highlight",
+      );
+    });
+  }
+});
+
+describe("orc-input", () => {
+  it("wires the visible label to the input and round-trips the value", () => {
+    const field = document.createElement("orc-input");
+    field.setAttribute("label", "Run name");
+    field.setAttribute("placeholder", "add-token-export");
     document.body.append(field);
 
-    const css = field.shadowRoot!.querySelector("style")!.textContent ?? "";
-    const focusRule = css
-      .slice(css.indexOf("textarea:focus-visible"))
-      .slice(0, css.slice(css.indexOf("textarea:focus-visible")).indexOf("}") + 1);
-    expect(focusRule).toContain("--orc-accent");
-    expect(focusRule).not.toContain("--orc-green");
+    const input = field.shadowRoot!.querySelector("input")!;
+    const label = field.shadowRoot!.querySelector("label")!;
+    expect(label.textContent).toBe("Run name");
+    expect(label.getAttribute("for")).toBe(input.id);
+    expect(input.placeholder).toBe("add-token-export");
+
+    field.value = "hello";
+    expect(input.value).toBe("hello");
+    input.value = "edited";
+    expect(field.value).toBe("edited");
+  });
+
+  it("falls back to text for types this field does not style", () => {
+    const field = document.createElement("orc-input");
+    document.body.append(field);
+    const input = field.shadowRoot!.querySelector("input")!;
+
+    expect(input.type).toBe("text");
+    field.setAttribute("type", "email");
+    expect(input.type).toBe("email");
+    field.setAttribute("type", "checkbox");
+    expect(input.type).toBe("text");
   });
 });

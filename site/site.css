@@ -366,6 +366,11 @@ h3 {
   display: block;
 }
 
+/* Block stages lose the flex gap, so stacked demos need their own rhythm. */
+.demo-stage-block > * + * {
+  margin-top: var(--orc-space-4, 1.25rem);
+}
+
 /* Lockups stack so the size ramp reads as a ramp, not a row of near-twins. */
 .demo-stage-marks {
   flex-direction: column;
@@ -373,7 +378,7 @@ h3 {
   gap: var(--orc-space-4, 1.25rem);
 }
 
-.demo-stage orc-textarea {
+.demo-stage :is(orc-textarea, orc-input) {
   display: block;
 }
 

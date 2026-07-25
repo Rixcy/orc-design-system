@@ -36,11 +36,14 @@ describe("reduced motion", () => {
     expect(getComputedStyle(el).animationName).toBe("none");
   });
 
-  it("replaces the glow-field beam animation with a static gradient", () => {
-    const field = document.createElement("orc-glow-field");
-    document.body.append(field);
-    const wrapper = field.shadowRoot?.querySelector(".field");
-    if (!wrapper) throw new Error("Expected glow field wrapper.");
-    expect(getComputedStyle(wrapper, "::before").animationName).toBe("none");
-  });
+  it.each(["orc-textarea", "orc-input"])(
+    "replaces the %s beam animation with a static gradient",
+    (tag) => {
+      const field = document.createElement(tag);
+      document.body.append(field);
+      const wrapper = field.shadowRoot?.querySelector(".field");
+      if (!wrapper) throw new Error(`Expected ${tag} field wrapper.`);
+      expect(getComputedStyle(wrapper, "::before").animationName).toBe("none");
+    },
+  );
 });

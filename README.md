@@ -20,7 +20,7 @@ values around.
   way. A parser-time `preflight.js` avoids the first-paint flash for persisted
   choices.
 - **Web Components** — `<orc-button>`, `<orc-chip>`, `<orc-dialog>`,
-  `<orc-glow-field>`, `<orc-navbar>`, `<orc-status-dot>`, `<orc-stepper>`,
+  `<orc-input>`, `<orc-navbar>`, `<orc-status-dot>`, `<orc-stepper>`,
   `<orc-tabs>`, `<orc-textarea>`, and `<orc-theme-toggle>`, defined via
   `defineOrcElements()` and driven by an exported `createThemeController()`.
 - **Utility CSS** — opt-in `scrollbar.css` (`.orc-scrollbar`) and

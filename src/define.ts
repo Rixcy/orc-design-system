@@ -1,7 +1,7 @@
 import { OrcButton } from "./components/orc-button";
 import { OrcChip } from "./components/orc-chip";
 import { OrcDialog } from "./components/orc-dialog";
-import { OrcGlowField } from "./components/orc-glow-field";
+import { OrcInput } from "./components/orc-input";
 import { OrcLogomark } from "./components/orc-logomark";
 import { OrcNavbar } from "./components/orc-navbar";
 import { OrcSegmented } from "./components/orc-segmented";
@@ -15,7 +15,7 @@ export {
   OrcButton,
   OrcChip,
   OrcDialog,
-  OrcGlowField,
+  OrcInput,
   OrcLogomark,
   OrcNavbar,
   OrcSegmented,
@@ -30,7 +30,7 @@ const ELEMENTS: ReadonlyArray<[string, CustomElementConstructor]> = [
   ["orc-button", OrcButton],
   ["orc-chip", OrcChip],
   ["orc-dialog", OrcDialog],
-  ["orc-glow-field", OrcGlowField],
+  ["orc-input", OrcInput],
   ["orc-logomark", OrcLogomark],
   ["orc-navbar", OrcNavbar],
   ["orc-segmented", OrcSegmented],

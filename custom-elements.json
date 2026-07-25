@@ -4,6 +4,40 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/components/field-chrome.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "fieldChromeStyles",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
+          "parameters": [
+            {
+              "name": "control",
+              "type": {
+                "text": "FieldControl"
+              }
+            }
+          ],
+          "description": "The beam, the border, the focus rules and the label — everything both fields\nshare. Each component appends its own control-specific rules after this."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "fieldChromeStyles",
+          "declaration": {
+            "name": "fieldChromeStyles",
+            "module": "src/components/field-chrome.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-button.ts",
       "declarations": [
         {
@@ -80,8 +114,15 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "`<orc-chip>` is a compact status pill in one of the token colour families,\noptionally preceded by a status dot.",
+          "description": "`<orc-chip>` is a compact status label in one of the token colour families,\noptionally preceded by a status dot.",
           "name": "OrcChip",
+          "cssProperties": [
+            {
+              "description": "Corner radius. Set it to a pill radius for a capsule chip.",
+              "name": "--orc-radius-chip",
+              "default": "12px"
+            }
+          ],
           "slots": [
             {
               "description": "Chip label content.",
@@ -276,12 +317,12 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/orc-glow-field.ts",
+      "path": "src/components/orc-input.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "`<orc-glow-field>` is the composer textarea with an animated beam border —\n`<orc-textarea>`'s expressive sibling for primary input surfaces.",
-          "name": "OrcGlowField",
+          "description": "`<orc-input>` is Orc's single-line field — the same beam and green,\noutline-free focus border as `<orc-textarea>`. Set `label` for a visible\nlabel, or `aria-label` alone for a bare surface.",
+          "name": "OrcInput",
           "cssProperties": [
             {
               "description": "Current beam rotation angle (animated).",
@@ -294,12 +335,6 @@
             {
               "description": "Border colour of the resting field.",
               "name": "--orc-control-border"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Actions below the input; the footer row stays hidden while empty.",
-              "name": "footer"
             }
           ],
           "members": [
@@ -331,6 +366,27 @@
           ],
           "attributes": [
             {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Visible label text, wired to the input via for/id."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name used when no visible label is set."
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "string"
+              },
+              "description": "Native text-entry input type; anything else falls back to `text`."
+            },
+            {
               "name": "placeholder",
               "type": {
                 "text": "string"
@@ -338,35 +394,28 @@
               "description": "Native placeholder text."
             },
             {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "description": "Accessible name for the textarea."
-            },
-            {
               "name": "disabled",
               "type": {
                 "text": "boolean"
               },
-              "description": "Disables the inner textarea and stops the beam."
+              "description": "Disables the inner input."
             }
           ],
           "superclass": {
             "name": "HTMLElementBase",
-            "module": "src/components/orc-glow-field.ts"
+            "module": "src/components/orc-input.ts"
           },
-          "tagName": "orc-glow-field",
+          "tagName": "orc-input",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "OrcGlowField",
+          "name": "OrcInput",
           "declaration": {
-            "name": "OrcGlowField",
-            "module": "src/components/orc-glow-field.ts"
+            "name": "OrcInput",
+            "module": "src/components/orc-input.ts"
           }
         }
       ]
@@ -718,12 +767,30 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "`<orc-textarea>` is the plain labelled multi-line input — the quiet\ncounterpart to `<orc-glow-field>`.",
+          "description": "`<orc-textarea>` is Orc's multi-line field: an animated beam border, a green\nfocus border, and no focus outline in any path. Set `label` for a visible\nlabel, or `aria-label` alone for a bare composer surface.",
           "name": "OrcTextarea",
           "cssProperties": [
             {
               "description": "Minimum height of the textarea.",
               "name": "--orc-textarea-min-height"
+            },
+            {
+              "description": "Current beam rotation angle (animated).",
+              "name": "--orc-beam-angle"
+            },
+            {
+              "description": "Beam underlay colour behind the field.",
+              "name": "--orc-beam-underlay"
+            },
+            {
+              "description": "Border colour of the resting field.",
+              "name": "--orc-control-border"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Actions below the input; the footer row stays hidden while empty.",
+              "name": "footer"
             }
           ],
           "members": [
@@ -759,7 +826,14 @@
               "type": {
                 "text": "string"
               },
-              "description": "Visible label text, wired to the textarea."
+              "description": "Visible label text, wired to the textarea via for/id."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name used when no visible label is set."
             },
             {
               "name": "placeholder",
