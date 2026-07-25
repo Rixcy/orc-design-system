@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.0](https://github.com/Rixcy/orc-design-system/compare/v1.2.0...v1.3.0) (2026-07-25)
+
+
+### Features
+
+* **components:** reflect disabled and open as properties ([7456678](https://github.com/Rixcy/orc-design-system/commit/7456678ff8d662a563bec38fffc2762d6be8b5f0))
+
 ## [1.2.0](https://github.com/Rixcy/orc-design-system/compare/v1.1.0...v1.2.0) (2026-07-25)
 
 
