@@ -91,3 +91,18 @@ Consumers import token surfaces instead of copying hex values, so the swamp
 identity can evolve in one place. Ordinary UI color must always flow through the
 semantic `--orc-*` roles — the logo and icon artwork keep their own first-party
 colors and never define interface token meaning.
+
+## License
+
+The **code** — tokens, components, styles, and scripts — is [MIT](LICENSE). Fork
+it, ship it, sell it; keep the copyright notice.
+
+The **marks are not**. The Orc name and the emblem, icon, and lockup artwork
+(`orc-logo.svg`, `orc-icon.svg`, `orc-design-system-logo.svg`) are reserved — no
+trademark or brand licence is granted here. Build on the system, but use your own
+identity. See [`src/assets/ASSETS.md`](src/assets/ASSETS.md) for their provenance.
+
+The packaged fonts carry their own terms: Inter and JetBrains Mono are
+distributed under the SIL Open Font License 1.1 (see
+[`src/assets/fonts/PROVENANCE.md`](src/assets/fonts/PROVENANCE.md)). They are
+opt-in — the default stacks are the platform sans and mono.
