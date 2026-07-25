@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.1](https://github.com/Rixcy/orc-design-system/compare/v1.4.0...v1.4.1) (2026-07-25)
+
+
+### Bug Fixes
+
+* **orc-dialog:** collapse the chrome row for a bare dialog ([e178448](https://github.com/Rixcy/orc-design-system/commit/e178448d2bce89f8f6c38428de9e480f3c25b649))
+
 ## [1.4.0](https://github.com/Rixcy/orc-design-system/compare/v1.3.0...v1.4.0) (2026-07-25)
 
 
