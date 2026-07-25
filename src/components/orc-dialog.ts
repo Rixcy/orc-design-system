@@ -62,7 +62,9 @@ const template = `
       border-bottom: 1px solid var(--orc-border, #3b4540);
     }
 
-    header:empty {
+    /* :empty is not enough — the <h2> is always in the template, so the row
+       is never childless. The component hides it explicitly instead. */
+    header[hidden] {
       display: none;
     }
 
@@ -263,6 +265,7 @@ export class OrcDialog extends HTMLElementBase {
       this.renderHeading();
     } else if (name === "no-close") {
       this.syncCloseButton();
+      this.syncHeader();
     }
   }
 
@@ -347,6 +350,8 @@ export class OrcDialog extends HTMLElementBase {
     // the inner <dialog> directly — aria-label on the host would never reach
     // it across the shadow boundary. A visible heading always wins, so the two
     // can never disagree.
+    this.syncHeader();
+
     const label = this.getAttribute("label")?.trim() ?? "";
     if (label && !text) {
       dialog.setAttribute("aria-label", label);
@@ -355,9 +360,16 @@ export class OrcDialog extends HTMLElementBase {
     }
   }
 
-  // The close button is the only always-present child of <header>, so removing
-  // it lets the existing `header:empty` rule collapse the whole chrome row for
-  // a heading-less dialog — no separate "bare" mode to maintain.
+  // With no heading and no close button there is nothing left to show, so the
+  // whole row goes. Hiding it explicitly rather than leaning on :empty, which
+  // never matches while the template's <h2> is present.
+  private syncHeader(): void {
+    const header = this.shadowRoot?.querySelector("header");
+    if (!header) return;
+    const hasHeading = Boolean(this.getAttribute("heading")?.trim());
+    header.hidden = !hasHeading && this.hasAttribute("no-close");
+  }
+
   private syncCloseButton(): void {
     const existing = this.closeButton;
     const wanted = !this.hasAttribute("no-close");

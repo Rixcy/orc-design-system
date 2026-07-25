@@ -273,10 +273,29 @@ describe("orc-dialog", () => {
     document.body.append(host);
 
     expect(host.shadowRoot?.querySelector("button.close")).toBeNull();
-    // header:empty hides the row; with no heading and no button it is empty.
+    // Regression: :empty never matched here, because the template's <h2> is
+    // always a child. The row must be hidden explicitly or a bare dialog
+    // renders an empty bordered band above its content.
     const header = host.shadowRoot?.querySelector("header");
-    expect(header?.children.length ?? 1).toBe(1); // the always-present <h2>
-    expect(header?.querySelector("h2")?.textContent).toBe("");
+    expect(header?.hidden).toBe(true);
+  });
+
+  it("keeps the chrome row when a heading is present, even with no-close", () => {
+    const host = createDialog("Still titled");
+    host.setAttribute("no-close", "");
+    const header = host.shadowRoot?.querySelector("header");
+    expect(header?.hidden).toBe(false);
+  });
+
+  it("brings the chrome row back when a heading is added to a bare dialog", () => {
+    const host = document.createElement("orc-dialog") as OrcDialog;
+    host.setAttribute("no-close", "");
+    host.setAttribute("label", "Bare");
+    document.body.append(host);
+    expect(host.shadowRoot?.querySelector("header")?.hidden).toBe(true);
+
+    host.setAttribute("heading", "Now titled");
+    expect(host.shadowRoot?.querySelector("header")?.hidden).toBe(false);
   });
 
   it("restores a working close button when no-close is removed", () => {
