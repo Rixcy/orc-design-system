@@ -88,7 +88,8 @@ const template = `
       }
     }
 
-    @container (max-width: 24rem) {
+    /* Below phone width there is no room to keep actions beside the brand. */
+    @container (max-width: 20rem) {
       nav {
         grid-template-columns: minmax(0, 1fr);
       }
