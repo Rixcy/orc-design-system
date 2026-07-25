@@ -126,6 +126,18 @@ export class OrcButton extends HTMLElementBase {
     this.render();
   }
 
+  // Reflected so `el.disabled = true` behaves the way it does on a native
+  // button. Without it the assignment silently defines a plain expando
+  // property: the attribute never lands, and the control stays clickable
+  // while reading as disabled in code — a failure with nothing to notice.
+  get disabled(): boolean {
+    return this.hasAttribute("disabled");
+  }
+
+  set disabled(next: boolean) {
+    this.toggleAttribute("disabled", Boolean(next));
+  }
+
   private get button(): HTMLButtonElement | null {
     return this.shadowRoot?.querySelector("button") ?? null;
   }

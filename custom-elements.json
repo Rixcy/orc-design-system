@@ -16,7 +16,15 @@
               "name": ""
             }
           ],
-          "members": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              }
+            }
+          ],
           "attributes": [
             {
               "name": "disabled",
@@ -146,6 +154,13 @@
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              }
+            },
             {
               "kind": "method",
               "name": "show",

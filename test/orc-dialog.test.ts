@@ -221,4 +221,28 @@ describe("orc-dialog", () => {
     expect(secondId).toBeTruthy();
     expect(firstId).not.toBe(secondId);
   });
+  // Mirrors HTMLDialogElement.open. Code migrating off a native <dialog>
+  // reads dialog.open; returning undefined would quietly invert its guards.
+  it("reflects the open property in both directions", () => {
+    const host = createDialog("Reflected");
+    const dialog = getDialogEl(host);
+
+    expect(host.open).toBe(false);
+
+    host.open = true;
+    expect(host.hasAttribute("open")).toBe(true);
+    if (supportsShowModal) expect(dialog.open).toBe(true);
+
+    host.open = false;
+    expect(host.hasAttribute("open")).toBe(false);
+    if (supportsShowModal) expect(dialog.open).toBe(false);
+  });
+
+  it("keeps the open property in step with show() and close()", () => {
+    const host = createDialog("In step");
+    host.show();
+    expect(host.open).toBe(true);
+    host.close();
+    expect(host.open).toBe(false);
+  });
 });
