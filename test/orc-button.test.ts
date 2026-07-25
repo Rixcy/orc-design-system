@@ -14,8 +14,8 @@ afterEach(() => {
   document.body.replaceChildren();
 });
 
-function createButton(): HTMLElement {
-  const button = document.createElement("orc-button");
+function createButton(): OrcButton {
+  const button = document.createElement("orc-button") as OrcButton;
   document.body.append(button);
   return button;
 }
@@ -111,5 +111,39 @@ describe("orc-button", () => {
     const styleText = host.shadowRoot?.querySelector("style")?.textContent ?? "";
     expect(styleText).toMatch(/button:focus-visible\s*\{/);
     expect(styleText).not.toMatch(/button:focus\s*\{/);
+  });
+  // Regression: orc-ui assigns `.disabled = ...` in ~70 places. Before this
+  // property existed the assignment defined an expando, the attribute never
+  // landed, and the inner button stayed clickable.
+  it("reflects the disabled property onto the attribute and the inner button", () => {
+    const host = createButton();
+    const button = host.shadowRoot?.querySelector("button");
+
+    expect(host.disabled).toBe(false);
+
+    host.disabled = true;
+    expect(host.hasAttribute("disabled")).toBe(true);
+    expect(button?.disabled).toBe(true);
+
+    host.disabled = false;
+    expect(host.hasAttribute("disabled")).toBe(false);
+    expect(button?.disabled).toBe(false);
+  });
+
+  it("reads the disabled property back from the attribute", () => {
+    const host = createButton();
+    host.setAttribute("disabled", "");
+    expect(host.disabled).toBe(true);
+    host.removeAttribute("disabled");
+    expect(host.disabled).toBe(false);
+  });
+
+  it("does not fire click while disabled via the property", () => {
+    const host = createButton();
+    let clicks = 0;
+    host.addEventListener("click", () => { clicks += 1; });
+    host.disabled = true;
+    host.shadowRoot?.querySelector("button")?.click();
+    expect(clicks).toBe(0);
   });
 });

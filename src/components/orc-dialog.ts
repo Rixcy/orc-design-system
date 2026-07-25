@@ -241,6 +241,17 @@ export class OrcDialog extends HTMLElementBase {
     }
   }
 
+  // Mirrors HTMLDialogElement.open. Code migrating off a native <dialog>
+  // reads `dialog.open` as a matter of course; without this it silently
+  // returns undefined, so an `if (dialog.open)` guard quietly inverts.
+  get open(): boolean {
+    return this.hasAttribute("open");
+  }
+
+  set open(next: boolean) {
+    this.toggleAttribute("open", Boolean(next));
+  }
+
   show(): void {
     if (!this.hasAttribute("open")) {
       this.setAttribute("open", "");
