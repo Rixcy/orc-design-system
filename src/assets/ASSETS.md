@@ -23,3 +23,9 @@ define interface token meaning.
 Logo and icon artwork retain their first-party colors. Those colors may compose
 palette hues as art, but do not define interface token meaning. Ordinary UI
 color must continue through the semantic `--orc-*` tokens.
+
+## Licensing
+
+These marks are **not** covered by the repository's MIT licence. The Orc name and
+the emblem, icon, and lockup artwork are reserved; no trademark or brand licence
+is granted. The MIT terms cover the code only — see the README's License section.
