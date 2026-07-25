@@ -1,6 +1,6 @@
 {
   "name": "@orc/design-system",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Framework-neutral Orc design system foundations and Web Components.",
   "private": true,
   "type": "module",
