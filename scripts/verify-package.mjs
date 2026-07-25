@@ -106,8 +106,23 @@ for (const [file, expectedHash] of sourceHashes) {
 }
 
 const packagedTokens = JSON.parse(await readFile(resolve(root, 'dist/tokens.json'), 'utf8'));
-if (JSON.stringify(Object.keys(packagedTokens)) !== JSON.stringify(['day', 'night'])) {
-  throw new Error('tokens.json must expose ordered day and night palettes.');
+if (JSON.stringify(Object.keys(packagedTokens)) !== JSON.stringify(['day', 'night', 'derived'])) {
+  throw new Error('tokens.json must expose ordered day and night palettes plus derived roles.');
+}
+if (JSON.stringify(Object.keys(packagedTokens.derived)) !== JSON.stringify(['day', 'night'])) {
+  throw new Error('tokens.json must resolve derived roles for day and night.');
+}
+
+const derivedRoles = [
+  'gate', 'muted-strong', 'accent-text', 'red-text', 'yellow-text', 'green-text', 'purple-text',
+  'cyan-text', 'orange-text', 'accent-strong', 'control-border', 'button-hover',
+  'button-hover-chip', 'button-hover-strong',
+];
+for (const [theme, palette] of Object.entries(packagedTokens.derived)) {
+  const missing = derivedRoles.filter((role) => !/^#[0-9a-f]{6}$/.test(palette[role]));
+  if (missing.length > 0 || Object.keys(palette).length !== derivedRoles.length) {
+    throw new Error(`tokens.json derived.${theme} must resolve exactly the derived roles to hex colors (bad: ${missing.join(', ') || 'role count'}).`);
+  }
 }
 
 console.log(`Verified ${actualExports.length} exports, ${expectedFiles.length} package files, curated design guidance, and source provenance.`);

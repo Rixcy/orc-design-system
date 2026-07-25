@@ -1,9 +1,10 @@
-import { copyFile, mkdir, readFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
+
+import { buildTokens, readPalettes } from './sync-theme.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const copies = [
-  ['src/theme/orc-tokens.json', 'dist/tokens.json'],
   ['src/styles/tokens.css', 'dist/tokens.css'],
   ['src/styles/components.css', 'dist/components.css'],
   ['src/styles/fonts.css', 'dist/fonts.css'],
@@ -30,6 +31,12 @@ for (const [sourcePath, outputPath] of copies) {
   await mkdir(dirname(output), { recursive: true });
   await copyFile(source, output);
 }
+
+// tokens.json is generated, not copied: consumers get the raw palettes plus the
+// derived roles that only existed as color-mix() recipes in tokens.css.
+const tokensOutput = resolve(root, 'dist/tokens.json');
+await mkdir(dirname(tokensOutput), { recursive: true });
+await writeFile(tokensOutput, `${JSON.stringify(buildTokens(await readPalettes()), null, 2)}\n`);
 
 // vite-plugin-dts preserves source structure. Add the public controller alias
 // while retaining dist/theme/controller.d.ts for root declaration re-exports.
