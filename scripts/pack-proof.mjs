@@ -56,7 +56,11 @@ const requiredPaths = [
   'dist/tokens.css',
   'dist/components.css',
   'dist/fonts.css',
+  'dist/scrollbar.css',
+  'dist/typography.css',
   'dist/preflight.js',
+  'LICENSE',
+  'README.md',
   'dist/assets/orc-logo.svg',
   'dist/assets/orc-icon.svg',
   'dist/assets/ASSETS.md',
@@ -75,19 +79,15 @@ const generatedPaths = [
   'dist/controller.js.map',
   'dist/define.d.ts.map',
   'dist/index.d.ts.map',
-  'dist/components/orc-navbar.d.ts',
-  'dist/components/orc-navbar.d.ts.map',
-  'dist/components/orc-theme-toggle.d.ts',
-  'dist/components/orc-theme-toggle.d.ts.map',
-  'dist/theme/controller.d.ts',
-  'dist/theme/controller.d.ts.map',
-  'dist/theme/registry.d.ts',
-  'dist/theme/registry.d.ts.map',
 ];
+// ponytail: per-component and per-theme declarations are tsc output that grows with
+// every new component — match the shape instead of relisting them on each addition.
+const declarationPattern = /^dist\/(components|theme)\/[a-z-]+\.d\.ts(\.map)?$/u;
 const exactPaths = new Set([...requiredPaths, ...generatedPaths]);
 const chunkPattern = /^dist\/(define|registry)-[A-Za-z0-9_-]+\.js$/u;
 const unexpected = [...packedPaths].filter((path) => (
   !exactPaths.has(path)
+  && !declarationPattern.test(path)
   && !chunkPattern.test(path)
   && !chunkPattern.test(path.replace(/\.map$/u, ''))
 ));
