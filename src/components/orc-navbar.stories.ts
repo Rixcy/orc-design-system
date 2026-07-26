@@ -22,7 +22,7 @@ function createLink(label: string, href: string): HTMLAnchorElement {
 
 function renderNavbar(
   args: NavbarArgs,
-  options: { longContent?: boolean; narrow?: boolean; slots?: boolean } = {},
+  options: { lockup?: boolean; longContent?: boolean; narrow?: boolean; slots?: boolean } = {},
 ): HTMLElement {
   const surface = document.createElement("div");
   surface.className = "story-surface";
@@ -44,6 +44,11 @@ function renderNavbar(
     action.type = "button";
     action.textContent = "Open Installation Instructions";
     navbar.append(action);
+  } else if (options.lockup) {
+    const lockup = document.createElement("orc-logomark");
+    lockup.slot = "brand";
+    lockup.setAttribute("product", "design-system");
+    navbar.append(lockup, createLink("Foundations", "#foundations"), createLink("Components", "#components"));
   } else if (options.slots) {
     const brand = document.createElement("a");
     brand.className = "story-nav-link";
@@ -108,6 +113,32 @@ export const SlottedContent: Story = {
       "aria-label",
       "Orc Platform home",
     );
+  },
+};
+
+export const BrandLockup: Story = {
+  render: (args) => renderNavbar(args, { lockup: true }),
+  parameters: {
+    docs: {
+      description: {
+        story: "The canonical site header: `<orc-logomark>` slotted as the brand.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector("orc-navbar");
+    const nav = host?.shadowRoot?.querySelector("nav");
+    const lockup = host?.querySelector("orc-logomark");
+    if (!nav || !lockup) throw new Error("Expected navbar grid and slotted lockup.");
+
+    // The lockup is inline-flex: a block .brand would drop it on a line box,
+    // where the strut descender rides it ~3 px above the row's centre.
+    const row = nav.getBoundingClientRect();
+    const brand = lockup.getBoundingClientRect();
+    const offset = Math.abs(
+      (brand.top + brand.bottom) / 2 - (row.top + row.bottom) / 2,
+    );
+    await expect(offset).toBeLessThanOrEqual(1);
   },
 };
 
