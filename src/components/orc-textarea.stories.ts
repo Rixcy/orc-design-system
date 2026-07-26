@@ -111,17 +111,23 @@ export const WithoutFooter: Story = {
 export const Focused: Story = {
   play: async ({ canvasElement }) => {
     // Focus is border-only however you reach the field: no outline from the
-    // keyboard and none from a click.
-    const field = canvasElement.querySelector("orc-textarea");
+    // keyboard and none from a click — on the host as much as inside it, since
+    // focus retargets to the host and the UA rings whatever it lands on.
+    const field = canvasElement.querySelector("orc-textarea")!;
     const textarea = getTextarea(field);
-    const wrapper = field!.shadowRoot!.querySelector(".field")!;
+    const wrapper = field.shadowRoot!.querySelector(".field")!;
 
     textarea.focus();
     await expect(getComputedStyle(wrapper).outlineStyle).toBe("none");
+    await expect(getComputedStyle(field).outlineStyle).toBe("none");
 
+    // A click on a text control still matches :focus-visible, so this is the
+    // path where a UA ring would appear — on the host as well as the control.
     await userEvent.click(textarea);
+    await expect(textarea.matches(":focus-visible")).toBe(true);
     await expect(getComputedStyle(wrapper).outlineStyle).toBe("none");
     await expect(getComputedStyle(textarea).outlineStyle).toBe("none");
+    await expect(getComputedStyle(field).outlineStyle).toBe("none");
   },
 };
 

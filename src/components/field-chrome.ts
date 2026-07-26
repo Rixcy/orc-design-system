@@ -3,9 +3,10 @@
  *
  * One beam, one focus contract, written once. Focus is border-only: the border
  * goes green and the beam's green underlay lights, with no outline in any focus
- * path — the resting state of Orc desktop's composer, which is what these
- * fields are meant to look like. Forced-colors keeps a `Highlight` border so
- * high-contrast users still get a system-drawn cue.
+ * path — control, wrapper or host — the resting state of Orc desktop's
+ * composer, which is what these fields are meant to look like. Forced-colors
+ * keeps a `Highlight` border so high-contrast users still get a system-drawn
+ * cue.
  */
 
 export type FieldControl = "textarea" | "input";
@@ -94,6 +95,14 @@ export function fieldChromeStyles(control: FieldControl): string {
     /* The inner control already has \`outline: 0\`; this also drops the outline
        the UA would draw on the wrapper if a consumer made it focusable. */
     .field:focus-visible {
+      outline: none;
+    }
+
+    /* Focus inside a shadow tree retargets to the host, so the UA can draw its
+       own ring around the whole element — the one focus path the two rules
+       above can't reach. \`:focus\` covers \`:focus-visible\` too, which is the
+       state a keyboard-drawn ring would use. */
+    :host(:focus) {
       outline: none;
     }
 
