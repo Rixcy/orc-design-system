@@ -103,6 +103,20 @@ describe("orc-button", () => {
     );
   });
 
+  it("tints ghost's hover and pressed states from the green family, not the accent", () => {
+    // Ghost shares primary's colour family — the accent blue it used to borrow
+    // read as a second action colour on a page with one.
+    const host = createButton();
+    const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
+
+    for (const state of ["hover", "active"]) {
+      const rule = css.slice(css.indexOf(`:host([variant="ghost"]) button:${state}`));
+      const body = rule.slice(0, rule.indexOf("}"));
+      expect(body).toContain("--orc-green");
+      expect(body).not.toContain("--orc-accent");
+    }
+  });
+
   it("bubbles native click events from the inner button through the host", () => {
     const host = createButton();
     const button = getButton(host);
