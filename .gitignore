@@ -13,3 +13,14 @@ fixtures/vite-consumer/public/orc-preflight.js
 .DS_Store
 site-dist/
 fixtures/vite-consumer/bun.lock
+
+# local agent tooling config — never tracked.
+# .impeccable/design.json is the tracked design contract (build + tests read it).
+.claude/
+.codex/
+.cursor/
+.agents/
+AGENTS.md
+CLAUDE.md
+.impeccable/*
+!.impeccable/design.json
