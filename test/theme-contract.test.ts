@@ -91,6 +91,63 @@ describe("Orc theme contract", () => {
     expect(css).toContain("--orc-focus-ring:");
   });
 
+  it("packages derived roles as resolved hex for both themes", () => {
+    const result = spawnSync(
+      process.execPath,
+      [
+        "-e",
+        "const m = await import('./scripts/sync-theme.mjs');"
+          + " console.log(JSON.stringify(m.buildTokens(await m.readPalettes())));",
+      ],
+      { cwd: root, encoding: "utf8" },
+    );
+
+    expect(result.stderr).toBe("");
+    const tokens = JSON.parse(result.stdout);
+
+    expect(Object.keys(tokens)).toEqual(["day", "night", "derived"]);
+    expect(tokens.day).toEqual(expected.day);
+    expect(tokens.night).toEqual(expected.night);
+
+    expect(tokens.derived.day).toEqual({
+      gate: mix(expected.day.orange, expected.day.heading, 0.6),
+      "muted-strong": mix(expected.day.muted, expected.day.heading, 0.45),
+      "accent-text": mix(expected.day.accent, expected.day.heading, 0.7),
+      "red-text": mix(expected.day.red, expected.day.heading, 0.6),
+      "yellow-text": mix(expected.day.yellow, expected.day.heading, 0.7),
+      "green-text": mix(expected.day.green, expected.day.heading, 0.7),
+      "purple-text": mix(expected.day.purple, expected.day.heading, 0.65),
+      "cyan-text": mix(expected.day.cyan, expected.day.heading, 0.6),
+      "orange-text": mix(expected.day.orange, expected.day.heading, 0.6),
+      "accent-strong": mix(expected.day.accent, expected.day.heading, 0.7),
+      "control-border": mix(expected.day.border, expected.day.heading, 0.65),
+      "button-hover": mix(expected.day.accent, expected.day.bg, 0.1),
+      "button-hover-chip": mix(expected.day.accent, expected.day.chip, 0.12),
+      "button-hover-strong": mix(
+        mix(expected.day.accent, expected.day.heading, 0.7),
+        expected.day.heading,
+        0.86,
+      ),
+    });
+
+    expect(tokens.derived.night).toEqual({
+      gate: expected.night.orange,
+      "muted-strong": mix(expected.night.muted, expected.night.heading, 0.45),
+      "accent-text": expected.night.accent,
+      "red-text": expected.night.red,
+      "yellow-text": expected.night.yellow,
+      "green-text": expected.night.green,
+      "purple-text": expected.night.purple,
+      "cyan-text": expected.night.cyan,
+      "orange-text": expected.night.orange,
+      "accent-strong": expected.night.accent,
+      "control-border": mix(expected.night.border, expected.night.heading, 0.65),
+      "button-hover": mix(expected.night.accent, expected.night.bg, 0.1),
+      "button-hover-chip": mix(expected.night.accent, expected.night.chip, 0.12),
+      "button-hover-strong": mix(expected.night.accent, expected.night.heading, 0.86),
+    });
+  });
+
   it("keeps design guidance aligned with every swamp role", async () => {
     const designSource = await readFile(resolve(root, ".impeccable/design.json"), "utf8");
     const design = JSON.parse(designSource);

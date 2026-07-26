@@ -1,32 +1,121 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, realpath, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const sourcePath = resolve(root, "src/theme/orc-tokens.json");
 const targetPath = resolve(root, "src/styles/tokens.css");
-const mode = process.argv[2] ?? "--check";
 
-if (!["--check", "--write"].includes(mode) || process.argv.length > 3) {
-  console.error("Usage: node scripts/sync-theme.mjs [--check|--write]");
-  process.exitCode = 2;
-} else {
+// Derived roles, declared once so the stylesheet and the packaged JSON cannot drift.
+// `mix(a, percent, b)` mirrors CSS `color-mix(in srgb, …)`; `alias(role)` mirrors `var(--orc-role)`.
+const themeDerivations = {
+  day: {
+    gate: mix("orange", 60, "heading"),
+    "muted-strong": mix("muted", 45, "heading"),
+    "accent-text": mix("accent", 70, "heading"),
+    "red-text": mix("red", 60, "heading"),
+    "yellow-text": mix("yellow", 70, "heading"),
+    "green-text": mix("green", 70, "heading"),
+    "purple-text": mix("purple", 65, "heading"),
+    "cyan-text": mix("cyan", 60, "heading"),
+    "orange-text": mix("orange", 60, "heading"),
+    "accent-strong": mix("accent", 70, "heading"),
+  },
+  night: {
+    gate: alias("orange"),
+    "muted-strong": mix("muted", 45, "heading"),
+    "accent-text": alias("accent"),
+    "red-text": alias("red"),
+    "yellow-text": alias("yellow"),
+    "green-text": alias("green"),
+    "purple-text": alias("purple"),
+    "cyan-text": alias("cyan"),
+    "orange-text": alias("orange"),
+    "accent-strong": alias("accent"),
+  },
+};
+
+// Declared once on :root; they reference theme-dependent roles, so they resolve per theme.
+const sharedDerivations = {
+  "control-border": mix("border", 65, "heading"),
+  "button-hover": mix("accent", 10, "bg"),
+  "button-hover-chip": mix("accent", 12, "chip"),
+  "button-hover-strong": mix("accent-strong", 86, "heading"),
+};
+
+export async function readPalettes() {
   const palettes = JSON.parse(await readFile(sourcePath, "utf8"));
   validatePalettes(palettes);
-  const desired = renderCss(palettes);
-  const current = await readFile(targetPath, "utf8").catch((error) => {
-    if (error?.code === "ENOENT") return "";
-    throw error;
-  });
+  return palettes;
+}
 
-  if (current === desired) {
-    console.log("Theme CSS is synchronized.");
-  } else if (mode === "--write") {
-    await writeFile(targetPath, desired);
-    console.log("Synchronized src/styles/tokens.css.");
+/** Packaged token payload: the raw day/night palettes plus resolved derived roles. */
+export function buildTokens(palettes) {
+  return {
+    ...palettes,
+    derived: {
+      day: resolveDerivations(palettes.day, themeDerivations.day),
+      night: resolveDerivations(palettes.night, themeDerivations.night),
+    },
+  };
+}
+
+// realpath, not argv[1] directly: a symlinked invocation path would otherwise skip
+// the CLI silently and let `theme:check` report success without checking anything.
+const invokedPath = process.argv[1]
+  ? await realpath(process.argv[1]).catch(() => process.argv[1])
+  : "";
+
+if (invokedPath === import.meta.filename) {
+  const mode = process.argv[2] ?? "--check";
+
+  if (!["--check", "--write"].includes(mode) || process.argv.length > 3) {
+    console.error("Usage: node scripts/sync-theme.mjs [--check|--write]");
+    process.exitCode = 2;
   } else {
-    console.error("src/styles/tokens.css has drifted. Run `bun run theme:write`.");
-    process.exitCode = 1;
+    const desired = renderCss(await readPalettes());
+    const current = await readFile(targetPath, "utf8").catch((error) => {
+      if (error?.code === "ENOENT") return "";
+      throw error;
+    });
+
+    if (current === desired) {
+      console.log("Theme CSS is synchronized.");
+    } else if (mode === "--write") {
+      await writeFile(targetPath, desired);
+      console.log("Synchronized src/styles/tokens.css.");
+    } else {
+      console.error("src/styles/tokens.css has drifted. Run `bun run theme:write`.");
+      process.exitCode = 1;
+    }
   }
+}
+
+function mix(from, percent, to) {
+  return { from, percent, to };
+}
+
+function alias(role) {
+  return { from: role, percent: 100, to: role };
+}
+
+function resolveDerivations(palette, themeRecipes) {
+  const resolved = {};
+  const lookup = (role) => palette[role] ?? resolved[role];
+  // Theme recipes first: shared `button-hover-strong` mixes the derived `accent-strong`.
+  for (const [role, recipe] of [...Object.entries(themeRecipes), ...Object.entries(sharedDerivations)]) {
+    resolved[role] = mixHex(lookup(recipe.from), lookup(recipe.to), recipe.percent / 100);
+  }
+  return resolved;
+}
+
+/** CSS `color-mix(in srgb, …)` over two opaque colors is a component-wise sRGB mix. */
+function mixHex(first, second, firstWeight) {
+  const channels = [1, 3, 5].map((offset) => {
+    const a = Number.parseInt(first.slice(offset, offset + 2), 16);
+    const b = Number.parseInt(second.slice(offset, offset + 2), 16);
+    return Math.round(a * firstWeight + b * (1 - firstWeight)).toString(16).padStart(2, "0");
+  });
+  return `#${channels.join("")}`;
 }
 
 function validatePalettes(palettes) {
@@ -107,34 +196,21 @@ function renderPalette(palette, indent) {
 }
 
 function renderDayDerivations(indent) {
-  return `${indent}--orc-gate: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
-${indent}--orc-muted-strong: color-mix(in srgb, var(--orc-muted) 45%, var(--orc-heading));
-${indent}--orc-accent-text: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
-${indent}--orc-red-text: color-mix(in srgb, var(--orc-red) 60%, var(--orc-heading));
-${indent}--orc-yellow-text: color-mix(in srgb, var(--orc-yellow) 70%, var(--orc-heading));
-${indent}--orc-green-text: color-mix(in srgb, var(--orc-green) 70%, var(--orc-heading));
-${indent}--orc-purple-text: color-mix(in srgb, var(--orc-purple) 65%, var(--orc-heading));
-${indent}--orc-cyan-text: color-mix(in srgb, var(--orc-cyan) 60%, var(--orc-heading));
-${indent}--orc-orange-text: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
-${indent}--orc-accent-strong: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));`;
+  return renderDerivations(themeDerivations.day, indent);
 }
 
 function renderNightDerivations(indent) {
-  return `${indent}--orc-gate: var(--orc-orange);
-${indent}--orc-muted-strong: color-mix(in srgb, var(--orc-muted) 45%, var(--orc-heading));
-${indent}--orc-accent-text: var(--orc-accent);
-${indent}--orc-red-text: var(--orc-red);
-${indent}--orc-yellow-text: var(--orc-yellow);
-${indent}--orc-green-text: var(--orc-green);
-${indent}--orc-purple-text: var(--orc-purple);
-${indent}--orc-cyan-text: var(--orc-cyan);
-${indent}--orc-orange-text: var(--orc-orange);
-${indent}--orc-accent-strong: var(--orc-accent);`;
+  return renderDerivations(themeDerivations.night, indent);
 }
 
 function renderSharedDerivations(indent) {
-  return `${indent}--orc-control-border: color-mix(in srgb, var(--orc-border) 65%, var(--orc-heading));
-${indent}--orc-button-hover: color-mix(in srgb, var(--orc-accent) 10%, var(--orc-bg));
-${indent}--orc-button-hover-chip: color-mix(in srgb, var(--orc-accent) 12%, var(--orc-chip));
-${indent}--orc-button-hover-strong: color-mix(in srgb, var(--orc-accent-strong) 86%, var(--orc-heading));`;
+  return renderDerivations(sharedDerivations, indent);
+}
+
+function renderDerivations(recipes, indent) {
+  return Object.entries(recipes)
+    .map(([role, { from, percent, to }]) => (percent === 100
+      ? `${indent}--orc-${role}: var(--orc-${from});`
+      : `${indent}--orc-${role}: color-mix(in srgb, var(--orc-${from}) ${percent}%, var(--orc-${to}));`))
+    .join("\n");
 }

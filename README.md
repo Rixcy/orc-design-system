@@ -61,17 +61,19 @@ defineOrcElements();
 // <orc-navbar> and <orc-theme-toggle> are now usable in your markup.
 ```
 
-Non-CSS consumers can read the raw palette directly:
+Non-CSS consumers can read the palette directly, including the derived roles
+resolved to hex per theme:
 
 ```ts
 import tokens from "@orc/design-system/tokens.json";
 
 const lightThemeColor = tokens.day.bg;
 const darkThemeColor = tokens.night.bg;
+const lightGate = tokens.derived.day.gate;
 ```
 
 See [`docs/theme-consumption.md`](docs/theme-consumption.md) for the full theming
-contract and the list of derived CSS roles.
+contract and the list of derived roles.
 
 ## Develop
 

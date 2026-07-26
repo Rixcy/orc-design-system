@@ -25,18 +25,24 @@ consumer offers a persisted theme choice.
 
 ## JSON
 
-Build tools and non-CSS consumers can import the raw palette:
+Build tools and non-CSS consumers can import the palette:
 
 ```ts
 import tokens from "@orc/design-system/tokens.json";
 
 const lightThemeColor = tokens.day.bg;
 const darkThemeColor = tokens.night.bg;
+const lightGate = tokens.derived.day.gate;
 ```
 
-The stable raw schema is `{ day, night }`. CSS maps `day` to light and `night`
-to dark. Derived CSS roles are intentionally absent from JSON: the package
-generator computes them from the 16 raw semantic colors.
+The schema is `{ day, night, derived }`. CSS maps `day` to light and `night` to
+dark; both hold the 16 raw semantic roles. `derived.day` and `derived.night`
+hold the roles the stylesheet builds with `color-mix()` — `gate`,
+`muted-strong`, the six `*-text` roles, `accent-strong`, `control-border`, and
+the three `button-hover*` roles — resolved to hex per theme, so consumers that
+cannot evaluate `color-mix()` (Figma, native, React Native) get the colors the
+stylesheet actually renders. One generator (`scripts/sync-theme.mjs`) emits both
+surfaces, so JSON and CSS cannot drift.
 
 ## Brand assets
 
