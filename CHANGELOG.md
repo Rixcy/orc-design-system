@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0](https://github.com/Rixcy/orc-design-system/compare/v1.5.0...v2.0.0) (2026-07-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **orc-textarea,orc-input:** `<orc-glow-field>` and the `OrcGlowField` export are
+removed. Use `<orc-textarea>` with `aria-label` and a `footer` slot. The
+`suppress-focus-ring` attribute is gone too — there is no focus ring left
+to suppress.
+
+### Features
+
+* **orc-chip,orc-button:** link chips, §5 chip size, --orc-button-text ([15f1f4f](https://github.com/Rixcy/orc-design-system/commit/15f1f4f12efc4522108a70849060af1bdf657b4e))
+* **orc-glow-field:** document at composer scale and take app-composer knobs ([4e56f7a](https://github.com/Rixcy/orc-design-system/commit/4e56f7aa613f28126a6ea8769917c54a661d45a7))
+* **orc-textarea,orc-input:** one glowing field surface ([1757dc2](https://github.com/Rixcy/orc-design-system/commit/1757dc29a2461429653c2f34ce62e4acd1d9b14e))
+* **tokens:** emit derived roles in dist/tokens.json ([44d9d87](https://github.com/Rixcy/orc-design-system/commit/44d9d87e2b46279004386a17f86a812e28d86c0f))
+
+
+### Bug Fixes
+
+* **docs:** use the themed logomark on the Storybook intro page ([0c6ee46](https://github.com/Rixcy/orc-design-system/commit/0c6ee46e731c35228e998a080ace5f0d09cd76f0))
+* **orc-glow-field:** drop the description IDREF when there is no description ([2a4df7b](https://github.com/Rixcy/orc-design-system/commit/2a4df7bdec89eaaa58d208e0778c0f46bc932238))
+* **orc-navbar:** keep actions beside the brand at phone width ([03912ca](https://github.com/Rixcy/orc-design-system/commit/03912ca44a427a75ad0d8f27b108dc478235bb04))
+* **orc-navbar:** reflow off the component's own width, not the viewport ([1cdbed3](https://github.com/Rixcy/orc-design-system/commit/1cdbed3bd8393b4ded5c65b7ddfd1ef165d352b2))
+
 ## [1.5.0](https://github.com/Rixcy/orc-design-system/compare/v1.4.2...v1.5.0) (2026-07-25)
 
 
