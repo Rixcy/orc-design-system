@@ -301,6 +301,16 @@
             {
               "description": "Border colour of the resting field.",
               "name": "--orc-control-border"
+            },
+            {
+              "description": "Minimum height of the textarea.",
+              "name": "--orc-glow-field-min-height",
+              "default": "82px"
+            },
+            {
+              "description": "Font size of the textarea.",
+              "name": "--orc-glow-field-font-size",
+              "default": "13px"
             }
           ],
           "slots": [
@@ -334,6 +344,15 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "field",
+              "name": "textarea",
+              "type": {
+                "text": "HTMLTextAreaElement | null"
+              },
+              "description": "The native textarea, so an app can wire its own listeners and attachment plumbing to it.",
+              "readonly": true
             }
           ],
           "attributes": [
@@ -357,6 +376,27 @@
                 "text": "boolean"
               },
               "description": "Disables the inner textarea and stops the beam."
+            },
+            {
+              "name": "rows",
+              "type": {
+                "text": "number"
+              },
+              "description": "Native textarea `rows`, for app composers that size by line count."
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "description": "Extra hint announced with the textarea (rendered visually hidden; the visible copy belongs in the footer)."
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Drops the keyboard focus ring; the beam still lights and quickens on focus.",
+              "name": "suppress-focus-ring"
             }
           ],
           "superclass": {

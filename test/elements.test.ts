@@ -164,6 +164,29 @@ describe("orc-glow-field", () => {
     expect(footer.hidden).toBe(false);
   });
 
+  it("takes the app-composer knobs: rows, description and a public textarea", () => {
+    const field = document.createElement("orc-glow-field");
+    field.setAttribute("rows", "4");
+    field.setAttribute("description", "Enter to start");
+    document.body.append(field);
+
+    const textarea = field.shadowRoot!.querySelector("textarea")!;
+    expect(textarea.getAttribute("rows")).toBe("4");
+    expect((field as { textarea?: HTMLTextAreaElement }).textarea).toBe(textarea);
+
+    const description = field.shadowRoot!.querySelector<HTMLElement>(
+      ".description",
+    )!;
+    expect(textarea.getAttribute("aria-describedby")).toBe(description.id);
+    expect(description.textContent).toBe("Enter to start");
+    expect(description.hidden).toBe(false);
+
+    // No description means no IDREF: an empty one describes worse than none.
+    field.removeAttribute("description");
+    expect(description.hidden).toBe(true);
+    expect(textarea.hasAttribute("aria-describedby")).toBe(false);
+  });
+
   it("binds the keyboard focus ring to the accent token, not green", () => {
     // Regression guard: the focus-visible outline must use --orc-accent so it
     // reads as one blue ring over the green beam edge (matching orc's

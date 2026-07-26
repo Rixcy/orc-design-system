@@ -1,3 +1,5 @@
+let instanceCount = 0;
+
 const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
@@ -54,6 +56,8 @@ const template = `
 
     @media (prefers-reduced-motion: no-preference) {
       .field::before { animation: orc-beam 7s linear infinite; }
+      /* Focus quickens the beam — the always-on cue that survives ring suppression. */
+      .field:has(textarea:focus)::before { animation-duration: 3s; }
     }
 
     :host(:not([suppress-focus-ring])) .field:has(textarea:focus-visible) {
@@ -73,7 +77,7 @@ const template = `
     textarea {
       display: block;
       width: 100%;
-      min-height: 82px;
+      min-height: var(--orc-glow-field-min-height, 82px);
       resize: vertical;
       box-sizing: border-box;
       padding: 13px 14px 8px;
@@ -82,8 +86,21 @@ const template = `
       background: transparent;
       color: var(--orc-text, #c7cfca);
       font: inherit;
-      font-size: 13px;
+      font-size: var(--orc-glow-field-font-size, 13px);
       line-height: 1.5;
+    }
+
+    /* Same screen-reader-only treatment as <orc-status-dot>'s .sr-only. */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     textarea:disabled {
@@ -131,6 +148,7 @@ const template = `
   </style>
   <div class="field">
     <textarea></textarea>
+    <p class="sr-only description" hidden></p>
     <footer hidden><slot name="footer"></slot></footer>
   </div>
 `;
@@ -143,15 +161,22 @@ const template = `
  * @attr {string} label - Accessible name for the textarea.
  * @attr {string} placeholder - Native placeholder text.
  * @attr {boolean} disabled - Disables the inner textarea and stops the beam.
+ * @attr {number} rows - Native textarea `rows`, for app composers that size by line count.
+ * @attr {string} description - Extra hint announced with the textarea (rendered visually hidden; the visible copy belongs in the footer).
+ * @attr {boolean} suppress-focus-ring - Drops the keyboard focus ring; the beam still lights and quickens on focus.
  * @slot footer - Actions below the input; the footer row stays hidden while empty.
  * @cssprop [--orc-beam-angle] - Current beam rotation angle (animated).
  * @cssprop [--orc-beam-underlay] - Beam underlay colour behind the field.
  * @cssprop [--orc-control-border] - Border colour of the resting field.
+ * @cssprop [--orc-glow-field-min-height=82px] - Minimum height of the textarea.
+ * @cssprop [--orc-glow-field-font-size=13px] - Font size of the textarea.
  */
 export class OrcGlowField extends HTMLElementBase {
   static get observedAttributes(): string[] {
-    return ["placeholder", "label", "disabled"];
+    return ["placeholder", "label", "disabled", "rows", "description"];
   }
+
+  private readonly elementId = `orc-glow-field-${++instanceCount}`;
 
   constructor() {
     super();
@@ -184,7 +209,8 @@ export class OrcGlowField extends HTMLElementBase {
     this.textarea?.focus(options);
   }
 
-  private get textarea(): HTMLTextAreaElement | null {
+  /** The native textarea, so an app can wire its own listeners and attachment plumbing to it. */
+  get textarea(): HTMLTextAreaElement | null {
     return this.shadowRoot?.querySelector("textarea") ?? null;
   }
 
@@ -197,6 +223,26 @@ export class OrcGlowField extends HTMLElementBase {
       this.getAttribute("label")?.trim() || "Message",
     );
     textarea.disabled = this.hasAttribute("disabled");
+
+    const rows = this.getAttribute("rows");
+    if (rows) textarea.setAttribute("rows", rows);
+    else textarea.removeAttribute("rows");
+
+    // Mirrors <orc-dialog>'s syncDescription: an IDREF pointing at an empty
+    // node yields an empty description, which is worse than none.
+    const description = this.shadowRoot?.querySelector<HTMLElement>(
+      ".description",
+    );
+    const hint = this.getAttribute("description")?.trim() ?? "";
+    if (!description) return;
+    description.textContent = hint;
+    description.hidden = hint === "";
+    if (hint === "") {
+      textarea.removeAttribute("aria-describedby");
+      return;
+    }
+    description.id ||= `${this.elementId}-description`;
+    textarea.setAttribute("aria-describedby", description.id);
   }
 }
 
