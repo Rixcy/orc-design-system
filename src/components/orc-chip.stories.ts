@@ -113,6 +113,41 @@ export const NeutralFallback: Story = {
   },
 };
 
+export const LinkChips: Story = {
+  render: () => {
+    const wrap = document.createElement("div");
+    wrap.className = "story-surface story-stack";
+    wrap.style.display = "flex";
+    wrap.style.gap = "8px";
+
+    const internal = document.createElement("orc-chip");
+    internal.setAttribute("href", "#parent-run");
+    internal.textContent = "Parent run";
+
+    const external = document.createElement("orc-chip");
+    external.setAttribute("variant", "green");
+    external.setAttribute("href", "https://example.test/app");
+    external.setAttribute("target", "_blank");
+    external.setAttribute("dot", "");
+    external.textContent = "Worktree app";
+
+    wrap.append(internal, external);
+    return wrap;
+  },
+  play: async ({ canvasElement }) => {
+    const [internal, external] = [
+      ...canvasElement.querySelectorAll("orc-chip"),
+    ];
+    const internalAnchor = internal?.shadowRoot?.querySelector("a.chip");
+    await expect(internalAnchor?.getAttribute("href")).toBe("#parent-run");
+    await expect(internalAnchor?.getAttribute("rel")).toBe(null);
+
+    const externalAnchor = external?.shadowRoot?.querySelector("a.chip");
+    await expect(externalAnchor?.getAttribute("target")).toBe("_blank");
+    await expect(externalAnchor?.getAttribute("rel")).toBe("noopener");
+  },
+};
+
 export const StatusDots: Story = {
   render: () => {
     const wrap = document.createElement("div");

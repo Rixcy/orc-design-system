@@ -85,6 +85,24 @@ describe("orc-button", () => {
     expect(button.tagName).toBe("BUTTON");
   });
 
+  it("takes its label colour from --orc-button-text, defaulting per variant", () => {
+    // A consumer recolouring one family (orc-ui's danger action) sets this
+    // property instead of re-pointing --orc-heading, which is the page's
+    // heading colour and has no business being scoped to a button.
+    const host = createButton();
+    const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
+
+    const primary = css.slice(css.indexOf(':host([variant="primary"]) button {'));
+    expect(primary.slice(0, primary.indexOf("}"))).toContain(
+      "color: var(--orc-button-text, var(--orc-panel, #16181b))",
+    );
+
+    const ghost = css.slice(css.indexOf(':host([variant="ghost"]) button {'));
+    expect(ghost.slice(0, ghost.indexOf("}"))).toContain(
+      "color: var(--orc-button-text, var(--orc-heading, #e0e5e2))",
+    );
+  });
+
   it("bubbles native click events from the inner button through the host", () => {
     const host = createButton();
     const button = getButton(host);

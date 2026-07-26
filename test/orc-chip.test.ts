@@ -60,6 +60,68 @@ describe("orc-chip", () => {
     expect(chip.shadowRoot?.querySelector("span.chip")).not.toBeNull();
   });
 
+  it("carries DESIGN.md §5's chip type and padding", () => {
+    const chip = document.createElement("orc-chip");
+    document.body.append(chip);
+
+    const css = chip.shadowRoot?.querySelector("style")?.textContent ?? "";
+    const base = css.slice(css.indexOf(".chip {"));
+    const block = base.slice(0, base.indexOf("}"));
+    expect(block).toContain("font-size: 12px");
+    expect(block).toContain("padding: 3px 10px");
+  });
+
+  it("renders an anchor with href, and swaps back to a span without one", () => {
+    const chip = document.createElement("orc-chip");
+    chip.setAttribute("href", "#run-1");
+    chip.textContent = "Parent run";
+    document.body.append(chip);
+
+    const anchor = chip.shadowRoot?.querySelector<HTMLAnchorElement>("a.chip");
+    expect(anchor).not.toBeNull();
+    expect(anchor?.getAttribute("href")).toBe("#run-1");
+    expect(chip.shadowRoot?.querySelector("span.chip")).toBeNull();
+    // The label is still slotted, so the accessible name comes from the light
+    // DOM and a consumer can extend it with its own visually-hidden text.
+    expect(
+      anchor?.querySelector<HTMLSlotElement>("slot")?.assignedNodes()[0]
+        ?.textContent,
+    ).toBe("Parent run");
+
+    chip.removeAttribute("href");
+    expect(chip.shadowRoot?.querySelector("a.chip")).toBeNull();
+    expect(chip.shadowRoot?.querySelector("span.chip")).not.toBeNull();
+    expect(chip.shadowRoot?.querySelector(".dot")).not.toBeNull();
+  });
+
+  it("defaults a new browsing context to noopener without overriding rel", () => {
+    const chip = document.createElement("orc-chip");
+    chip.setAttribute("href", "https://example.test");
+    chip.setAttribute("target", "_blank");
+    document.body.append(chip);
+
+    const anchor = chip.shadowRoot?.querySelector<HTMLAnchorElement>("a.chip");
+    expect(anchor?.getAttribute("target")).toBe("_blank");
+    expect(anchor?.getAttribute("rel")).toBe("noopener");
+
+    chip.setAttribute("rel", "noopener noreferrer");
+    expect(anchor?.getAttribute("rel")).toBe("noopener noreferrer");
+  });
+
+  it("gives the link chip DESIGN.md §5's hover state and a focus ring", () => {
+    const chip = document.createElement("orc-chip");
+    chip.setAttribute("href", "#run-1");
+    document.body.append(chip);
+
+    const css = chip.shadowRoot?.querySelector("style")?.textContent ?? "";
+    const hover = css.slice(css.indexOf("a.chip:hover"));
+    expect(hover.slice(0, hover.indexOf("}"))).toContain(
+      "border-color: var(--orc-accent, #78a9c2)",
+    );
+    expect(css).toContain("a.chip:focus-visible");
+    expect(css).toContain("outline: var(--orc-focus-ring");
+  });
+
   it("renders a decorative leading dot only when the dot attribute is set", () => {
     const chip = document.createElement("orc-chip");
     document.body.append(chip);
