@@ -96,7 +96,8 @@ orc-navbar nav a {
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
-  padding: 0.25rem 0.1rem;
+  /* Top padding absorbs the 2px hover underline so the label stays centred. */
+  padding: calc(0.25rem + 2px) 0.1rem 0.25rem;
   border-bottom: 2px solid transparent;
 }
 

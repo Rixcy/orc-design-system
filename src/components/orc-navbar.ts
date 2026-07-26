@@ -31,6 +31,13 @@ const template = `
       min-inline-size: 0;
     }
 
+    /* Flex, not block: a slotted inline-level lockup would otherwise sit on a
+       line box and ride its strut descender ~3px above the row's centre. */
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+
     .navigation {
       display: flex;
       flex-wrap: wrap;
