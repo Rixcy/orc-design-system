@@ -171,6 +171,10 @@
               "description": "Corner radius. Set it to a pill radius for a capsule chip.",
               "name": "--orc-radius-chip",
               "default": "12px"
+            },
+            {
+              "description": "Soft Fill behind the neutral chip. Set it to `transparent` for an outline-only chip.",
+              "name": "--orc-chip"
             }
           ],
           "slots": [

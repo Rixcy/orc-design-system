@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.1](https://github.com/Rixcy/orc-design-system/compare/v2.0.0...v2.0.1) (2026-07-26)
+
+
+### Bug Fixes
+
+* **orc-chip:** give the neutral chip DESIGN.md §5's Soft Fill ([7c111da](https://github.com/Rixcy/orc-design-system/commit/7c111da1c224b8a7d4b218dc92b95faf3afa4765))
+
 ## [2.0.0](https://github.com/Rixcy/orc-design-system/compare/v1.5.0...v2.0.0) (2026-07-26)
 
 
