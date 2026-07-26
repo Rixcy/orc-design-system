@@ -20,6 +20,29 @@ ramp closing on the interaction accent. Its swatch fills use the day-palette
 neutral scale plus `--orc-accent` as artwork; like the other marks, they do not
 define interface token meaning.
 
+## Third-party marks
+
+The landing navbar's Storybook link (`site/index.html`) inlines Storybook's own
+icon so the destination is recognisable. It is not vendored into `src/assets/`
+and ships with the site only, never with the package.
+
+- Repository: `https://github.com/storybookjs/brand`
+- Commit: `136fa3fdfe25b43c5b0a8ea2a3f0b9a44fa09db4`
+- Source: `icon/icon-storybook-default.svg`; SHA-256: `af4c15e6af99322f18efe7334937c3c2674050bceb5c0e3447754bd78802e7c0`
+- Changes, all rendering no-ops: element ids namespaced (`sb-book` / `sb-mask`)
+  to avoid collisions in the page; `xlink:href` modernised; `<title>` and the
+  intrinsic width/height dropped in favour of CSS sizing and `aria-hidden` (the
+  link's own text is its accessible name); the export's two wrapper `<g>`
+  elements collapsed into one carrying the `transform` and the `fill-rule` that
+  was uniform across every path; and two zero-length `lineto` repeats removed
+  from the outer path. Path geometry and Storybook's `#FF4785` are unchanged.
+- Terms: the Storybook brand repository grants use of these assets for
+  "articles, talks, addons, websites, and anything else you can think of".
+
+That pink is Storybook's artwork, used nominatively for a link to Storybook. It
+does not become an orc interface color: the button's chrome stays on `--orc-*`
+tokens like every other control in the bar.
+
 Logo and icon artwork retain their first-party colors. Those colors may compose
 palette hues as art, but do not define interface token meaning. Ordinary UI
 color must continue through the semantic `--orc-*` tokens.
