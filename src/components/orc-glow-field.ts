@@ -1,3 +1,5 @@
+let instanceCount = 0;
+
 const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
@@ -88,15 +90,17 @@ const template = `
       line-height: 1.5;
     }
 
-    .description {
+    /* Same screen-reader-only treatment as <orc-status-dot>'s .sr-only. */
+    .sr-only {
       position: absolute;
       width: 1px;
       height: 1px;
-      margin: -1px;
       padding: 0;
+      margin: -1px;
       overflow: hidden;
-      clip-path: inset(50%);
+      clip: rect(0, 0, 0, 0);
       white-space: nowrap;
+      border: 0;
     }
 
     textarea:disabled {
@@ -143,8 +147,8 @@ const template = `
     }
   </style>
   <div class="field">
-    <textarea aria-describedby="orc-glow-field-description"></textarea>
-    <p id="orc-glow-field-description" class="description" hidden></p>
+    <textarea></textarea>
+    <p class="sr-only description" hidden></p>
     <footer hidden><slot name="footer"></slot></footer>
   </div>
 `;
@@ -171,6 +175,8 @@ export class OrcGlowField extends HTMLElementBase {
   static get observedAttributes(): string[] {
     return ["placeholder", "label", "disabled", "rows", "description"];
   }
+
+  private readonly elementId = `orc-glow-field-${++instanceCount}`;
 
   constructor() {
     super();
@@ -218,19 +224,25 @@ export class OrcGlowField extends HTMLElementBase {
     );
     textarea.disabled = this.hasAttribute("disabled");
 
-    const rows = Number(this.getAttribute("rows"));
-    if (Number.isInteger(rows) && rows > 0)
-      textarea.setAttribute("rows", String(rows));
+    const rows = this.getAttribute("rows");
+    if (rows) textarea.setAttribute("rows", rows);
     else textarea.removeAttribute("rows");
 
+    // Mirrors <orc-dialog>'s syncDescription: an IDREF pointing at an empty
+    // node yields an empty description, which is worse than none.
     const description = this.shadowRoot?.querySelector<HTMLElement>(
       ".description",
     );
     const hint = this.getAttribute("description")?.trim() ?? "";
-    if (description) {
-      description.textContent = hint;
-      description.hidden = hint === "";
+    if (!description) return;
+    description.textContent = hint;
+    description.hidden = hint === "";
+    if (hint === "") {
+      textarea.removeAttribute("aria-describedby");
+      return;
     }
+    description.id ||= `${this.elementId}-description`;
+    textarea.setAttribute("aria-describedby", description.id);
   }
 }
 

@@ -119,8 +119,10 @@ export const AgentComposer: Story = {
     field.style.setProperty("--orc-glow-field-min-height", "110px");
     field.style.setProperty("--orc-glow-field-font-size", "14px");
 
+    // Live region: apps swap this line for launch/error state, so it announces.
     const status = document.createElement("span");
     status.slot = "footer";
+    status.role = "status";
     status.textContent = "Enter to start · Shift+Enter for a new line";
 
     const actions = document.createElement("span");
@@ -150,7 +152,7 @@ export const AgentComposer: Story = {
     await expect((field as { textarea?: HTMLTextAreaElement }).textarea).toBe(
       textarea,
     );
-    const description = field!.shadowRoot!.querySelector(".description");
+    const description = field!.shadowRoot!.querySelector(".description")!;
     await expect(textarea.getAttribute("aria-describedby")).toBe(
       description?.id,
     );

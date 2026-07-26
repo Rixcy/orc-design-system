@@ -181,8 +181,10 @@ describe("orc-glow-field", () => {
     expect(description.textContent).toBe("Enter to start");
     expect(description.hidden).toBe(false);
 
+    // No description means no IDREF: an empty one describes worse than none.
     field.removeAttribute("description");
     expect(description.hidden).toBe(true);
+    expect(textarea.hasAttribute("aria-describedby")).toBe(false);
   });
 
   it("binds the keyboard focus ring to the accent token, not green", () => {
