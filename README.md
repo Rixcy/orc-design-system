@@ -43,7 +43,7 @@ bun install
 Import the tokens before your application styles, then use the public roles:
 
 ```css
-@import "@orc/design-system/tokens.css";
+@import "@orc-tools/orc-design-system/tokens.css";
 
 .card {
   background: var(--orc-panel);
@@ -55,7 +55,7 @@ Import the tokens before your application styles, then use the public roles:
 Register the components and let the controller manage theme:
 
 ```ts
-import { defineOrcElements } from "@orc/design-system/define";
+import { defineOrcElements } from "@orc-tools/orc-design-system/define";
 
 defineOrcElements();
 // <orc-navbar> and <orc-theme-toggle> are now usable in your markup.
@@ -65,7 +65,7 @@ Non-CSS consumers can read the palette directly, including the derived roles
 resolved to hex per theme:
 
 ```ts
-import tokens from "@orc/design-system/tokens.json";
+import tokens from "@orc-tools/orc-design-system/tokens.json";
 
 const lightThemeColor = tokens.day.bg;
 const darkThemeColor = tokens.night.bg;

@@ -1,11 +1,11 @@
-import "@orc/design-system/tokens.css";
-import "@orc/design-system/components.css";
-import "@orc/design-system/fonts.css";
-import iconUrl from "@orc/design-system/assets/orc-icon.svg";
-import logoUrl from "@orc/design-system/assets/orc-logo.svg";
-import tokens from "@orc/design-system/tokens.json";
-import { createThemeController } from "@orc/design-system/controller";
-import { defineOrcElements } from "@orc/design-system/define";
+import "@orc-tools/orc-design-system/tokens.css";
+import "@orc-tools/orc-design-system/components.css";
+import "@orc-tools/orc-design-system/fonts.css";
+import iconUrl from "@orc-tools/orc-design-system/assets/orc-icon.svg";
+import logoUrl from "@orc-tools/orc-design-system/assets/orc-logo.svg";
+import tokens from "@orc-tools/orc-design-system/tokens.json";
+import { createThemeController } from "@orc-tools/orc-design-system/controller";
+import { defineOrcElements } from "@orc-tools/orc-design-system/define";
 
 import "./orc-flags-aliases.css";
 import "./styles.css";

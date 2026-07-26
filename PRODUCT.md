@@ -14,7 +14,7 @@ identity
 
 ## Product Purpose
 
-`@orc/design-system` is the single source of truth for Orc's visual
+`@orc-tools/orc-design-system` is the single source of truth for Orc's visual
 identity: a 16-color semantic swamp palette, type and motion rules, theming
 (day/night), and a small set of standards-based Web Components. Success means
 any Orc surface — regardless of framework — imports tokens and components

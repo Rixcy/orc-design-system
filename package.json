@@ -1,10 +1,12 @@
 {
-  "name": "@orc/design-system",
+  "name": "@orc-tools/orc-design-system",
   "version": "2.0.1",
   "description": "Framework-neutral Orc design system foundations and Web Components.",
-  "private": true,
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Rixcy/orc-design-system.git"

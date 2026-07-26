@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "@orc/design-system-preview",
+      "name": "@orc-tools/orc-design-system-preview",
       "devDependencies": {
         "@custom-elements-manifest/analyzer": "^0.11.0",
         "@storybook/addon-a11y": "10.5.3",
