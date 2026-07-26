@@ -36,7 +36,11 @@ const template = `
       line-height: 1.4;
       overflow-wrap: anywhere;
       color: var(--orc-muted-strong, #565f89);
-      background: transparent;
+      /* §5's Soft Fill, which the neutral chip was missing: every coloured
+         variant carries its own 13-15% tint, and neutral had nothing, so a
+         neutral chip read as an outline next to the filled pills around it.
+         Consumers that want the outline back set --orc-chip: transparent. */
+      background: var(--orc-chip, #29312c);
       border-color: var(--orc-border, #3b4540);
     }
 
@@ -152,6 +156,8 @@ const VARIANTS = new Set([
  * @attr {string} rel - Anchor relationship. Only applies with `href`.
  * @cssprop [--orc-radius-chip=12px] - Corner radius. Set it to a pill radius
  *   for a capsule chip.
+ * @cssprop [--orc-chip] - Soft Fill behind the neutral chip. Set it to
+ *   `transparent` for an outline-only chip.
  * @slot - Chip label content.
  */
 export class OrcChip extends HTMLElementBase {

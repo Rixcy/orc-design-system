@@ -60,7 +60,7 @@ describe("orc-chip", () => {
     expect(chip.shadowRoot?.querySelector("span.chip")).not.toBeNull();
   });
 
-  it("carries DESIGN.md §5's chip type and padding", () => {
+  it("carries DESIGN.md §5's chip type, padding and Soft Fill", () => {
     const chip = document.createElement("orc-chip");
     document.body.append(chip);
 
@@ -69,6 +69,9 @@ describe("orc-chip", () => {
     const block = base.slice(0, base.indexOf("}"));
     expect(block).toContain("font-size: 12px");
     expect(block).toContain("padding: 3px 10px");
+    // The neutral chip used to be transparent, which left it reading as an
+    // outline beside the filled pills a consumer puts next to it.
+    expect(block).toContain("background: var(--orc-chip, #29312c)");
   });
 
   it("renders an anchor with href, and swaps back to a span without one", () => {
