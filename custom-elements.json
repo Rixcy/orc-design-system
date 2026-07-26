@@ -80,8 +80,15 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "`<orc-chip>` is a compact status pill in one of the token colour families,\noptionally preceded by a status dot.",
+          "description": "`<orc-chip>` is a compact status label in one of the token colour families,\noptionally preceded by a status dot.",
           "name": "OrcChip",
+          "cssProperties": [
+            {
+              "description": "Corner radius. Set it to a pill radius for a capsule chip.",
+              "name": "--orc-radius-chip",
+              "default": "12px"
+            }
+          ],
           "slots": [
             {
               "description": "Chip label content.",
