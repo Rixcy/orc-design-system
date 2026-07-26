@@ -1,15 +1,18 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 
+import { defineOrcElements } from "../define";
+
 <Meta title="Introduction" />
+
+{/* The vendored orc-logo.svg is a light-card mark with a near-black wordmark,
+    so it goes dark-on-dark here. The lockup component is token-coloured and
+    reads on both themes — same choice as the landing site. */}
+
+{defineOrcElements()}
 
 <div style={{ padding: "clamp(20px, 5vw, 56px)", maxWidth: "80ch" }}>
 
-<img
-  src="/orc-logo.svg"
-  alt="Orc"
-  width="220"
-  style={{ display: "block", marginBottom: "24px" }}
-/>
+<orc-logomark size="lg" product="design system" style={{ marginBottom: "24px" }}></orc-logomark>
 
 # Orc design system
 
