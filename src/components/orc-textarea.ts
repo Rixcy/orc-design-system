@@ -1,91 +1,68 @@
+import { fieldChromeStyles, syncDescription } from "./field-chrome";
+
 const HTMLElementBase = (
   typeof HTMLElement === "undefined" ? class {} : HTMLElement
 ) as typeof HTMLElement;
 
 let instanceCount = 0;
 
-// A plain labelled form textarea with the repo's "more green" focus treatment
-// (green border + soft ring instead of a drop shadow).
+// The multi-line half of the Orc field surface: the shared glowing chrome plus
+// a resizable textarea and an optional footer row for composer actions.
 const template = `
   <style>
-    :host {
-      display: block;
-      font-family: var(--orc-font-sans, Inter, ui-sans-serif, system-ui, sans-serif);
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--orc-text, #c7cfca);
-      font-size: 13px;
-      font-weight: 600;
-    }
+    ${fieldChromeStyles("textarea")}
 
     textarea {
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
       resize: vertical;
-      min-height: var(--orc-textarea-min-height, 62px);
-      padding: 10px 12px;
-      border: 1px solid var(--orc-border, #3b4540);
-      border-radius: var(--orc-radius-md, 8px);
-      background: var(--orc-bg, #1a1c20);
-      color: var(--orc-text, #c7cfca);
-      font: inherit;
-      font-size: 13px;
-      line-height: 1.5;
-      transition: border-color 0.16s ease-out;
+      min-height: var(--orc-textarea-min-height, 82px);
+      font-size: var(--orc-textarea-font-size, 13px);
+      padding: 13px 14px 8px;
     }
 
-    textarea::placeholder {
+    footer {
+      min-height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 5px 8px 6px 13px;
+      border-top: 1px solid var(--orc-border, #3b4540);
       color: var(--orc-muted-strong, #565f89);
+      font-size: 11px;
     }
 
-    textarea:focus-visible {
-      border-color: var(--orc-green, #9dc76b);
-      outline: 2px solid var(--orc-green, #9dc76b);
-      outline-offset: 1px;
-    }
-
-    textarea:disabled {
-      color: var(--orc-muted-strong, #565f89);
-      cursor: not-allowed;
-      opacity: 0.72;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      textarea {
-        transition: none;
-      }
-    }
-
-    @media (forced-colors: active) {
-      textarea:focus-visible {
-        border-color: Highlight;
-        outline: 2px solid Highlight;
-        outline-offset: 2px;
-      }
-    }
+    footer[hidden] { display: none; }
   </style>
   <label></label>
-  <textarea></textarea>
+  <div class="field">
+    <textarea></textarea>
+    <p class="sr-only description" hidden></p>
+    <footer hidden><slot name="footer"></slot></footer>
+  </div>
 `;
 
 /**
- * `<orc-textarea>` is the plain labelled multi-line input — the quiet
- * counterpart to `<orc-glow-field>`.
+ * `<orc-textarea>` is Orc's multi-line field: an animated beam border, a green
+ * focus border, and no focus outline in any path. Set `label` for a visible
+ * label, or `aria-label` alone for a bare composer surface.
  *
  * @customElement orc-textarea
- * @attr {string} label - Visible label text, wired to the textarea.
+ * @attr {string} label - Visible label text, wired to the textarea via for/id.
+ * @attr {string} aria-label - Accessible name used when no visible label is set.
  * @attr {string} placeholder - Native placeholder text.
  * @attr {boolean} disabled - Disables the inner textarea.
- * @attr {number} rows - Native rows attribute.
- * @cssprop [--orc-textarea-min-height] - Minimum height of the textarea.
+ * @attr {number} rows - Native rows attribute, for app composers that size by line count.
+ * @attr {string} description - Extra hint announced with the textarea (rendered visually hidden; the visible copy belongs in the footer).
+ * @slot footer - Actions below the input; the footer row stays hidden while empty.
+ * @cssprop [--orc-textarea-min-height=82px] - Minimum height of the textarea.
+ * @cssprop [--orc-textarea-font-size=13px] - Font size of the textarea.
+ * @cssprop [--orc-beam-angle] - Current beam rotation angle (animated).
+ * @cssprop [--orc-beam-underlay] - Beam underlay colour behind the field.
+ * @cssprop [--orc-control-border] - Border colour of the resting field.
  */
 export class OrcTextarea extends HTMLElementBase {
   static get observedAttributes(): string[] {
-    return ["label", "placeholder", "disabled", "rows"];
+    return ["label", "aria-label", "placeholder", "disabled", "rows", "description"];
   }
 
   private readonly elementId = `orc-textarea-${++instanceCount}`;
@@ -97,6 +74,12 @@ export class OrcTextarea extends HTMLElementBase {
     const label = this.label;
     if (textarea) textarea.id = this.elementId;
     if (label) label.setAttribute("for", this.elementId);
+
+    const slot = this.shadowRoot?.querySelector("slot");
+    slot?.addEventListener("slotchange", () => {
+      const footer = this.shadowRoot?.querySelector("footer");
+      if (footer) footer.hidden = slot.assignedNodes().length === 0;
+    });
   }
 
   connectedCallback(): void {
@@ -120,7 +103,8 @@ export class OrcTextarea extends HTMLElementBase {
     this.textarea?.focus(options);
   }
 
-  private get textarea(): HTMLTextAreaElement | null {
+  /** The native textarea, so an app can wire its own listeners and attachment plumbing to it. */
+  get textarea(): HTMLTextAreaElement | null {
     return this.shadowRoot?.querySelector("textarea") ?? null;
   }
 
@@ -135,6 +119,16 @@ export class OrcTextarea extends HTMLElementBase {
 
     const labelText = this.getAttribute("label")?.trim() ?? "";
     label.textContent = labelText;
+    label.hidden = labelText === "";
+
+    // A composer with no visible label still needs a name; forward the host's
+    // aria-label rather than inventing a second labelling attribute.
+    const ariaLabel = this.getAttribute("aria-label")?.trim() ?? "";
+    if (!labelText && ariaLabel) {
+      textarea.setAttribute("aria-label", ariaLabel);
+    } else {
+      textarea.removeAttribute("aria-label");
+    }
 
     textarea.placeholder = this.getAttribute("placeholder") ?? "";
     textarea.disabled = this.hasAttribute("disabled");
@@ -145,6 +139,13 @@ export class OrcTextarea extends HTMLElementBase {
     } else {
       textarea.removeAttribute("rows");
     }
+
+    syncDescription(
+      this.shadowRoot,
+      textarea,
+      this.getAttribute("description")?.trim() ?? "",
+      this.elementId,
+    );
   }
 }
 

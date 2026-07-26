@@ -2,7 +2,7 @@ export {
   OrcButton,
   OrcChip,
   OrcDialog,
-  OrcGlowField,
+  OrcInput,
   OrcLogomark,
   OrcNavbar,
   OrcSegmented,

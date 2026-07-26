@@ -4,6 +4,84 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/components/field-chrome.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "fieldChromeStyles",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
+          "parameters": [
+            {
+              "name": "control",
+              "type": {
+                "text": "FieldControl"
+              }
+            }
+          ],
+          "description": "The beam, the border, the focus rules and the label — everything both fields\nshare. Each component appends its own control-specific rules after this."
+        },
+        {
+          "kind": "function",
+          "name": "syncDescription",
+          "return": {
+            "type": {
+              "text": "void"
+            }
+          },
+          "parameters": [
+            {
+              "name": "root",
+              "type": {
+                "text": "ShadowRoot | null"
+              }
+            },
+            {
+              "name": "control",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "name": "hint",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "elementId",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "description": "Points the control at a visually-hidden description, or at nothing.\n\nMirrors `<orc-dialog>`'s syncDescription: an IDREF pointing at an empty node\nyields an empty description, which is worse than none."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "fieldChromeStyles",
+          "declaration": {
+            "name": "fieldChromeStyles",
+            "module": "src/components/field-chrome.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "syncDescription",
+          "declaration": {
+            "name": "syncDescription",
+            "module": "src/components/field-chrome.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-button.ts",
       "declarations": [
         {
@@ -283,13 +361,18 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/orc-glow-field.ts",
+      "path": "src/components/orc-input.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "`<orc-glow-field>` is the composer textarea with an animated beam border —\n`<orc-textarea>`'s expressive sibling for primary input surfaces.",
-          "name": "OrcGlowField",
+          "description": "`<orc-input>` is Orc's single-line field — the same beam and green,\noutline-free focus border as `<orc-textarea>`. Set `label` for a visible\nlabel, or `aria-label` alone for a bare surface.",
+          "name": "OrcInput",
           "cssProperties": [
+            {
+              "description": "Font size of the input.",
+              "name": "--orc-input-font-size",
+              "default": "13px"
+            },
             {
               "description": "Current beam rotation angle (animated).",
               "name": "--orc-beam-angle"
@@ -301,22 +384,6 @@
             {
               "description": "Border colour of the resting field.",
               "name": "--orc-control-border"
-            },
-            {
-              "description": "Minimum height of the textarea.",
-              "name": "--orc-glow-field-min-height",
-              "default": "82px"
-            },
-            {
-              "description": "Font size of the textarea.",
-              "name": "--orc-glow-field-font-size",
-              "default": "13px"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Actions below the input; the footer row stays hidden while empty.",
-              "name": "footer"
             }
           ],
           "members": [
@@ -347,15 +414,36 @@
             },
             {
               "kind": "field",
-              "name": "textarea",
+              "name": "input",
               "type": {
-                "text": "HTMLTextAreaElement | null"
+                "text": "HTMLInputElement | null"
               },
-              "description": "The native textarea, so an app can wire its own listeners and attachment plumbing to it.",
+              "description": "The native input, so an app can wire its own listeners to it.",
               "readonly": true
             }
           ],
           "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Visible label text, wired to the input via for/id."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name used when no visible label is set."
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "string"
+              },
+              "description": "Native text-entry input type; anything else falls back to `text`."
+            },
             {
               "name": "placeholder",
               "type": {
@@ -364,56 +452,35 @@
               "description": "Native placeholder text."
             },
             {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "description": "Accessible name for the textarea."
-            },
-            {
               "name": "disabled",
               "type": {
                 "text": "boolean"
               },
-              "description": "Disables the inner textarea and stops the beam."
-            },
-            {
-              "name": "rows",
-              "type": {
-                "text": "number"
-              },
-              "description": "Native textarea `rows`, for app composers that size by line count."
+              "description": "Disables the inner input."
             },
             {
               "name": "description",
               "type": {
                 "text": "string"
               },
-              "description": "Extra hint announced with the textarea (rendered visually hidden; the visible copy belongs in the footer)."
-            },
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Drops the keyboard focus ring; the beam still lights and quickens on focus.",
-              "name": "suppress-focus-ring"
+              "description": "Extra hint announced with the input (rendered visually hidden)."
             }
           ],
           "superclass": {
             "name": "HTMLElementBase",
-            "module": "src/components/orc-glow-field.ts"
+            "module": "src/components/orc-input.ts"
           },
-          "tagName": "orc-glow-field",
+          "tagName": "orc-input",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "OrcGlowField",
+          "name": "OrcInput",
           "declaration": {
-            "name": "OrcGlowField",
-            "module": "src/components/orc-glow-field.ts"
+            "name": "OrcInput",
+            "module": "src/components/orc-input.ts"
           }
         }
       ]
@@ -765,12 +832,36 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "`<orc-textarea>` is the plain labelled multi-line input — the quiet\ncounterpart to `<orc-glow-field>`.",
+          "description": "`<orc-textarea>` is Orc's multi-line field: an animated beam border, a green\nfocus border, and no focus outline in any path. Set `label` for a visible\nlabel, or `aria-label` alone for a bare composer surface.",
           "name": "OrcTextarea",
           "cssProperties": [
             {
               "description": "Minimum height of the textarea.",
-              "name": "--orc-textarea-min-height"
+              "name": "--orc-textarea-min-height",
+              "default": "82px"
+            },
+            {
+              "description": "Font size of the textarea.",
+              "name": "--orc-textarea-font-size",
+              "default": "13px"
+            },
+            {
+              "description": "Current beam rotation angle (animated).",
+              "name": "--orc-beam-angle"
+            },
+            {
+              "description": "Beam underlay colour behind the field.",
+              "name": "--orc-beam-underlay"
+            },
+            {
+              "description": "Border colour of the resting field.",
+              "name": "--orc-control-border"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Actions below the input; the footer row stays hidden while empty.",
+              "name": "footer"
             }
           ],
           "members": [
@@ -798,6 +889,15 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "field",
+              "name": "textarea",
+              "type": {
+                "text": "HTMLTextAreaElement | null"
+              },
+              "description": "The native textarea, so an app can wire its own listeners and attachment plumbing to it.",
+              "readonly": true
             }
           ],
           "attributes": [
@@ -806,7 +906,14 @@
               "type": {
                 "text": "string"
               },
-              "description": "Visible label text, wired to the textarea."
+              "description": "Visible label text, wired to the textarea via for/id."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name used when no visible label is set."
             },
             {
               "name": "placeholder",
@@ -827,7 +934,14 @@
               "type": {
                 "text": "number"
               },
-              "description": "Native rows attribute."
+              "description": "Native rows attribute, for app composers that size by line count."
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "description": "Extra hint announced with the textarea (rendered visually hidden; the visible copy belongs in the footer)."
             }
           ],
           "superclass": {

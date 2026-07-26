@@ -6,7 +6,7 @@ import "./site.css";
 
 import { defineOrcElements } from "../src/define";
 import { createThemeController } from "../src/theme/controller";
-import type { OrcDialog, OrcGlowField } from "../src/define";
+import type { OrcDialog, OrcTextarea } from "../src/define";
 import tokens from "../src/theme/orc-tokens.json";
 
 defineOrcElements();
@@ -59,7 +59,7 @@ document
 
 // Hero composer: pressing send just clears with a tiny acknowledgement —
 // the demo is the beam, not a backend.
-const field = document.querySelector<OrcGlowField>("#hero-field");
+const field = document.querySelector<OrcTextarea>("#hero-field");
 const send = document.querySelector("#hero-send");
 send?.addEventListener("click", () => {
   if (!field) return;

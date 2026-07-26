@@ -54,7 +54,8 @@ Current facts (not pinned as binding):
   `preflight.js` prevents first-paint flash for persisted choices.
 - Stable raw token schema is `{ day, night }` JSON; derived CSS roles are
   generated, intentionally absent from JSON.
-- Components: `<orc-navbar>`, `<orc-theme-toggle>`, `<orc-glow-field>`.
+- Components: `<orc-navbar>`, `<orc-theme-toggle>`, and one glowing field
+  surface — `<orc-textarea>` and `<orc-input>`.
 - MIT-licensed, installed from the public git repository; `private: true` keeps
   it off the npm registry.
 

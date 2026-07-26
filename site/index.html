@@ -9,7 +9,7 @@ STORY: a developer arrives, recognizes orc's restrained field, watches the beam
 breathe, toggles the theme, prods real components, copies the import, leaves
 knowing consumption is one package away.
 FIRST VIEWPORT: navbar (live), display heading left with one-line offer, the
-glow-field composer right with its beam running — the system's signature
+composer right with its beam running — the system's signature
 artifact at full scale; primary action is the green send button inside it.
 FORM: single scrolling field guide, foundations before components, quickstart
 as a live stepper; chosen directly — surface sits inside the committed orc
@@ -71,9 +71,9 @@ world, no concept tournament (direction settled at the Orc plan gate).
         </p>
       </div>
       <div class="hero-demo">
-        <orc-glow-field
+        <orc-textarea
           id="hero-field"
-          label="Try the composer"
+          aria-label="Try the composer"
           placeholder="Everything on this page is a live component, including this one."
         >
           <span slot="footer" class="composer-footer">
@@ -81,7 +81,7 @@ world, no concept tournament (direction settled at the Orc plan gate).
             <span class="composer-hint">the beam is the focus cue</span>
             <orc-button id="hero-send" size="compact">Send</orc-button>
           </span>
-        </orc-glow-field>
+        </orc-textarea>
       </div>
     </header>
 
@@ -166,18 +166,23 @@ world, no concept tournament (direction settled at the Orc plan gate).
 &lt;orc-logomark size="lg"&gt;&lt;/orc-logomark&gt;</code></pre>
         </article>
 
-        <article class="demo" aria-labelledby="d-textarea">
+        <article class="demo" aria-labelledby="d-fields">
           <div class="demo-head">
-            <h3 id="d-textarea">Textarea</h3>
-            <p>Plain form input with the green focus ring. For composing with ceremony, see the glow-field above.</p>
+            <h3 id="d-fields">Fields</h3>
+            <p>One glowing surface, two shapes. Focus either one and the border goes moss — no ring, however you got there.</p>
           </div>
           <div class="demo-stage demo-stage-block">
+            <orc-input
+              label="Run name"
+              placeholder="add-token-export"
+            ></orc-input>
             <orc-textarea
               label="Release notes"
               placeholder="Focus me. The border goes moss."
             ></orc-textarea>
           </div>
-          <pre class="demo-code"><code>&lt;orc-textarea label="Release notes"&gt;&lt;/orc-textarea&gt;</code></pre>
+          <pre class="demo-code"><code>&lt;orc-input label="Run name"&gt;&lt;/orc-input&gt;
+&lt;orc-textarea label="Release notes"&gt;&lt;/orc-textarea&gt;</code></pre>
         </article>
 
         <article class="demo" aria-labelledby="d-chip">
