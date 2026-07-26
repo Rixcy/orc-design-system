@@ -190,6 +190,23 @@ orc-navbar nav a:hover {
   border-color: var(--orc-accent);
 }
 
+/* In the navbar the CTA stands next to <orc-theme-toggle>, whose control is
+   2.25rem square — match that box so the two hover fills line up, and match
+   the tap behaviour the toggle and the navbar's own links already set. */
+.nav-cta {
+  block-size: 2.25rem;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Storybook's mark carries its own brand pink (ASSETS.md: artwork colour, not
+   an interface token). Sized off the label so it scales with the type. */
+.nav-cta-mark {
+  block-size: 1em;
+  inline-size: auto;
+  flex: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cta {
     transition: none;
