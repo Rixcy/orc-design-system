@@ -181,14 +181,14 @@ orc-navbar nav a:hover {
 }
 
 .cta-ghost:hover {
-  background: color-mix(in srgb, var(--orc-accent) 12%, transparent);
-  border-color: var(--orc-accent);
-  color: var(--orc-accent-text, var(--orc-accent));
+  background: color-mix(in srgb, var(--orc-green) 12%, transparent);
+  border-color: var(--orc-green);
+  color: var(--orc-green-text, var(--orc-green));
 }
 
 .cta-ghost:active {
-  background: color-mix(in srgb, var(--orc-accent) 20%, transparent);
-  border-color: var(--orc-accent);
+  background: color-mix(in srgb, var(--orc-green) 20%, transparent);
+  border-color: var(--orc-green);
 }
 
 @media (prefers-reduced-motion: reduce) {
