@@ -22,7 +22,10 @@ interface SegmentedArgs {
  * </orc-segmented>
  * ```
  */
-function renderSegmented(args: SegmentedArgs): HTMLElement {
+function renderSegmented(
+  args: SegmentedArgs,
+  values: string[] = ["orc", "orc-quick"],
+): HTMLElement {
   const surface = document.createElement("div");
   surface.className = "story-surface story-stack";
 
@@ -30,7 +33,7 @@ function renderSegmented(args: SegmentedArgs): HTMLElement {
   segmented.setAttribute("label", "Orc mode");
   if (args.value) segmented.setAttribute("value", args.value);
 
-  for (const value of ["orc", "orc-quick"]) {
+  for (const value of values) {
     const option = document.createElement("button");
     option.setAttribute("value", value);
     option.textContent = `/${value}`;
@@ -67,6 +70,23 @@ export const Default: Story = {
     ];
     await expect(options).toHaveLength(2);
     await expect(options[0]).toHaveAttribute("aria-checked", "true");
+  },
+};
+
+/** Three segments — the group is not limited to a two-way switch. */
+export const ThreeSegments: Story = {
+  args: { value: "orc-quick" },
+  render: (args) =>
+    renderSegmented(args, ["orc", "orc-quick", "orc-ultraquick"]),
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector("orc-segmented");
+    const options = [
+      ...(host?.shadowRoot?.querySelectorAll<HTMLButtonElement>(
+        '[role="radio"]',
+      ) ?? []),
+    ];
+    await expect(options).toHaveLength(3);
+    await expect(options[1]).toHaveAttribute("aria-checked", "true");
   },
 };
 
