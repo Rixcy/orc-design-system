@@ -257,6 +257,14 @@ describe("field focus contract", () => {
       expect(css).not.toContain("--orc-focus-ring");
       expect(css).not.toContain("focus-visible {\n      outline: var");
       expect(css).not.toContain("suppress-focus-ring");
+
+      // Focus retargets to the host, so the UA would draw its ring around the
+      // whole element unless the chrome drops it there too.
+      const host = css.indexOf(":host(:focus)");
+      expect(host).toBeGreaterThan(-1);
+      expect(css.slice(host, css.indexOf("}", host) + 1)).toContain(
+        "outline: none",
+      );
     });
 
     it(`${tag} keeps a forced-colors focus cue`, () => {
