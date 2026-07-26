@@ -88,6 +88,12 @@
           "kind": "class",
           "description": "`<orc-button>` is the primary action element: a filled `primary` button and a\nbordered `ghost` button sharing size, focus-ring, and disabled behaviour.",
           "name": "OrcButton",
+          "cssProperties": [
+            {
+              "description": "Label colour. Defaults to the variant's own colour, so setting it is the supported way to recolour one button family.",
+              "name": "--orc-button-text"
+            }
+          ],
           "slots": [
             {
               "description": "Button label content.",
@@ -158,7 +164,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "`<orc-chip>` is a compact status label in one of the token colour families,\noptionally preceded by a status dot.",
+          "description": "`<orc-chip>` is a compact status label in one of the token colour families,\noptionally preceded by a status dot. With `href` it renders as a link chip.",
           "name": "OrcChip",
           "cssProperties": [
             {
@@ -188,6 +194,27 @@
                 "text": "boolean"
               },
               "description": "Shows the leading status dot."
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string"
+              },
+              "description": "Renders the chip as an `<a>` with this destination."
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "string"
+              },
+              "description": "Anchor target. Only applies with `href`; `_blank` gets `rel=\"noopener\"` unless the consumer supplies its own `rel`."
+            },
+            {
+              "name": "rel",
+              "type": {
+                "text": "string"
+              },
+              "description": "Anchor relationship. Only applies with `href`."
             }
           ],
           "superclass": {

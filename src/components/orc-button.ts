@@ -39,11 +39,16 @@ const template = `
       font-size: 0.75rem;
     }
 
+    /* --orc-button-text is the label colour, and it exists so a consumer can
+       recolour one button family without re-pointing a global token: the danger
+       treatment in orc-ui used to set --orc-heading inside the button's scope,
+       which is the page's heading colour wearing a component's hat. Left unset,
+       each variant resolves to exactly the colour it had before. */
     :host(:not([variant])) button,
     :host([variant="primary"]) button {
       background: var(--orc-green, #9dc76b);
       border-color: var(--orc-green, #9dc76b);
-      color: var(--orc-panel, #16181b);
+      color: var(--orc-button-text, var(--orc-panel, #16181b));
     }
 
     :host(:not([variant])) button:hover:not(:disabled),
@@ -60,7 +65,7 @@ const template = `
     :host([variant="ghost"]) button {
       background: color-mix(in srgb, var(--orc-text, #c7cfca) 6%, transparent);
       border-color: var(--orc-control-border, var(--orc-border, #3b4540));
-      color: var(--orc-heading, #e0e5e2);
+      color: var(--orc-button-text, var(--orc-heading, #e0e5e2));
     }
 
     :host([variant="ghost"]) button:hover:not(:disabled) {
@@ -106,6 +111,8 @@ const template = `
  * @attr {"default"|"compact"} size - Control density. Defaults to `default`.
  * @attr {boolean} disabled - Disables the inner native button.
  * @attr {"button"|"submit"} type - Native button type. Defaults to `button`.
+ * @cssprop [--orc-button-text] - Label colour. Defaults to the variant's own
+ *   colour, so setting it is the supported way to recolour one button family.
  * @slot - Button label content.
  */
 export class OrcButton extends HTMLElementBase {

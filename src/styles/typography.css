@@ -9,7 +9,8 @@
  *   headline 600 / 17px   / 1.3   — section/run titles
  *   title    600 / 15px   / 1.3   — sidebar/H2-level titles
  *   body     400 / 14px   / 1.55  — UI and prose
- *   label    600 / 11px   / 1.4   — tags, chips, captions, uppercase-tracked
+ *   label    600 / 11px   / 1.4   — tags, captions, uppercase-tracked
+ *                                    (orc-chip carries §5's own 12px)
  *   mono     400 / 12.5px / 1.7   — inline/block code, logs
  *
  * Font stacks match src/styles/fonts.css: --orc-font-sans resolves to

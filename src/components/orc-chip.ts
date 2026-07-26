@@ -3,10 +3,13 @@ const HTMLElementBase = (
 ) as typeof HTMLElement;
 
 // A native-CSS tag/chip: a small soft-filled label with a tinted background, a
-// hairline border and an AA-contrast text token per variant. This is a
-// static label, not a control, so it renders a <span> with no button
-// semantics — status is always conveyed by the slotted text, never by the
-// leading dot alone.
+// hairline border and an AA-contrast text token per variant. It is a label,
+// never a button — status is always conveyed by the slotted text, never by the
+// leading dot alone. With `href` it becomes the one thing a chip may also be:
+// a link, rendered as a real <a> so it keeps native activation, middle-click
+// and context menu. The accessible name still comes from the slotted content,
+// which stays in the light DOM, so a consumer can extend it with its own
+// visually-hidden text instead of an aria-label the shadow root can never see.
 const template = `
   <style>
     :host {
@@ -20,19 +23,47 @@ const template = `
       align-items: center;
       gap: var(--orc-space-1, 4px);
       max-inline-size: 100%;
-      padding: 2px 8px;
-      /* A soft-filled rounded rectangle, not a pill: the chip is a label on a
-         dense surface, and the 12px corner keeps it reading as a sibling of the
-         panels and inputs around it rather than as a floating capsule. */
+      /* DESIGN.md §5: Soft Fill background, 1px Border, 12px radius, 12px text,
+         3px 10px padding. A soft-filled rounded rectangle, not a pill: the chip
+         is a label on a dense surface, and the 12px corner keeps it reading as a
+         sibling of the panels and inputs around it rather than as a floating
+         capsule. */
+      padding: 3px 10px;
       border-radius: var(--orc-radius-chip, 12px);
       border: 1px solid transparent;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
       line-height: 1.4;
       overflow-wrap: anywhere;
       color: var(--orc-muted-strong, #565f89);
       background: transparent;
       border-color: var(--orc-border, #3b4540);
+    }
+
+    /* §5's chip state, and it only exists on the link form: hover moves border
+       and text to Signal Blue. The variant rules below are written against the
+       chip class, so they style the anchor and the span alike; this block is
+       the only place the two differ. */
+    a.chip {
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+    }
+
+    a.chip:hover {
+      border-color: var(--orc-accent, #78a9c2);
+      color: var(--orc-accent-text, var(--orc-accent, #78a9c2));
+    }
+
+    a.chip:focus-visible {
+      outline: var(--orc-focus-ring, 2px solid #78a9c2);
+      outline-offset: var(--orc-focus-offset, 2px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      a.chip {
+        transition: none;
+      }
     }
 
     .dot {
@@ -110,18 +141,22 @@ const VARIANTS = new Set([
 
 /**
  * `<orc-chip>` is a compact status label in one of the token colour families,
- * optionally preceded by a status dot.
+ * optionally preceded by a status dot. With `href` it renders as a link chip.
  *
  * @customElement orc-chip
  * @attr {"neutral"|"green"|"yellow"|"red"|"purple"|"cyan"|"orange"|"accent"} variant - Colour family. Unknown values fall back to `neutral`.
  * @attr {boolean} dot - Shows the leading status dot.
+ * @attr {string} href - Renders the chip as an `<a>` with this destination.
+ * @attr {string} target - Anchor target. Only applies with `href`; `_blank`
+ *   gets `rel="noopener"` unless the consumer supplies its own `rel`.
+ * @attr {string} rel - Anchor relationship. Only applies with `href`.
  * @cssprop [--orc-radius-chip=12px] - Corner radius. Set it to a pill radius
  *   for a capsule chip.
  * @slot - Chip label content.
  */
 export class OrcChip extends HTMLElementBase {
   static get observedAttributes(): string[] {
-    return ["variant", "dot"];
+    return ["variant", "dot", "href", "target", "rel"];
   }
 
   constructor() {
@@ -141,6 +176,10 @@ export class OrcChip extends HTMLElementBase {
     return this.shadowRoot?.querySelector(".dot") ?? null;
   }
 
+  private get chipEl(): HTMLElement | null {
+    return this.shadowRoot?.querySelector(".chip") ?? null;
+  }
+
   private render(): void {
     const variant = this.getAttribute("variant");
     if (!variant || !VARIANTS.has(variant)) {
@@ -148,8 +187,42 @@ export class OrcChip extends HTMLElementBase {
       return;
     }
 
+    this.renderHref();
+
     const dot = this.dotEl;
     if (dot) dot.hidden = !this.hasAttribute("dot");
+  }
+
+  // Swaps the wrapper element rather than rendering two of them: a link chip is
+  // an <a>, a label chip is a <span>, and nothing in between is a sensible
+  // thing to expose to assistive technology.
+  private renderHref(): void {
+    const href = this.getAttribute("href");
+    const wantsLink = href !== null && href !== "";
+    let chip = this.chipEl;
+    if (!chip) return;
+
+    if (wantsLink !== (chip.tagName === "A")) {
+      const next = this.ownerDocument.createElement(wantsLink ? "a" : "span");
+      next.className = "chip";
+      next.append(...chip.childNodes);
+      chip.replaceWith(next);
+      chip = next;
+    }
+
+    if (!wantsLink) return;
+    chip.setAttribute("href", href);
+
+    const target = this.getAttribute("target");
+    if (target) chip.setAttribute("target", target);
+    else chip.removeAttribute("target");
+
+    // A new browsing context gets `noopener` by default; an explicit rel from
+    // the consumer always wins, so opting into `opener` stays possible.
+    const rel = this.getAttribute("rel");
+    if (rel) chip.setAttribute("rel", rel);
+    else if (target === "_blank") chip.setAttribute("rel", "noopener");
+    else chip.removeAttribute("rel");
   }
 }
 
