@@ -20,6 +20,17 @@ ramp closing on the interaction accent. Its swatch fills use the day-palette
 neutral scale plus `--orc-accent` as artwork; like the other marks, they do not
 define interface token meaning.
 
+`.github/social-preview.png` is the repository's GitHub social card (1280×640,
+the size GitHub asks for). It is first-party and generated, never hand-edited:
+`scripts/render-social-preview.mjs` (`bun run social-preview`) inlines
+`orc-emblem.svg` unchanged, reads every colour from `src/theme/orc-tokens.json`,
+embeds the vendored Inter and JetBrains Mono faces, and screenshots the result
+through the existing `playwright` devDependency — so the card cannot drift from
+the night palette, and rendering fetches nothing over the network (an installed
+Playwright Chromium is the only prerequisite). Its hue strip is artwork from the
+palette; like the other marks, it does not define interface token meaning. The
+PNG ships with the repository only, never with the package (`files: ["dist"]`).
+
 ## Third-party marks
 
 The landing navbar's Storybook link (`site/index.html`) inlines Storybook's own

@@ -65,6 +65,7 @@
     "prepack": "bun run build",
     "prepare": "bun run build",
     "release": "commit-and-tag-version",
+    "social-preview": "node scripts/render-social-preview.mjs",
     "dev": "vite --config vite.site.config.ts",
     "build:site": "vite build --config vite.site.config.ts"
   },
