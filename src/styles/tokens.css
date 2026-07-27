@@ -47,7 +47,9 @@
   --orc-radius-sm: 4px;
   --orc-radius-md: 8px;
   --orc-radius-pill: 999px;
-  --orc-focus-ring: 2px solid var(--orc-accent);
+  /* Green, not accent: fields already mark focus with a green border, so a
+     blue ring on the controls beside them read as two focus languages. */
+  --orc-focus-ring: 2px solid var(--orc-green);
   --orc-focus-offset: 2px;
 }
 
