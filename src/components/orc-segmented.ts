@@ -40,7 +40,7 @@ const template = `
     }
 
     [role="radio"]:focus-visible {
-      outline: var(--orc-focus-ring, 2px solid #7aa2f7);
+      outline: var(--orc-focus-ring, 2px solid #9dc76b);
       outline-offset: 1px;
     }
 

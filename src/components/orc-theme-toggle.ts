@@ -41,7 +41,7 @@ const template = `
     }
 
     button:focus-visible {
-      outline: var(--orc-focus-ring, 2px solid #7aa2f7);
+      outline: var(--orc-focus-ring, 2px solid #9dc76b);
       outline-offset: var(--orc-focus-offset, 2px);
       color: var(--orc-heading, #c0caf5);
     }
