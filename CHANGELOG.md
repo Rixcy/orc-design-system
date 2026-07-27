@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.0.0](https://github.com/Rixcy/orc-design-system/compare/v2.0.1...v3.0.0) (2026-07-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tokens:** --orc-focus-ring is green rather than accent blue. Consumers
+relying on a blue focus ring must set --orc-focus-ring themselves.
+
+### Features
+
+* add generated 1280x640 GitHub social preview card ([76fbb7b](https://github.com/Rixcy/orc-design-system/commit/76fbb7bde0d7324113313c15b13e2923067c9ecd))
+* publish as @orc-tools/orc-design-system ([4e6ae20](https://github.com/Rixcy/orc-design-system/commit/4e6ae20f38f91d9adf16c76d558b709c7134186e))
+* **site:** add Storybook link to landing header ([4dde6e8](https://github.com/Rixcy/orc-design-system/commit/4dde6e8d107b27a8ecdb8d1220740513bcb9c21e))
+* **tokens:** make the focus ring green ([0ce033b](https://github.com/Rixcy/orc-design-system/commit/0ce033bb0b686706beef4a29c78b5a3c5e4acca8))
+
+
+### Bug Fixes
+
+* **orc-button:** tint ghost hover and press from the green family ([b7b3bba](https://github.com/Rixcy/orc-design-system/commit/b7b3bba0ee480a56a9a0475ff904565387510b4f))
+* **orc-navbar:** vertically centre header brand and nav text ([98787f5](https://github.com/Rixcy/orc-design-system/commit/98787f5f46d24fae4c048b378e61e366565c16ea))
+* **orc-textarea,orc-input:** drop the focus outline on the host ([6d194e9](https://github.com/Rixcy/orc-design-system/commit/6d194e945a7c59bc5bbcdea766d4f1331fb25969))
+* **pack-proof:** match declaration output by shape, not by list ([47ef82d](https://github.com/Rixcy/orc-design-system/commit/47ef82dfc2ef9d54afd9d9ea85ced2b6121cd5f4))
+
 ## [2.0.1](https://github.com/Rixcy/orc-design-system/compare/v2.0.0...v2.0.1) (2026-07-26)
 
 
