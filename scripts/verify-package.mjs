@@ -1,4 +1,4 @@
-import { access, readFile } from 'node:fs/promises';
+import { access, readdir, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 
@@ -125,4 +125,17 @@ for (const [theme, palette] of Object.entries(packagedTokens.derived)) {
   }
 }
 
-console.log(`Verified ${actualExports.length} exports, ${expectedFiles.length} package files, curated design guidance, and source provenance.`);
+// 4.0.0 reached npm with a breaking token change and no migration beside it.
+// prepack builds after commit-and-tag-version writes the entry, so this fires
+// before the tarball exists rather than after consumers hit it.
+const changelog = await readFile(resolve(root, 'CHANGELOG.md'), 'utf8');
+const latestEntry = changelog.split(/^## \[/mu)[1] ?? '';
+const releasedVersion = /^\d+\.\d+\.\d+/u.exec(latestEntry)?.[0];
+if (latestEntry.includes('BREAKING CHANGES')) {
+  const migrations = await readdir(resolve(root, 'migrations'));
+  if (!migrations.some((name) => name.startsWith(`${releasedVersion}-`))) {
+    throw new Error(`${releasedVersion} has breaking changes but no migrations/${releasedVersion}-<slug>.mjs.`);
+  }
+}
+
+console.log(`Verified ${actualExports.length} exports, ${expectedFiles.length} package files, migration coverage, curated design guidance, and source provenance.`);
