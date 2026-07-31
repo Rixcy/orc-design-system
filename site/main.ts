@@ -4,6 +4,7 @@ import "../src/styles/typography.css";
 import "../src/styles/scrollbar.css";
 import "./site.css";
 
+import { burstConfetti } from "./confetti";
 import { defineOrcElements } from "../src/define";
 import { createThemeController } from "../src/theme/controller";
 import type { OrcDialog, OrcTextarea } from "../src/define";
@@ -57,11 +58,12 @@ document
   .querySelector("#close-dialog")
   ?.addEventListener("click", () => dialog?.close());
 
-// Hero composer: pressing send just clears with a tiny acknowledgement —
+// Hero composer: pressing send clears the field and throws orc confetti —
 // the demo is the beam, not a backend.
 const field = document.querySelector<OrcTextarea>("#hero-field");
 const send = document.querySelector("#hero-send");
 send?.addEventListener("click", () => {
+  burstConfetti(send);
   if (!field) return;
   field.value = "";
   field.focus();
