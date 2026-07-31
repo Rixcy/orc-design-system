@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [4.0.0](https://github.com/Rixcy/orc-design-system/compare/v3.0.0...v4.0.0) (2026-07-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tokens:** --orc-focus-ring is 1px instead of 2px and
+--orc-focus-offset is 3px instead of 2px. Consumers relying on the old
+2px/2px focus ring will see 1px/3px.
+
+### Features
+
+* **rollout:** ship per-release migrations and a consumer rollout script ([63e4ef7](https://github.com/Rixcy/orc-design-system/commit/63e4ef7947785e4242c2c137541c1ec949e75dd9))
+* **site:** explode orc-logo confetti from the hero send button ([aef3203](https://github.com/Rixcy/orc-design-system/commit/aef3203450d14ff49df3b3c64c2a1ea20dca15ce))
+* **tokens:** make the focus ring a hairline ([322974a](https://github.com/Rixcy/orc-design-system/commit/322974a5c8d4583ad94c15c712d0eaa611328ab6))
+
 ## [3.0.0](https://github.com/Rixcy/orc-design-system/compare/v2.0.1...v3.0.0) (2026-07-27)
 
 
