@@ -37,8 +37,11 @@ const themeDerivations = {
 // Declared once on :root; they reference theme-dependent roles, so they resolve per theme.
 const sharedDerivations = {
   "control-border": mix("border", 65, "heading"),
-  "button-hover": mix("accent", 10, "bg"),
-  "button-hover-chip": mix("accent", 12, "chip"),
+  // Green, not accent: the controls these tint already fill and focus in green,
+  // so an accent-blue hover put a second interaction colour on the same button.
+  "button-hover": mix("green", 10, "bg"),
+  "button-hover-chip": mix("green", 12, "chip"),
+  // Still accent: this is the accent family's own strong step, and nothing uses it.
   "button-hover-strong": mix("accent-strong", 86, "heading"),
 };
 

@@ -15,14 +15,14 @@ const template = `
       display: flex;
       align-items: center;
       gap: var(--orc-space-2, 0.5rem);
-      border-block-end: 1px solid var(--orc-border, #3b4261);
+      border-block-end: 1px solid var(--orc-border, #3b4540);
       overflow-x: auto;
     }
 
     [role="tab"] {
       border: none;
       background: none;
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       cursor: pointer;
       padding: var(--orc-space-2, 0.5rem) var(--orc-space-3, 0.75rem);
       font: inherit;
@@ -35,7 +35,7 @@ const template = `
     }
 
     [role="tab"]:hover {
-      color: var(--orc-text, #c0caf5);
+      color: var(--orc-text, #c7cfca);
     }
 
     [role="tab"]:focus-visible {
@@ -43,10 +43,13 @@ const template = `
       outline-offset: -2px;
     }
 
+    /* Green, not accent: selecting a tab is an interaction, and the ring this
+       tab focuses with is already green. The 2px underline stays twice the
+       weight of the 1px focus ring so the two states never read as one. */
     [role="tab"][aria-selected="true"] {
-      color: var(--orc-accent-text, var(--orc-accent, #7aa2f7));
+      color: var(--orc-green-text, var(--orc-green, #9dc76b));
       font-weight: 600;
-      border-bottom-color: var(--orc-accent, #7aa2f7);
+      border-bottom-color: var(--orc-green, #9dc76b);
     }
 
     @media (prefers-reduced-motion: no-preference) {

@@ -55,6 +55,22 @@ describe("orc-tabs", () => {
     ]);
   });
 
+  it("marks the selected tab in green, and keeps it heavier than the focus ring", () => {
+    const host = createTabs();
+    const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
+    const selected = css.slice(css.indexOf('[role="tab"][aria-selected="true"]'));
+    const block = selected.slice(0, selected.indexOf("}"));
+
+    expect(block).toContain("color: var(--orc-green-text");
+    expect(block).toContain("border-bottom-color: var(--orc-green, #9dc76b)");
+    // Selection must not borrow the accent back: that is the whole change.
+    expect(block).not.toContain("--orc-accent");
+    // Both states are green, so weight is what separates them: the selection
+    // underline is 2px against the focus ring's 1px.
+    expect(css).toContain("border-bottom: 2px solid transparent");
+    expect(css).toContain("var(--orc-focus-ring, 1px solid #9dc76b)");
+  });
+
   it("wires aria-controls and aria-labelledby between tabs and panels", () => {
     const host = createTabs();
     const tabs = getTabButtons(host);

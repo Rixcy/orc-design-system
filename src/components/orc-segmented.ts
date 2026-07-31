@@ -16,7 +16,7 @@ const template = `
       gap: var(--orc-space-1, 4px);
       padding: 3px;
       border-radius: var(--orc-radius-2, 8px);
-      background: var(--orc-button-hover-chip, color-mix(in srgb, var(--orc-accent, #7aa2f7) 12%, var(--orc-panel, #16181b)));
+      background: var(--orc-button-hover-chip, #374334);
       inline-size: fit-content;
     }
 
@@ -29,14 +29,14 @@ const template = `
       font: inherit;
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       white-space: nowrap;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
 
     [role="radio"]:hover:not([aria-checked="true"]) {
-      color: var(--orc-heading, var(--orc-text, #c0caf5));
+      color: var(--orc-heading, var(--orc-text, #c7cfca));
     }
 
     [role="radio"]:focus-visible {
@@ -45,8 +45,8 @@ const template = `
     }
 
     [role="radio"][aria-checked="true"] {
-      background: var(--orc-bg, #1a1b26);
-      color: var(--orc-heading, var(--orc-text, #c0caf5));
+      background: var(--orc-bg, #1a1c20);
+      color: var(--orc-heading, var(--orc-text, #c7cfca));
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
     }
 

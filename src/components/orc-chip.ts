@@ -35,7 +35,7 @@ const template = `
       font-weight: 600;
       line-height: 1.4;
       overflow-wrap: anywhere;
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       /* §5's Soft Fill, which the neutral chip was missing: every coloured
          variant carries its own 13-15% tint, and neutral had nothing, so a
          neutral chip read as an outline next to the filled pills around it.
@@ -44,10 +44,11 @@ const template = `
       border-color: var(--orc-border, #3b4540);
     }
 
-    /* §5's chip state, and it only exists on the link form: hover moves border
-       and text to Signal Blue. The variant rules below are written against the
-       chip class, so they style the anchor and the span alike; this block is
-       the only place the two differ. */
+    /* The chip's one interactive state, and it only exists on the link form:
+       hover moves border and text to --orc-green, the colour this chip already
+       focuses in. The variant rules below are written against the chip class,
+       so they style the anchor and the span alike; this block is the only
+       place the two differ. */
     a.chip {
       cursor: pointer;
       text-decoration: none;
@@ -55,8 +56,8 @@ const template = `
     }
 
     a.chip:hover {
-      border-color: var(--orc-accent, #78a9c2);
-      color: var(--orc-accent-text, var(--orc-accent, #78a9c2));
+      border-color: var(--orc-green, #9dc76b);
+      color: var(--orc-green-text, var(--orc-green, #9dc76b));
     }
 
     a.chip:focus-visible {

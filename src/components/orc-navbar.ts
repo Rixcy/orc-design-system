@@ -7,9 +7,9 @@ const template = `
     :host {
       display: block;
       container-type: inline-size;
-      color: var(--orc-text, #c0caf5);
+      color: var(--orc-text, #c7cfca);
       background: var(--orc-panel, #16161e);
-      border-block-end: 1px solid var(--orc-border, #3b4261);
+      border-block-end: 1px solid var(--orc-border, #3b4540);
       font-family: var(--orc-font-sans, Inter, ui-sans-serif, system-ui, sans-serif);
     }
 
@@ -59,7 +59,7 @@ const template = `
       align-items: center;
       padding: var(--orc-space-2, 0.5rem);
       border-radius: var(--orc-radius-sm, 0.25rem);
-      color: var(--orc-heading, #c0caf5);
+      color: var(--orc-heading, #e0e5e2);
       font-weight: 700;
       line-height: 1.25;
       text-decoration: none;
@@ -69,7 +69,7 @@ const template = `
     }
 
     a:hover {
-      background: var(--orc-button-hover, #292e42);
+      background: var(--orc-button-hover, #272d28);
     }
 
     a:focus-visible {

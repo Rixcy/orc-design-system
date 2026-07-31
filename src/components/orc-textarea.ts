@@ -27,7 +27,7 @@ const template = `
       gap: 12px;
       padding: 5px 8px 6px 13px;
       border-top: 1px solid var(--orc-border, #3b4540);
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       font-size: 11px;
     }
 

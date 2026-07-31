@@ -3,8 +3,8 @@
   "title": "Design System: Orc",
   "extensions": {
     "colorMeta": {
-      "accent-day": { "role": "primary", "displayName": "Interaction Blue (day)", "canonical": "#2d6983" },
-      "accent-night": { "role": "primary", "displayName": "Interaction Blue (night)", "canonical": "#78a9c2" },
+      "accent-day": { "role": "secondary", "displayName": "Informational Blue (day)", "canonical": "#2d6983" },
+      "accent-night": { "role": "secondary", "displayName": "Informational Blue (night)", "canonical": "#78a9c2" },
       "canvas-day": { "role": "neutral", "displayName": "Slate Canvas (day)", "canonical": "#e3e5e4" },
       "canvas-night": { "role": "neutral", "displayName": "Slate Canvas (night)", "canonical": "#1a1c20" },
       "panel-day": { "role": "neutral", "displayName": "Panel (day)", "canonical": "#eceeec" },
@@ -23,8 +23,8 @@
       "chip-night": { "role": "secondary", "displayName": "Chip Surface (night)", "canonical": "#29312c" },
       "code-day": { "role": "secondary", "displayName": "Code Surface (day)", "canonical": "#d4d8d5" },
       "code-night": { "role": "secondary", "displayName": "Code Surface (night)", "canonical": "#1f2422" },
-      "pass-green-day": { "role": "tertiary", "displayName": "Pass Green (day)", "canonical": "#53743a" },
-      "pass-green-night": { "role": "tertiary", "displayName": "Pass Green (night)", "canonical": "#9dc76b" },
+      "pass-green-day": { "role": "primary", "displayName": "Interaction Green (day)", "canonical": "#53743a" },
+      "pass-green-night": { "role": "primary", "displayName": "Interaction Green (night)", "canonical": "#9dc76b" },
       "warn-yellow-day": { "role": "tertiary", "displayName": "Warn Yellow (day)", "canonical": "#8a6a2f" },
       "warn-yellow-night": { "role": "tertiary", "displayName": "Warn Yellow (night)", "canonical": "#d5b05c" },
       "fail-red-day": { "role": "tertiary", "displayName": "Fail Red (day)", "canonical": "#b83f50" },

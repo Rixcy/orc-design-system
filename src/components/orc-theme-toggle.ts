@@ -26,7 +26,7 @@ const template = `
       padding: 0;
       border: 1px solid transparent;
       border-radius: var(--orc-radius-md, 0.5rem);
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       background: none;
       cursor: pointer;
       touch-action: manipulation;
@@ -35,15 +35,15 @@ const template = `
     }
 
     button:hover:not(:disabled) {
-      border-color: var(--orc-border, #292e42);
-      background: var(--orc-button-hover-chip, #292e42);
-      color: var(--orc-heading, #c0caf5);
+      border-color: var(--orc-border, #3b4540);
+      background: var(--orc-button-hover-chip, #374334);
+      color: var(--orc-heading, #e0e5e2);
     }
 
     button:focus-visible {
       outline: var(--orc-focus-ring, 1px solid #9dc76b);
       outline-offset: var(--orc-focus-offset, 3px);
-      color: var(--orc-heading, #c0caf5);
+      color: var(--orc-heading, #e0e5e2);
     }
 
     button:disabled {

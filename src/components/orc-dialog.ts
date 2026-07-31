@@ -92,14 +92,14 @@ const template = `
       border: 0;
       border-radius: var(--orc-radius-sm, 8px);
       background: transparent;
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       font: inherit;
       cursor: pointer;
       transition: background-color 0.12s ease-out, color 0.12s ease-out;
     }
 
     button.close:hover {
-      background: var(--orc-button-hover, #292e42);
+      background: var(--orc-button-hover, #272d28);
       color: var(--orc-heading, #eef1ee);
     }
 
@@ -156,7 +156,7 @@ const template = `
        light DOM by id. Slotting into a shadow-owned wrapper is what keeps the
        association intact. */
     .description {
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       font-size: 13px;
       line-height: 1.55;
     }
