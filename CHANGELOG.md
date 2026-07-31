@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [4.0.1](https://github.com/Rixcy/orc-design-system/compare/v4.0.0...v4.0.1) (2026-07-31)
+
+
+### Bug Fixes
+
+* **migrations:** report the 4.0.0 focus hairline change and guard the gap ([ad53948](https://github.com/Rixcy/orc-design-system/commit/ad539481ac6d356b9d56769965ef96ff81d22629))
+
 ## [4.0.0](https://github.com/Rixcy/orc-design-system/compare/v3.0.0...v4.0.0) (2026-07-31)
 
 
