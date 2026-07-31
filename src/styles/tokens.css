@@ -32,8 +32,8 @@
   --orc-orange-text: color-mix(in srgb, var(--orc-orange) 60%, var(--orc-heading));
   --orc-accent-strong: color-mix(in srgb, var(--orc-accent) 70%, var(--orc-heading));
   --orc-control-border: color-mix(in srgb, var(--orc-border) 65%, var(--orc-heading));
-  --orc-button-hover: color-mix(in srgb, var(--orc-accent) 10%, var(--orc-bg));
-  --orc-button-hover-chip: color-mix(in srgb, var(--orc-accent) 12%, var(--orc-chip));
+  --orc-button-hover: color-mix(in srgb, var(--orc-green) 10%, var(--orc-bg));
+  --orc-button-hover-chip: color-mix(in srgb, var(--orc-green) 12%, var(--orc-chip));
   --orc-button-hover-strong: color-mix(in srgb, var(--orc-accent-strong) 86%, var(--orc-heading));
 
   /* Stable typography, layout, and focus tokens. */

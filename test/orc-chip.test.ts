@@ -111,16 +111,18 @@ describe("orc-chip", () => {
     expect(anchor?.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
-  it("gives the link chip DESIGN.md §5's hover state and a focus ring", () => {
+  it("hovers the link chip in green, the colour it already focuses in", () => {
     const chip = document.createElement("orc-chip");
     chip.setAttribute("href", "#run-1");
     document.body.append(chip);
 
     const css = chip.shadowRoot?.querySelector("style")?.textContent ?? "";
     const hover = css.slice(css.indexOf("a.chip:hover"));
-    expect(hover.slice(0, hover.indexOf("}"))).toContain(
-      "border-color: var(--orc-accent, #78a9c2)",
-    );
+    const block = hover.slice(0, hover.indexOf("}"));
+    expect(block).toContain("border-color: var(--orc-green, #9dc76b)");
+    expect(block).toContain("color: var(--orc-green-text");
+    // The accent belongs to variant="accent" now, not to any interactive state.
+    expect(block).not.toContain("--orc-accent");
     expect(css).toContain("a.chip:focus-visible");
     expect(css).toContain("outline: var(--orc-focus-ring");
   });

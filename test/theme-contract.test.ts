@@ -152,8 +152,8 @@ describe("Orc theme contract", () => {
       "orange-text": mix(expected.day.orange, expected.day.heading, 0.6),
       "accent-strong": mix(expected.day.accent, expected.day.heading, 0.7),
       "control-border": mix(expected.day.border, expected.day.heading, 0.65),
-      "button-hover": mix(expected.day.accent, expected.day.bg, 0.1),
-      "button-hover-chip": mix(expected.day.accent, expected.day.chip, 0.12),
+      "button-hover": mix(expected.day.green, expected.day.bg, 0.1),
+      "button-hover-chip": mix(expected.day.green, expected.day.chip, 0.12),
       "button-hover-strong": mix(
         mix(expected.day.accent, expected.day.heading, 0.7),
         expected.day.heading,
@@ -173,8 +173,8 @@ describe("Orc theme contract", () => {
       "orange-text": expected.night.orange,
       "accent-strong": expected.night.accent,
       "control-border": mix(expected.night.border, expected.night.heading, 0.65),
-      "button-hover": mix(expected.night.accent, expected.night.bg, 0.1),
-      "button-hover-chip": mix(expected.night.accent, expected.night.chip, 0.12),
+      "button-hover": mix(expected.night.green, expected.night.bg, 0.1),
+      "button-hover-chip": mix(expected.night.green, expected.night.chip, 0.12),
       "button-hover-strong": mix(expected.night.accent, expected.night.heading, 0.86),
     });
   });

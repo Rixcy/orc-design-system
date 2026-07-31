@@ -43,10 +43,13 @@ const template = `
       outline-offset: -2px;
     }
 
+    /* Green, not accent: selecting a tab is an interaction, and the ring this
+       tab focuses with is already green. The 2px underline stays twice the
+       weight of the 1px focus ring so the two states never read as one. */
     [role="tab"][aria-selected="true"] {
-      color: var(--orc-accent-text, var(--orc-accent, #7aa2f7));
+      color: var(--orc-green-text, var(--orc-green, #9dc76b));
       font-weight: 600;
-      border-bottom-color: var(--orc-accent, #7aa2f7);
+      border-bottom-color: var(--orc-green, #9dc76b);
     }
 
     @media (prefers-reduced-motion: no-preference) {
