@@ -71,7 +71,7 @@ export class OrcTextarea extends HTMLElementBase {
     super();
     this.attachShadow({ mode: "open" }).innerHTML = template;
     const textarea = this.textarea;
-    const label = this.label;
+    const label = this.labelEl;
     if (textarea) textarea.id = this.elementId;
     if (label) label.setAttribute("for", this.elementId);
 
@@ -108,13 +108,13 @@ export class OrcTextarea extends HTMLElementBase {
     return this.shadowRoot?.querySelector("textarea") ?? null;
   }
 
-  private get label(): HTMLLabelElement | null {
+  private get labelEl(): HTMLLabelElement | null {
     return this.shadowRoot?.querySelector("label") ?? null;
   }
 
   private render(): void {
     const textarea = this.textarea;
-    const label = this.label;
+    const label = this.labelEl;
     if (!textarea || !label) return;
 
     const labelText = this.getAttribute("label")?.trim() ?? "";

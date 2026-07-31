@@ -82,4 +82,17 @@ describe("orc-textarea", () => {
     field.focus();
     expect(field.shadowRoot!.activeElement).toBe(textarea);
   });
+
+  // React 19 assigns to a matching property instead of setting the attribute,
+  // and a getter-only accessor named after a public attribute makes that a
+  // strict-mode TypeError. Any internal element accessor must not shadow one.
+  it("leaves the label attribute free for property assignment", () => {
+    const field = document.createElement("orc-textarea");
+    document.body.append(field);
+
+    expect(() => {
+      "use strict";
+      (field as unknown as { label: string }).label = "Feedback";
+    }).not.toThrow();
+  });
 });
