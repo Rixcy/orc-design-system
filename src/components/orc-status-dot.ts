@@ -23,7 +23,7 @@ const template = `
     }
 
     :host([tone="muted"]) .dot {
-      background: var(--orc-muted-strong, #565f89);
+      background: var(--orc-muted-strong, #aeb5b0);
     }
 
     :host([tone="red"]) .dot {

@@ -35,7 +35,7 @@ const template = `
       font-weight: 600;
       line-height: 1.4;
       overflow-wrap: anywhere;
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       /* §5's Soft Fill, which the neutral chip was missing: every coloured
          variant carries its own 13-15% tint, and neutral had nothing, so a
          neutral chip read as an outline next to the filled pills around it.

@@ -46,7 +46,7 @@ export function fieldChromeStyles(control: FieldControl): string {
       --orc-beam-angle: 24deg;
       position: relative;
       isolation: isolate;
-      border: 1px solid var(--orc-control-border, #565f89);
+      border: 1px solid var(--orc-control-border, #757d79);
       border-radius: var(--orc-radius-md, 0.5rem);
       background: var(--orc-panel, #16181b);
       transition: border-color 0.16s ease-out, outline-color 0.16s ease-out;
@@ -120,7 +120,7 @@ export function fieldChromeStyles(control: FieldControl): string {
     }
 
     ${control}::placeholder {
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
     }
 
     /* Same screen-reader-only treatment as <orc-status-dot>'s .sr-only. */
@@ -137,7 +137,7 @@ export function fieldChromeStyles(control: FieldControl): string {
     }
 
     ${control}:disabled {
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       cursor: not-allowed;
     }
 

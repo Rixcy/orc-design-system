@@ -19,7 +19,7 @@ const template = `
       font-size: 15px;
       line-height: 1;
       letter-spacing: -0.01em;
-      color: var(--orc-heading, #c0caf5);
+      color: var(--orc-heading, #e0e5e2);
     }
 
     :host([size="sm"]) {
@@ -45,7 +45,7 @@ const template = `
     /* muted-strong, not muted: the product word is body-size prose and must
        clear 4.5:1 on the day panel, which plain --orc-muted does not. */
     .product {
-      color: var(--orc-muted-strong, #565f89);
+      color: var(--orc-muted-strong, #aeb5b0);
       font-weight: 400;
     }
 
