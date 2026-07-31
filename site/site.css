@@ -158,8 +158,8 @@ orc-navbar nav a:hover {
 }
 
 .cta:focus-visible {
-  outline: var(--orc-focus-ring, 2px solid var(--orc-accent));
-  outline-offset: var(--orc-focus-offset, 2px);
+  outline: var(--orc-focus-ring, 1px solid var(--orc-accent));
+  outline-offset: var(--orc-focus-offset, 3px);
 }
 
 .cta-primary {

@@ -165,8 +165,8 @@ ${renderSharedDerivations("  ")}
   --orc-radius-pill: 999px;
   /* Green, not accent: fields already mark focus with a green border, so a
      blue ring on the controls beside them read as two focus languages. */
-  --orc-focus-ring: 2px solid var(--orc-green);
-  --orc-focus-offset: 2px;
+  --orc-focus-ring: 1px solid var(--orc-green);
+  --orc-focus-offset: 3px;
 }
 
 @media (prefers-color-scheme: dark) {
