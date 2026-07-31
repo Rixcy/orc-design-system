@@ -75,6 +75,31 @@ const lightGate = tokens.derived.day.gate;
 See [`docs/theme-consumption.md`](docs/theme-consumption.md) for the full theming
 contract and the list of derived roles.
 
+## Upgrading
+
+Each breaking release ships a migration beside it. From a consumer project:
+
+```bash
+npx @orc-tools/orc-design-system migrate --dry-run   # show what would change
+npx @orc-tools/orc-design-system migrate             # apply, nothing committed
+```
+
+Mechanical changes are applied; anything that is a design decision is reported
+for you to settle. A new breaking release needs a matching
+`migrations/<version>-<slug>.mjs`.
+
+To move every consumer at once, list them in `consumers.json` and run from this
+repo:
+
+```bash
+bun run rollout --dry-run     # per-project report, no writes
+bun run rollout               # branch, bump, migrate, build, test, commit
+bun run rollout --pr          # ...and push + open PRs
+```
+
+Projects with uncommitted changes are skipped, a failed build stops that project
+only, and nothing is pushed without `--pr`.
+
 ## Develop
 
 ```bash

@@ -15,8 +15,13 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "files": [
-    "dist"
+    "bin",
+    "dist",
+    "migrations"
   ],
+  "bin": {
+    "orc-design-system": "./bin/migrate.mjs"
+  },
   "sideEffects": [
     "**/*.css",
     "./dist/preflight.js"
@@ -66,6 +71,7 @@
     "prepare": "bun run build",
     "release": "commit-and-tag-version",
     "social-preview": "node scripts/render-social-preview.mjs",
+    "rollout": "node scripts/rollout.mjs",
     "dev": "vite --config vite.site.config.ts",
     "build:site": "vite build --config vite.site.config.ts"
   },
