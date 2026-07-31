@@ -73,8 +73,8 @@ const template = `
     }
 
     a:focus-visible {
-      outline: var(--orc-focus-ring, 2px solid #9dc76b);
-      outline-offset: var(--orc-focus-offset, 2px);
+      outline: var(--orc-focus-ring, 1px solid #9dc76b);
+      outline-offset: var(--orc-focus-offset, 3px);
     }
 
     ::slotted(*) {

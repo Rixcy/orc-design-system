@@ -39,7 +39,7 @@ const template = `
     }
 
     [role="tab"]:focus-visible {
-      outline: var(--orc-focus-ring, 2px solid #9dc76b);
+      outline: var(--orc-focus-ring, 1px solid #9dc76b);
       outline-offset: -2px;
     }
 

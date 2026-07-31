@@ -88,7 +88,38 @@ describe("Orc theme contract", () => {
     expect(themeValues(css, ':root[data-theme="light"]')).toMatchObject(expected.day);
     expect(css).toContain("--orc-control-border: color-mix(in srgb, var(--orc-border) 65%, var(--orc-heading));");
     expect(css).toContain("--orc-font-sans:");
-    expect(css).toContain("--orc-focus-ring:");
+    expect(css).toContain("--orc-focus-ring: 1px solid var(--orc-green);");
+    expect(css).toContain("--orc-focus-offset: 3px;");
+  });
+
+  it("keeps every shadow-DOM focus fallback in sync with the token", async () => {
+    const bothFallbacks = [
+      "src/components/orc-button.ts",
+      "src/components/orc-chip.ts",
+      "src/components/orc-dialog.ts",
+      "src/components/orc-theme-toggle.ts",
+      "src/components/orc-navbar.ts",
+    ];
+    for (const path of bothFallbacks) {
+      const source = await readFile(resolve(root, path), "utf8");
+      expect(source, path).toContain("var(--orc-focus-ring, 1px solid #9dc76b)");
+      expect(source, path).toContain("var(--orc-focus-offset, 3px)");
+      expect(source, path).not.toContain("2px solid #9dc76b");
+      expect(source, path).not.toContain("var(--orc-focus-offset, 2px)");
+    }
+
+    const outlineOnlyFallbacks = ["src/components/orc-tabs.ts", "src/components/orc-segmented.ts"];
+    for (const path of outlineOnlyFallbacks) {
+      const source = await readFile(resolve(root, path), "utf8");
+      expect(source, path).toContain("var(--orc-focus-ring, 1px solid #9dc76b)");
+      expect(source, path).not.toContain("2px solid #9dc76b");
+    }
+
+    const site = await readFile(resolve(root, "site/site.css"), "utf8");
+    expect(site).toContain("var(--orc-focus-ring, 1px solid var(--orc-accent))");
+    expect(site).toContain("var(--orc-focus-offset, 3px)");
+    expect(site).not.toContain("2px solid var(--orc-accent)");
+    expect(site).not.toContain("var(--orc-focus-offset, 2px)");
   });
 
   it("packages derived roles as resolved hex for both themes", () => {
