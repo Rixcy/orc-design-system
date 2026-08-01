@@ -1,6 +1,6 @@
 {
   "name": "@orc-tools/orc-design-system",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Framework-neutral Orc design system foundations and Web Components.",
   "type": "module",
   "license": "MIT",

@@ -695,6 +695,189 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/orc-select.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-select>` is Orc's custom select: a themed trigger button and a\nmanually-positioned listbox in front of a real `<select>` mirrored into the\nshadow root, so every ARIA IDREF stays inside one shadow tree. Ported from\norc-ui's `enhanceSelect`.\n\nContent API: provide light-DOM `<option>` children, exactly as with a\nnative `<select>`. They are read as data — hidden from the a11y tree and\nmirrored into the shadow-root `<select>`, which is the real value holder.\nRead/write selection through this element's `value`/`selectedOptions`\nproperties or its mirrored `select`, not the light-DOM options directly.\nAfter mutating the light-DOM options from JS (e.g. an async fetch), call\n`syncCustomSelect()` to refresh the mirror; a `MutationObserver` also does\nthis automatically for simple childList changes.",
+          "name": "OrcSelect",
+          "members": [
+            {
+              "kind": "field",
+              "name": "select",
+              "type": {
+                "text": "HTMLSelectElement | null"
+              },
+              "description": "The mirrored native `<select>` in the shadow root — the real value holder.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selectedOptions",
+              "type": {
+                "text": "HTMLOptionElement[]"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "type": {
+                "text": "HTMLOptionElement[]"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "multiple",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "searchable",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "syncCustomSelect",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Rebuilds the mirrored `<select>` and the visible listbox from the\ncurrent light-DOM `<option>` children. Call this after adding, removing\nor mutating (e.g. `selected`) light-DOM options from JS — an async\nfetch that populates the list, for instance. A `MutationObserver` calls\nthis automatically for plain childList changes, so this is mainly for\ncases that also need `setCustomSelectStatus()` in the same tick."
+            },
+            {
+              "kind": "method",
+              "name": "setCustomSelectStatus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "message",
+                  "default": "\"\""
+                },
+                {
+                  "name": "busy",
+                  "default": "false"
+                }
+              ],
+              "description": "Sets the empty-state message shown in the listbox (e.g. while options\nload asynchronously) and its `aria-busy` state. Call with no arguments\nto clear back to the default \"No matches\" / \"No options available\" text."
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired when the selection changes, mirroring the native `<select>` `change` event."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Visible label text."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name used when no visible label is set."
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "description": "Extra hint announced with the trigger (rendered visually hidden)."
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflected. Disables the trigger and the mirrored select."
+            },
+            {
+              "name": "multiple",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflected. Enables multi-select with checkbox-style options."
+            },
+            {
+              "name": "searchable",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Shows a search box that filters options case-insensitively."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-select.ts"
+          },
+          "tagName": "orc-select",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcSelect",
+          "declaration": {
+            "name": "OrcSelect",
+            "module": "src/components/orc-select.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-status-dot.ts",
       "declarations": [
         {
