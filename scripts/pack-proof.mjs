@@ -68,6 +68,8 @@ const requiredPaths = [
   'dist/fonts/jetbrains-mono-latin-wght-normal.woff2',
   'dist/fonts/LICENSE.txt',
   'dist/fonts/PROVENANCE.md',
+  'bin/lib.mjs',
+  'bin/migrate.mjs',
 ];
 const missing = requiredPaths.filter((path) => !packedPaths.has(path));
 if (missing.length > 0) {
@@ -83,11 +85,16 @@ const generatedPaths = [
 // ponytail: per-component and per-theme declarations are tsc output that grows with
 // every new component — match the shape instead of relisting them on each addition.
 const declarationPattern = /^dist\/(components|theme)\/[a-z-]+\.d\.ts(\.map)?$/u;
+// migrations/ grows one file per breaking release, same reasoning — package.json's
+// "files" field has legitimately shipped the whole directory since 2.0.0, so the
+// allowlist tracks its shape rather than an ever-growing list of exact filenames.
+const migrationPattern = /^migrations\/[\w.-]+\.mjs$/u;
 const exactPaths = new Set([...requiredPaths, ...generatedPaths]);
 const chunkPattern = /^dist\/(define|registry)-[A-Za-z0-9_-]+\.js$/u;
 const unexpected = [...packedPaths].filter((path) => (
   !exactPaths.has(path)
   && !declarationPattern.test(path)
+  && !migrationPattern.test(path)
   && !chunkPattern.test(path)
   && !chunkPattern.test(path.replace(/\.map$/u, ''))
 ));
