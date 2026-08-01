@@ -1,8 +1,9 @@
 #!/usr/bin/env node
+import { spawnSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-import { migrate, parseVersion } from "./lib.mjs";
+import { PACKAGE, bumpDependency, dependencyField, installer, migrate, parseVersion } from "./lib.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 
@@ -17,16 +18,39 @@ const flag = (name) => {
 };
 const dir = resolve(flag("dir") ?? process.cwd());
 const dryRun = args.includes("--dry-run");
-const to = flag("to") ?? JSON.parse(await readFile(resolve(root, "package.json"), "utf8")).version;
-const from =
-  flag("from") ??
-  parseVersion(
-    JSON.parse(await readFile(resolve(dir, "package.json"), "utf8")).dependencies?.[
-      "@orc-tools/orc-design-system"
-    ],
-  );
+// `upgrade` also moves the dependency; `migrate` (the default) only runs codemods.
+const command = args.find((arg) => !arg.startsWith("--")) ?? "migrate";
+const to = parseVersion(
+  flag("to") ?? JSON.parse(await readFile(resolve(root, "package.json"), "utf8")).version,
+);
+const manifest = JSON.parse(await readFile(resolve(dir, "package.json"), "utf8"));
+const field = dependencyField(manifest);
+if (!flag("from") && field === null) {
+  console.error(`${dir} does not depend on ${PACKAGE}. Install it first, or pass --from.`);
+  process.exit(1);
+}
+const from = parseVersion(flag("from") ?? manifest[field][PACKAGE]);
 
-const results = await migrate({ dir, from: parseVersion(from), to: parseVersion(to), dryRun });
+if (from === to) {
+  console.log(
+    `Already on ${to}. If a newer release exists, this ran an older copy of the CLI — use \`npx ${PACKAGE}@latest ${command}\`.`,
+  );
+  process.exit(0);
+}
+
+if (command === "upgrade" && !dryRun) {
+  const range = await bumpDependency(dir, to);
+  const [installCommand, installArgs] = installer(dir);
+  console.log(`${PACKAGE} ${from} → ${range}, running ${installCommand} ${installArgs.join(" ")}…`);
+  if (spawnSync(installCommand, installArgs, { cwd: dir, stdio: "inherit" }).status !== 0) {
+    console.error(`${installCommand} install failed. package.json is bumped; install by hand, then re-run.`);
+    process.exit(1);
+  }
+}
+
+if (command === "upgrade" && dryRun) console.log(`Would move ${PACKAGE} ${from} → ${to} and install.`);
+
+const results = await migrate({ dir, from, to, dryRun });
 if (results.length === 0) {
   console.log(`No migrations between ${from} and ${to}.`);
   process.exit(0);

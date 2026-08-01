@@ -1,7 +1,9 @@
+import { existsSync } from "node:fs";
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
+export const PACKAGE = "@orc-tools/orc-design-system";
 const SOURCE_EXTENSIONS = new Set([
   ".astro",
   ".css",
@@ -44,6 +46,29 @@ export function parseVersion(range) {
   const match = /\d+\.\d+\.\d+/u.exec(range ?? "");
   if (!match) throw new Error(`Cannot read a version from "${range}".`);
   return match[0];
+}
+
+export function installer(dir) {
+  if (existsSync(resolve(dir, "bun.lock"))) return ["bun", ["install"]];
+  if (existsSync(resolve(dir, "pnpm-lock.yaml"))) return ["pnpm", ["install"]];
+  return ["npm", ["install"]];
+}
+
+export function dependencyField(manifest) {
+  if (manifest.dependencies?.[PACKAGE]) return "dependencies";
+  if (manifest.devDependencies?.[PACKAGE]) return "devDependencies";
+  return null;
+}
+
+// Keep whatever range style the consumer chose; only the version moves.
+export async function bumpDependency(dir, version) {
+  const manifestPath = resolve(dir, "package.json");
+  const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+  const field = dependencyField(manifest);
+  if (!field) return null;
+  manifest[field][PACKAGE] = manifest[field][PACKAGE].replace(/\d+\.\d+\.\d+/u, version);
+  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  return manifest[field][PACKAGE];
 }
 
 export function selectMigrations(names, from, to) {

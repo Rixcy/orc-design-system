@@ -80,9 +80,18 @@ contract and the list of derived roles.
 Each breaking release ships a migration beside it. From a consumer project:
 
 ```bash
-npx @orc-tools/orc-design-system migrate --dry-run   # show what would change
-npx @orc-tools/orc-design-system migrate             # apply, nothing committed
+npx @orc-tools/orc-design-system@latest upgrade --dry-run   # show what would change
+npx @orc-tools/orc-design-system@latest upgrade             # bump, install, migrate
 ```
+
+`upgrade` moves the dependency to the version of the CLI you ran, installs with
+whichever package manager the lockfile names, then applies the migrations. Use
+`migrate` instead when the dependency is already at the target version and you
+only want the codemods.
+
+Pin the CLI with `@latest` (or `@5.0.0`): a bare `npx` resolves the copy already
+in `node_modules`, which neither knows about the new version nor ships its
+migration.
 
 Mechanical changes are applied; anything that is a design decision is reported
 for you to settle. A new breaking release needs a matching

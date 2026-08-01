@@ -1,11 +1,10 @@
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-import { migrate, parseVersion } from "../bin/lib.mjs";
+import { PACKAGE, bumpDependency, dependencyField, installer, migrate, parseVersion } from "../bin/lib.mjs";
 
-const PACKAGE = "@orc-tools/orc-design-system";
 const root = resolve(import.meta.dirname, "..");
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
@@ -21,12 +20,6 @@ function run(cwd, command, commandArgs) {
   return spawnSync(command, commandArgs, { cwd, encoding: "utf8" });
 }
 
-function installer(dir) {
-  if (existsSync(resolve(dir, "bun.lock"))) return ["bun", ["install"]];
-  if (existsSync(resolve(dir, "pnpm-lock.yaml"))) return ["pnpm", ["install"]];
-  return ["npm", ["install"]];
-}
-
 const summary = [];
 for (const dir of consumers) {
   const name = dir.slice(dir.lastIndexOf("/") + 1);
@@ -38,12 +31,12 @@ for (const dir of consumers) {
     continue;
   }
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-  const range = manifest.dependencies?.[PACKAGE] ?? manifest.devDependencies?.[PACKAGE];
-  if (!range) {
+  const field = dependencyField(manifest);
+  if (!field) {
     record("skipped", `does not depend on ${PACKAGE}`);
     continue;
   }
-  const from = parseVersion(range);
+  const from = parseVersion(manifest[field][PACKAGE]);
   if (from === version) {
     record("current", version);
     continue;
@@ -69,10 +62,7 @@ for (const dir of consumers) {
     continue;
   }
 
-  // Keep whatever range style the consumer chose; only the version moves.
-  const field = manifest.dependencies?.[PACKAGE] ? "dependencies" : "devDependencies";
-  manifest[field][PACKAGE] = range.replace(/\d+\.\d+\.\d+/u, version);
-  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  await bumpDependency(dir, version);
   const [command, commandArgs] = installer(dir);
   if (run(dir, command, commandArgs).status !== 0) {
     record("needs hands", `${command} install failed`);
