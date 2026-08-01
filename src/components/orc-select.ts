@@ -105,6 +105,7 @@ const template = `
     .value {
       flex: 1;
       min-width: 0;
+      min-block-size: 1lh;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
