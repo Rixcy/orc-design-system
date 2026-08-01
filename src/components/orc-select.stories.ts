@@ -10,6 +10,7 @@ if (!customElements.get("orc-select")) {
 interface SelectArgs {
   label: string;
   searchable: boolean;
+  disableSearch: boolean;
   multiple: boolean;
   disabled: boolean;
 }
@@ -39,6 +40,7 @@ function renderSelect(
   const select = document.createElement("orc-select");
   select.setAttribute("label", args.label);
   if (args.searchable) select.setAttribute("searchable", "");
+  if (args.disableSearch) select.setAttribute("disable-search", "");
   if (args.multiple) select.setAttribute("multiple", "");
   if (args.disabled) select.setAttribute("disabled", "");
 
@@ -67,12 +69,14 @@ const meta = {
   args: {
     label: "Fruit",
     searchable: false,
+    disableSearch: false,
     multiple: false,
     disabled: false,
   },
   argTypes: {
     label: { control: "text" },
     searchable: { control: "boolean" },
+    disableSearch: { control: "boolean" },
     multiple: { control: "boolean" },
     disabled: { control: "boolean" },
   },
@@ -118,6 +122,24 @@ export const Searchable: Story = {
       ].filter((option) => !option.hidden);
       expect(visible.map((option) => option.textContent)).toEqual(["Elderberry"]);
     });
+  },
+};
+
+export const SearchDisabled: Story = {
+  args: { searchable: true, disableSearch: true },
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector("orc-select");
+    const trigger = getTrigger(host);
+    await userEvent.click(trigger);
+
+    const search = host?.shadowRoot?.querySelector<HTMLInputElement>(".search");
+    const selected = host?.shadowRoot?.querySelector<HTMLElement>(
+      '.option[aria-selected="true"]',
+    );
+    await expect(search).not.toBeNull();
+    await expect(search).not.toBeVisible();
+    await waitFor(() => expect(host?.shadowRoot?.activeElement).toBe(selected));
+    await userEvent.keyboard("{Escape}");
   },
 };
 
