@@ -333,6 +333,7 @@ function matchesQuery(text: string, query: string): boolean {
  * @attr {string} label - Visible label text.
  * @attr {string} aria-label - Accessible name used when no visible label is set.
  * @attr {boolean} searchable - Shows a search box that filters options case-insensitively.
+ * @attr {boolean} disable-search - Reflected. Hides search and overrides `searchable`.
  * @attr {boolean} disabled - Reflected. Disables the trigger and the mirrored select.
  * @attr {boolean} multiple - Reflected. Enables multi-select with checkbox-style options.
  * @attr {string} description - Extra hint announced with the trigger (rendered visually hidden).
@@ -340,7 +341,15 @@ function matchesQuery(text: string, query: string): boolean {
  */
 export class OrcSelect extends HTMLElementBase {
   static get observedAttributes(): string[] {
-    return ["label", "aria-label", "description", "disabled", "multiple", "searchable"];
+    return [
+      "label",
+      "aria-label",
+      "description",
+      "disabled",
+      "multiple",
+      "searchable",
+      "disable-search",
+    ];
   }
 
   private readonly elementId = `orc-select-${++instanceCount}`;
@@ -416,7 +425,7 @@ export class OrcSelect extends HTMLElementBase {
       }
       return;
     } else if (
-      this.searchable &&
+      this.searchEnabled &&
       search &&
       event.key.length === 1 &&
       !event.metaKey &&
@@ -515,6 +524,7 @@ export class OrcSelect extends HTMLElementBase {
         this.syncCustomSelect();
         break;
       case "searchable":
+      case "disable-search":
         this.syncSearchableState();
         break;
       default:
@@ -568,6 +578,15 @@ export class OrcSelect extends HTMLElementBase {
 
   set searchable(next: boolean) {
     this.toggleAttribute("searchable", Boolean(next));
+  }
+
+  /** Reflected. Hides search and overrides `searchable`. */
+  get disableSearch(): boolean {
+    return this.hasAttribute("disable-search");
+  }
+
+  set disableSearch(next: boolean) {
+    this.toggleAttribute("disable-search", Boolean(next));
   }
 
   focus(options?: FocusOptions): void {
@@ -634,6 +653,10 @@ export class OrcSelect extends HTMLElementBase {
     return this.shadowRoot?.querySelector(".empty") ?? null;
   }
 
+  private get searchEnabled(): boolean {
+    return this.searchable && !this.disableSearch;
+  }
+
   private syncLabelling(): void {
     const label = this.labelEl;
     const value = this.valueEl;
@@ -682,8 +705,13 @@ export class OrcSelect extends HTMLElementBase {
 
   private syncSearchableState(): void {
     const search = this.searchEl;
-    if (search) search.hidden = !this.searchable;
+    const wasFocused = this.shadowRoot?.activeElement === search;
+    if (search && !this.searchEnabled) search.value = "";
+    if (search) search.hidden = !this.searchEnabled;
     this.updateVisibility();
+    if (wasFocused && !this.searchEnabled && this.menuEl?.classList.contains("open")) {
+      this.focusSelectedOrFirstOption();
+    }
   }
 
   private syncMultiselectState(): void {
@@ -757,11 +785,11 @@ export class OrcSelect extends HTMLElementBase {
     if (!listbox || !empty) return;
 
     const options = [...listbox.querySelectorAll<HTMLElement>(".option")];
-    const query = this.searchable ? (this.searchEl?.value ?? "") : "";
+    const query = this.searchEnabled ? (this.searchEl?.value ?? "") : "";
     let visible = 0;
     options.forEach((option) => {
       const label = option.querySelector(".option-label")?.textContent ?? "";
-      const matches = !this.searchable || matchesQuery(label, query);
+      const matches = !this.searchEnabled || matchesQuery(label, query);
       option.hidden = !matches;
       if (matches) visible += 1;
     });
@@ -802,6 +830,12 @@ export class OrcSelect extends HTMLElementBase {
     });
   }
 
+  private focusSelectedOrFirstOption(): void {
+    const options = this.visibleOptions();
+    const selected = options.find((option) => option.getAttribute("aria-selected") === "true");
+    (selected ?? options[0])?.focus();
+  }
+
   private pick(value: string): void {
     const select = this.select;
     if (!select) return;
@@ -839,11 +873,10 @@ export class OrcSelect extends HTMLElementBase {
     menu.style.top = below ? `${rect.bottom + 4}px` : `${Math.max(8, rect.top - 4 - menuHeight)}px`;
 
     const search = this.searchEl;
-    if (this.searchable && search) {
+    if (this.searchEnabled && search) {
       search.focus();
     } else {
-      const selected = this.listboxEl?.querySelector<HTMLElement>('[aria-selected="true"]');
-      (selected ?? (this.listboxEl?.firstElementChild as HTMLElement | null))?.focus();
+      this.focusSelectedOrFirstOption();
     }
 
     window.addEventListener("pointerdown", this.onDocumentDismiss, true);

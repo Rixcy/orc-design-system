@@ -231,6 +231,81 @@ describe("orc-select", () => {
       menu(host).dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       expect(search(host).value).toBe("");
     });
+
+    it("reflects disableSearch through its attribute and property", () => {
+      const host = createSelect();
+      expect(host.disableSearch).toBe(false);
+
+      host.setAttribute("disable-search", "");
+      expect(host.disableSearch).toBe(true);
+
+      host.disableSearch = false;
+      expect(host.hasAttribute("disable-search")).toBe(false);
+
+      host.disableSearch = true;
+      expect(host.hasAttribute("disable-search")).toBe(true);
+    });
+
+    it("lets disable-search override searchable visibility, filtering, and opening focus", () => {
+      const host = createSelect(undefined, {
+        label: "Fruit",
+        searchable: "",
+        "disable-search": "",
+      });
+      search(host).value = "zzz";
+
+      trigger(host).click();
+
+      expect(search(host).hidden).toBe(true);
+      expect(optionRows(host).every((row) => !row.hidden)).toBe(true);
+      expect(host.shadowRoot!.activeElement).toBe(
+        optionRows(host).find((row) => row.dataset.value === "banana"),
+      );
+      expect(empty(host).hidden).toBe(true);
+    });
+
+    it("cleans up filtering and focus when search is disabled and re-enabled while open", () => {
+      const host = createSelect(undefined, { label: "Fruit", searchable: "" });
+      trigger(host).click();
+      search(host).value = "ch";
+      search(host).dispatchEvent(new Event("input", { bubbles: true }));
+      expect(optionRows(host).filter((row) => !row.hidden).map((row) => row.dataset.value)).toEqual([
+        "cherry",
+      ]);
+
+      host.disableSearch = true;
+
+      expect(search(host).hidden).toBe(true);
+      expect(search(host).value).toBe("");
+      expect(optionRows(host).every((row) => !row.hidden)).toBe(true);
+      expect(host.shadowRoot!.activeElement).toBe(
+        optionRows(host).find((row) => row.dataset.value === "banana"),
+      );
+
+      host.removeAttribute("disable-search");
+      expect(host.disableSearch).toBe(false);
+      expect(search(host).hidden).toBe(false);
+      expect(search(host).value).toBe("");
+      expect(optionRows(host).every((row) => !row.hidden)).toBe(true);
+    });
+
+    it("uses listbox typeahead when searchable is overridden", () => {
+      const host = createSelect(undefined, {
+        label: "Fruit",
+        searchable: "",
+        "disable-search": "",
+      });
+      trigger(host).click();
+
+      menu(host).dispatchEvent(
+        new KeyboardEvent("keydown", { key: "c", bubbles: true, cancelable: true }),
+      );
+
+      expect(host.shadowRoot!.activeElement).toBe(
+        optionRows(host).find((row) => row.dataset.value === "cherry"),
+      );
+      expect(search(host).value).toBe("");
+    });
   });
 
   describe("empty / no-options configuration", () => {

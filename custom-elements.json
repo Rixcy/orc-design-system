@@ -756,6 +756,14 @@
               }
             },
             {
+              "kind": "field",
+              "name": "disableSearch",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflected. Hides search and overrides `searchable`."
+            },
+            {
               "kind": "method",
               "name": "focus",
               "return": {
@@ -855,6 +863,13 @@
                 "text": "boolean"
               },
               "description": "Shows a search box that filters options case-insensitively."
+            },
+            {
+              "name": "disable-search",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflected. Hides search and overrides `searchable`."
             }
           ],
           "superclass": {
