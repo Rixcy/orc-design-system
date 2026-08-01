@@ -165,6 +165,34 @@ export const Loading: Story = {
   },
 };
 
+export const StableHeightAcrossAsyncContent: Story = {
+  render: (args) => renderSelect(args, []),
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector("orc-select") as OrcSelect;
+    const trigger = getTrigger(host);
+    await document.fonts.ready;
+
+    const emptyHeight = trigger.getBoundingClientRect().height;
+    await expect(trigger).toHaveAccessibleName("Fruit");
+
+    host.setCustomSelectStatus("Loading…", true);
+    const loadingHeight = trigger.getBoundingClientRect().height;
+
+    const option = document.createElement("option");
+    option.value = "banana";
+    option.textContent = "Banana";
+    option.selected = true;
+    host.append(option);
+    host.setCustomSelectStatus();
+    host.syncCustomSelect();
+
+    await expect(trigger).toHaveAccessibleName("Fruit Banana");
+    const contentHeight = trigger.getBoundingClientRect().height;
+    expect(loadingHeight).toBe(emptyHeight);
+    expect(contentHeight).toBe(emptyHeight);
+  },
+};
+
 export const Disabled: Story = {
   args: { disabled: true },
   play: async ({ canvasElement }) => {
