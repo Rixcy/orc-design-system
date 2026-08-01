@@ -5,6 +5,7 @@ import { OrcInput } from "./components/orc-input";
 import { OrcLogomark } from "./components/orc-logomark";
 import { OrcNavbar } from "./components/orc-navbar";
 import { OrcSegmented } from "./components/orc-segmented";
+import { OrcSelect } from "./components/orc-select";
 import { OrcStatusDot } from "./components/orc-status-dot";
 import { OrcStepper } from "./components/orc-stepper";
 import { OrcTabs } from "./components/orc-tabs";
@@ -19,6 +20,7 @@ export {
   OrcLogomark,
   OrcNavbar,
   OrcSegmented,
+  OrcSelect,
   OrcStatusDot,
   OrcStepper,
   OrcTabs,
@@ -34,6 +36,7 @@ const ELEMENTS: ReadonlyArray<[string, CustomElementConstructor]> = [
   ["orc-logomark", OrcLogomark],
   ["orc-navbar", OrcNavbar],
   ["orc-segmented", OrcSegmented],
+  ["orc-select", OrcSelect],
   ["orc-status-dot", OrcStatusDot],
   ["orc-stepper", OrcStepper],
   ["orc-tabs", OrcTabs],

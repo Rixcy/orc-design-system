@@ -1,5 +1,6 @@
 [
   "../orc",
+  "../orc-companion",
   "../orc-flags",
   "../orc-game",
   "../orc-jargon",

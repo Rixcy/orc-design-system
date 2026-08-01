@@ -6,6 +6,7 @@ export {
   OrcLogomark,
   OrcNavbar,
   OrcSegmented,
+  OrcSelect,
   OrcStatusDot,
   OrcStepper,
   OrcTabs,
