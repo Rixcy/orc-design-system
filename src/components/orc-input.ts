@@ -62,7 +62,7 @@ export class OrcInput extends HTMLElementBase {
     super();
     this.attachShadow({ mode: "open" }).innerHTML = template;
     const input = this.input;
-    const label = this.label;
+    const label = this.labelEl;
     if (input) input.id = this.elementId;
     if (label) label.setAttribute("for", this.elementId);
   }
@@ -93,13 +93,13 @@ export class OrcInput extends HTMLElementBase {
     return this.shadowRoot?.querySelector("input") ?? null;
   }
 
-  private get label(): HTMLLabelElement | null {
+  private get labelEl(): HTMLLabelElement | null {
     return this.shadowRoot?.querySelector("label") ?? null;
   }
 
   private render(): void {
     const input = this.input;
-    const label = this.label;
+    const label = this.labelEl;
     if (!input || !label) return;
 
     const labelText = this.getAttribute("label")?.trim() ?? "";
