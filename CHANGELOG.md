@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.0.0](https://github.com/Rixcy/orc-design-system/compare/v4.0.2...v5.0.0) (2026-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tokens:** --orc-button-hover and --orc-button-hover-chip resolve
+through --orc-green instead of --orc-accent. Consumers relying on a blue
+hover tint must set those tokens themselves.
+
+### Features
+
+* **tokens:** move hover and tab selection to green ([d287fbe](https://github.com/Rixcy/orc-design-system/commit/d287fbe2eb420d0e482348d6e1e5de5a6a9ba650))
+
+
+### Bug Fixes
+
+* **orc-input,orc-textarea:** stop the internal label accessor shadowing the label attribute ([5838864](https://github.com/Rixcy/orc-design-system/commit/58388640537937aa3704e468d7584a65e7d78ad6))
+* **tokens:** replace the leftover Tokyo Night fallbacks ([cd35675](https://github.com/Rixcy/orc-design-system/commit/cd35675eef586010357567e473529944ec4db3be)), closes [#3b4261](https://github.com/Rixcy/orc-design-system/issues/3b4261) [#565f89](https://github.com/Rixcy/orc-design-system/issues/565f89) [#7aa2f7](https://github.com/Rixcy/orc-design-system/issues/7aa2f7) [#aeb5b0](https://github.com/Rixcy/orc-design-system/issues/aeb5b0) [#757d79](https://github.com/Rixcy/orc-design-system/issues/757d79)
+
 ## [4.0.2](https://github.com/Rixcy/orc-design-system/compare/v4.0.1...v4.0.2) (2026-07-31)
 
 ## [4.0.1](https://github.com/Rixcy/orc-design-system/compare/v4.0.0...v4.0.1) (2026-07-31)
