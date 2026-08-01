@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.1.0](https://github.com/Rixcy/orc-design-system/compare/v5.0.0...v5.1.0) (2026-08-01)
+
+
+### Features
+
+* **cli:** add an upgrade command that bumps, installs, then migrates ([7f9bc13](https://github.com/Rixcy/orc-design-system/commit/7f9bc13bbe8908ef403030a1422c8dd50fa2db78))
+
 ## [5.0.0](https://github.com/Rixcy/orc-design-system/compare/v4.0.2...v5.0.0) (2026-08-01)
 
 
