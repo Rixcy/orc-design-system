@@ -103,8 +103,12 @@ export class OrcCopyButton extends OrcButton {
       ?.addEventListener("click", () => void this.copy());
   }
 
+  // Reverts rather than only clearing the timer: a button removed while its
+  // outcome shows would otherwise come back still saying "Copied", with the
+  // timer that was going to undo it already gone.
   disconnectedCallback(): void {
     clearTimeout(this.revertTimer);
+    this.revert();
   }
 
   private get labelEl(): HTMLElement | null {

@@ -173,6 +173,15 @@ describe("orc-copy-button", () => {
     expect(el.hasAttribute("state")).toBe(false);
   });
 
+  it("does not come back still showing an outcome after removal", async () => {
+    const el = mount();
+    await click(el);
+    el.remove();
+
+    expect(el.hasAttribute("state")).toBe(false);
+    expect(el.style.minWidth).toBe("");
+  });
+
   it("is registered by defineOrcElements", () => {
     expect(customElements.get("orc-copy-button")).toBe(OrcCopyButton);
   });
