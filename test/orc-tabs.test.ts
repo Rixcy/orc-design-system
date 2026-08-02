@@ -55,20 +55,27 @@ describe("orc-tabs", () => {
     ]);
   });
 
-  it("marks the selected tab in green, and keeps it heavier than the focus ring", () => {
+  it("draws keyboard focus on the top edge without changing the selected bottom edge", () => {
     const host = createTabs();
     const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
+    const focused = css.slice(css.indexOf('[role="tab"]:focus-visible'));
+    const focusBlock = focused.slice(0, focused.indexOf("}"));
     const selected = css.slice(css.indexOf('[role="tab"][aria-selected="true"]'));
-    const block = selected.slice(0, selected.indexOf("}"));
+    const selectedBlock = selected.slice(0, selected.indexOf("}"));
 
-    expect(block).toContain("color: var(--orc-green-text");
-    expect(block).toContain("border-bottom-color: var(--orc-green, #9dc76b)");
-    // Selection must not borrow the accent back: that is the whole change.
-    expect(block).not.toContain("--orc-accent");
-    // Both states are green, so weight is what separates them: the selection
-    // underline is 2px against the focus ring's 1px.
+    expect(focusBlock).toContain("outline: none");
+    expect(focusBlock).toContain(
+      "box-shadow: inset 0 1px 0 var(--orc-green, #9dc76b)",
+    );
+    expect(focusBlock).not.toContain("--orc-focus-ring");
+    expect(focusBlock).not.toContain("outline-offset");
+
+    expect(selectedBlock).toContain("color: var(--orc-green-text");
+    expect(selectedBlock).toContain(
+      "border-bottom-color: var(--orc-green, #9dc76b)",
+    );
+    expect(selectedBlock).not.toContain("--orc-accent");
     expect(css).toContain("border-bottom: 2px solid transparent");
-    expect(css).toContain("var(--orc-focus-ring, 1px solid #9dc76b)");
   });
 
   it("wires aria-controls and aria-labelledby between tabs and panels", () => {

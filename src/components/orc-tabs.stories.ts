@@ -80,6 +80,40 @@ export const Default: Story = {
   },
 };
 
+export const Focused: Story = {
+  globals: { theme: "light" },
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector("orc-tabs")!;
+    const shadow = host.shadowRoot!;
+    const tabs = [
+      ...shadow.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
+    ];
+
+    tabs[0].focus();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect(shadow.activeElement).toBe(tabs[1]);
+    await expect(tabs[1]).toHaveAttribute("aria-selected", "true");
+    await expect(tabs[1].matches(":focus-visible")).toBe(true);
+    await expect(getComputedStyle(tabs[1]).outlineStyle).toBe("none");
+    await expect(getComputedStyle(tabs[1]).boxShadow).not.toBe("none");
+    await expect(getComputedStyle(tabs[1]).borderBottomWidth).toBe("2px");
+
+    tabs[2].focus();
+    await expect(shadow.activeElement).toBe(tabs[2]);
+    await expect(tabs[2]).toHaveAttribute("aria-selected", "false");
+    await expect(tabs[2].matches(":focus-visible")).toBe(true);
+    await expect(getComputedStyle(tabs[2]).outlineStyle).toBe("none");
+    await expect(getComputedStyle(tabs[2]).boxShadow).not.toBe("none");
+    await expect(tabs[1]).toHaveAttribute("tabindex", "0");
+    await expect(tabs[2]).toHaveAttribute("tabindex", "-1");
+  },
+};
+
+export const FocusedDark: Story = {
+  globals: { theme: "dark" },
+  play: Focused.play,
+};
+
 export const ClickAndKeyboardNavigation: Story = {
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector("orc-tabs");

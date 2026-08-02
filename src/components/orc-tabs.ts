@@ -39,13 +39,11 @@ const template = `
     }
 
     [role="tab"]:focus-visible {
-      outline: var(--orc-focus-ring, 1px solid #9dc76b);
-      outline-offset: -2px;
+      outline: none;
+      box-shadow: inset 0 1px 0 var(--orc-green, #9dc76b);
     }
 
-    /* Green, not accent: selecting a tab is an interaction, and the ring this
-       tab focuses with is already green. The 2px underline stays twice the
-       weight of the 1px focus ring so the two states never read as one. */
+    /* The selected edge stays below while keyboard focus sits above it. */
     [role="tab"][aria-selected="true"] {
       color: var(--orc-green-text, var(--orc-green, #9dc76b));
       font-weight: 600;
