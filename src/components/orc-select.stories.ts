@@ -103,6 +103,7 @@ export const Open: Story = {
     await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "true"));
     const listbox = host?.shadowRoot?.querySelector('[role="listbox"]');
     await expect(listbox).not.toBeNull();
+    await expect(listbox as HTMLElement).toHaveAccessibleName("Fruit");
   },
 };
 
@@ -239,7 +240,7 @@ export const MultiSelect: Story = {
       ...(host?.shadowRoot?.querySelectorAll<HTMLElement>(".option") ?? []),
     ].find((option) => option.textContent?.includes("Apple"));
     await userEvent.click(apple!);
-    await waitFor(() => expect(trigger).toHaveTextContent("Banana, Cherry, Apple"));
+    await waitFor(() => expect(trigger).toHaveTextContent("Apple, Banana, Cherry"));
     // multi-select stays open after a pick
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
   },
