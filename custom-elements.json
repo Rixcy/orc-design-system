@@ -82,6 +82,118 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/floating-layer.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "computeFloatingLayerPosition",
+          "return": {
+            "type": {
+              "text": "FloatingLayerPosition"
+            }
+          },
+          "parameters": [
+            {
+              "name": "anchor",
+              "type": {
+                "text": "Pick<DOMRect, \"bottom\" | \"left\" | \"top\">"
+              }
+            },
+            {
+              "name": "layer",
+              "type": {
+                "text": "Pick<DOMRect, \"height\" | \"width\">"
+              }
+            },
+            {
+              "name": "viewport",
+              "type": {
+                "text": "FloatingLayerViewport"
+              }
+            },
+            {
+              "name": "gap",
+              "default": "4"
+            },
+            {
+              "name": "padding",
+              "default": "8"
+            }
+          ]
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FloatingLayerController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "isOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "open",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "update",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "destroy",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "computeFloatingLayerPosition",
+          "declaration": {
+            "name": "computeFloatingLayerPosition",
+            "module": "src/components/floating-layer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FloatingLayerController",
+          "declaration": {
+            "name": "FloatingLayerController",
+            "module": "src/components/floating-layer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-button.ts",
       "declarations": [
         {
@@ -556,6 +668,203 @@
           "declaration": {
             "name": "OrcLogomark",
             "module": "src/components/orc-logomark.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-menu.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-menu>` renders a named trigger and a fixed, viewport-bound menu for\nslotted `menuitem` and `menuitemradio` content.",
+          "name": "OrcMenu",
+          "cssProperties": [
+            {
+              "description": "Minimum panel width.",
+              "name": "--orc-menu-min-width",
+              "default": "10rem"
+            },
+            {
+              "description": "Maximum panel width.",
+              "name": "--orc-menu-max-width",
+              "default": "22rem"
+            },
+            {
+              "description": "Maximum panel height before scrolling.",
+              "name": "--orc-menu-max-height",
+              "default": "22rem"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Trigger label or icon content. The component owns the native button.",
+              "name": "trigger"
+            },
+            {
+              "description": "Menu items. Use native buttons or links with `menuitem` or `menuitemradio` roles.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "type": {
+                "text": "HTMLButtonElement | null"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "menu",
+              "type": {
+                "text": "HTMLElement | null"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "show",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "focus",
+                  "default": "\"first\"",
+                  "type": {
+                    "text": "\"first\" | \"last\""
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "reason",
+                  "default": "\"programmatic\"",
+                  "type": {
+                    "text": "OrcMenuCloseReason"
+                  }
+                },
+                {
+                  "name": "restoreFocus",
+                  "default": "false"
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "name": "open",
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired after the menu opens."
+            },
+            {
+              "name": "close",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired after close with an `OrcMenuCloseDetail` reason."
+            },
+            {
+              "name": "cancel",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Cancelable; fired before Escape, outside-pointer, or scroll dismissal."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the trigger and closes the menu."
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for the menu surface. Falls back to the trigger text."
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflects and controls menu visibility."
+            },
+            {
+              "name": "trigger-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for an icon-only trigger."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-menu.ts"
+          },
+          "tagName": "orc-menu",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcMenu",
+          "declaration": {
+            "name": "OrcMenu",
+            "module": "src/components/orc-menu.ts"
           }
         }
       ]

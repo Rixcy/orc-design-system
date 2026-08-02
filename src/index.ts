@@ -4,6 +4,7 @@ export {
   OrcDialog,
   OrcInput,
   OrcLogomark,
+  OrcMenu,
   OrcNavbar,
   OrcSegmented,
   OrcSelect,
