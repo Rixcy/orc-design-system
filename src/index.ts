@@ -1,6 +1,7 @@
 export {
   OrcButton,
   OrcChip,
+  OrcCopyButton,
   OrcDialog,
   OrcInput,
   OrcLogomark,
@@ -14,6 +15,7 @@ export {
   OrcThemeToggle,
   defineOrcElements,
 } from "./define";
+export type { OrcCopyDetail } from "./components/orc-copy-button";
 export {
   createThemeController,
   type ResolvedTheme,
