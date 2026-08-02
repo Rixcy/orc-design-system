@@ -107,6 +107,11 @@ const template = `
       gap: 2px;
     }
 
+    .menu-surface {
+      display: grid;
+      gap: 2px;
+    }
+
     @media (prefers-reduced-motion: no-preference) {
       .chevron {
         transition: transform 0.15s ease-out;
@@ -209,9 +214,13 @@ const template = `
     <slot name="trigger">Menu</slot>
     ${CHEVRON}
   </button>
-  <div class="menu" role="menu">
-    <slot></slot>
-    <div class="empty" role="menuitem" aria-disabled="true" hidden>No actions available</div>
+  <div class="menu">
+    <div class="menu-surface" role="menu">
+      <slot></slot>
+    </div>
+    <div class="empty" role="status" aria-live="polite" aria-atomic="true" hidden>
+      No actions available
+    </div>
   </div>
 `;
 
@@ -310,7 +319,8 @@ export class OrcMenu extends HTMLElementBase {
       this.trigger.id = `${this.elementId}-trigger`;
       this.trigger.setAttribute("aria-controls", `${this.elementId}-menu`);
     }
-    if (this.menu) this.menu.id = `${this.elementId}-menu`;
+    if (this.menu) this.menu.id = `${this.elementId}-layer`;
+    if (this.semanticMenu) this.semanticMenu.id = `${this.elementId}-menu`;
 
     this.trigger?.addEventListener("click", this.onTriggerClick);
     this.trigger?.addEventListener("keydown", this.onTriggerKeyDown);
@@ -375,6 +385,10 @@ export class OrcMenu extends HTMLElementBase {
 
   get menu(): HTMLElement | null {
     return this.shadowRoot?.querySelector(".menu") ?? null;
+  }
+
+  private get semanticMenu(): HTMLElement | null {
+    return this.shadowRoot?.querySelector(".menu-surface") ?? null;
   }
 
   focus(options?: FocusOptions): void {
@@ -452,7 +466,7 @@ export class OrcMenu extends HTMLElementBase {
 
   private syncLabelling(): void {
     const trigger = this.trigger;
-    const menu = this.menu;
+    const menu = this.semanticMenu;
     if (!trigger || !menu) return;
     const triggerLabel = this.getAttribute("trigger-label")?.trim() ?? "";
     if (triggerLabel) trigger.setAttribute("aria-label", triggerLabel);

@@ -44,12 +44,13 @@ function activeItem(host: OrcMenu): HTMLElement | null {
 describe("orc-menu", () => {
   it("owns a named native trigger and menu relationship", () => {
     const host = createMenu();
+    const semanticMenu = host.shadowRoot?.querySelector<HTMLElement>(".menu-surface");
     expect(host.trigger?.tagName).toBe("BUTTON");
     expect(host.trigger?.getAttribute("aria-haspopup")).toBe("menu");
     expect(host.trigger?.getAttribute("aria-expanded")).toBe("false");
-    expect(host.trigger?.getAttribute("aria-controls")).toBe(host.menu?.id);
-    expect(host.menu?.getAttribute("role")).toBe("menu");
-    expect(host.menu?.getAttribute("aria-label")).toBe("Run actions");
+    expect(host.trigger?.getAttribute("aria-controls")).toBe(semanticMenu?.id);
+    expect(semanticMenu?.getAttribute("role")).toBe("menu");
+    expect(semanticMenu?.getAttribute("aria-label")).toBe("Run actions");
   });
 
   it("supports an explicit accessible name for an icon-only trigger", () => {
@@ -235,6 +236,11 @@ describe("orc-menu", () => {
 
     expect(empty?.hidden).toBe(false);
     expect(empty?.textContent).toContain("No actions available");
+    expect(empty?.getAttribute("role")).toBe("status");
+    expect(empty?.getAttribute("aria-live")).toBe("polite");
+    expect(empty?.getAttribute("aria-atomic")).toBe("true");
+    expect(empty?.hasAttribute("aria-disabled")).toBe(false);
+    expect(empty?.hasAttribute("tabindex")).toBe(false);
     expect(css).toContain("calc(100vw - 16px)");
     expect(css).toContain("max-block-size");
     expect(css).toContain("prefers-reduced-motion: no-preference");
