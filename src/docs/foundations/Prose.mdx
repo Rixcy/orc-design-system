@@ -11,10 +11,10 @@ export const MARKUP = `
 thing applied to it is <code>.orc-prose</code> on the wrapper.</p>
 <h2>A section heading</h2>
 <p>Body copy sits at <code>line-height: 1.6</code>, with <strong>strong text</strong>
-lifted to the heading colour and <a href="#specimen">links</a> in the accent text
-colour.</p>
+lifted to the heading colour and <a href="#lists">links</a> underlined in the
+accent text colour.</p>
 <blockquote><p>A blockquote carries the accent wash and a left rule.</p></blockquote>
-<h3>Lists</h3>
+<h3 id="lists">Lists</h3>
 <ul>
   <li>An unordered item</li>
   <li>A nested list
@@ -51,7 +51,7 @@ export const Specimen = () => (
     style={{
       display: "block",
       width: "100%",
-      height: "860px",
+      height: "860px", // replaced with the content height once the frame loads
       border: "1px solid var(--orc-border)",
       borderRadius: "var(--orc-radius-md)",
       colorScheme: "normal",
@@ -61,14 +61,25 @@ export const Specimen = () => (
              color: var(--orc-text); font-family: var(--orc-font-sans); font-size: 14px; }
     </style></head><body><article class="orc-prose">${MARKUP}</article>
     <script>
-      var sync = function () {
-        var theme = parent.document.documentElement.dataset.theme;
-        if (theme) document.documentElement.dataset.theme = theme;
-        else document.documentElement.removeAttribute("data-theme");
+      var fit = function () {
+        if (frameElement) frameElement.style.height =
+          document.documentElement.scrollHeight + "px";
       };
-      sync();
-      new MutationObserver(sync).observe(parent.document.documentElement,
-        { attributes: true, attributeFilter: ["data-theme"] });
+      fit();
+      new ResizeObserver(fit).observe(document.documentElement);
+      // Cross-origin embedding (Storybook composition) makes parent.document
+      // throw; the frame then just follows the system colour scheme.
+      try {
+        var root = parent.document.documentElement;
+        var sync = function () {
+          if (root.dataset.theme) document.documentElement.dataset.theme = root.dataset.theme;
+          else document.documentElement.removeAttribute("data-theme");
+        };
+        sync();
+        var observer = new MutationObserver(sync);
+        observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+        addEventListener("pagehide", function () { observer.disconnect(); });
+      } catch (error) {}
     </script></body></html>`}
   />
 );
@@ -106,6 +117,11 @@ import "@orc-tools/orc-design-system/prose.css";  // .orc-prose
 background, or border. The measure and the frame belong to the surface hosting
 the prose — a document page wants a different measure to a sidebar preview, and
 baking one in would only be overridden.
+
+A wide table scrolls inside itself, which takes a `display: block` that costs the
+native table role in some browsers. If a surface needs those semantics intact,
+wrap the table in its own labelled scroll container and override the rule —
+CSS alone cannot add the wrapper.
 
 Product-specific treatments stay with the product for the same reason. Severity
 pills, ticket tables, callouts, lightboxes, and diff views are not prose; they

@@ -8,7 +8,6 @@ import customElements from "../custom-elements.json";
 import "../src/styles/tokens.css";
 import "../src/styles/components.css";
 import "../src/styles/typography.css";
-import "../src/styles/prose.css";
 import "./preview.css";
 import { orcTheme } from "./orc-theme";
 

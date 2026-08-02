@@ -130,7 +130,10 @@
   background: none;
 }
 
-/* A wide table scrolls inside its own box instead of widening the page. */
+/* A wide table scrolls inside its own box instead of widening the page. The
+   `display: block` that makes that work costs the native table role in some
+   browsers; a surface that needs the semantics intact should wrap the table in
+   its own scroll container and drop this rule. */
 .orc-prose table {
   display: block;
   width: max-content;
@@ -174,13 +177,14 @@
   border-radius: 6px;
 }
 
+/* Underlined by default: --orc-accent-text against --orc-text is around 1.3:1,
+   far below the 3:1 that would let colour carry the link on its own. Both Orc
+   copies underlined on hover only, which left the link invisible to anyone not
+   pointing at it. */
 .orc-prose a {
   color: var(--orc-accent-text);
-  text-decoration: none;
-}
-
-.orc-prose a:hover {
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .orc-prose blockquote {
