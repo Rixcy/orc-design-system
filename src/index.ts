@@ -1,6 +1,7 @@
 export {
   OrcButton,
   OrcChip,
+  OrcCombobox,
   OrcDialog,
   OrcInput,
   OrcLogomark,
@@ -14,6 +15,10 @@ export {
   OrcThemeToggle,
   defineOrcElements,
 } from "./define";
+export type {
+  OrcComboboxGroup,
+  OrcComboboxOption,
+} from "./components/orc-combobox";
 export {
   createThemeController,
   type ResolvedTheme,
