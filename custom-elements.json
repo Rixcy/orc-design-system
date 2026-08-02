@@ -392,6 +392,99 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/orc-icon-button.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-icon-button>` is a square, icon-only control: a borderless `plain`\nweight (the default) and a bordered `ghost` weight, rendering as an\n`<a href>` when `href` is set and a `<button type=\"button\">` otherwise.\n`disabled` always wins, forcing a disabled native `<button>` with no href.",
+          "name": "OrcIconButton",
+          "slots": [
+            {
+              "description": "Icon content. Mark it `aria-hidden=\"true\"`; `label` supplies the accessible name.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the control and forces a `<button>`, overriding `href`."
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Required accessible name; mirrored onto `aria-label` and `title`."
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string"
+              },
+              "description": "Renders the control as an `<a href>` instead of a `<button>`."
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "string"
+              },
+              "description": "Passed through to the internal `<a>` when `href` is set."
+            },
+            {
+              "name": "rel",
+              "type": {
+                "text": "string"
+              },
+              "description": "Passed through to the internal `<a>` when `href` is set."
+            },
+            {
+              "type": {
+                "text": "\"plain\"|\"ghost\""
+              },
+              "description": "Visual weight. Defaults to `plain`.",
+              "name": "variant"
+            },
+            {
+              "type": {
+                "text": "\"default\"|\"compact\""
+              },
+              "description": "Control density. Defaults to `default`.",
+              "name": "size"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-icon-button.ts"
+          },
+          "tagName": "orc-icon-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcIconButton",
+          "declaration": {
+            "name": "OrcIconButton",
+            "module": "src/components/orc-icon-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-input.ts",
       "declarations": [
         {
