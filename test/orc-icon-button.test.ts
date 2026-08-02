@@ -110,6 +110,28 @@ describe("orc-icon-button", () => {
     expect(control.title).toBe("Preferences");
   });
 
+  it("leaves aria-label and title off when there is no label", () => {
+    const host = document.createElement("orc-icon-button") as OrcIconButton;
+    document.body.append(host);
+    const control = getControl(host);
+    expect(control.hasAttribute("aria-label")).toBe(false);
+    expect(control.hasAttribute("title")).toBe(false);
+  });
+
+  it("keeps focus on the control when swapping between link and button", () => {
+    const host = createIconButton();
+    host.setAttribute("href", "#tickets");
+    const link = getControl(host);
+    link.focus();
+    expect(host.shadowRoot?.activeElement).toBe(link);
+
+    // Dropping href swaps <a> for <button>; focus must follow the swap.
+    host.removeAttribute("href");
+    const button = getControl(host);
+    expect(button.tagName).toBe("BUTTON");
+    expect(host.shadowRoot?.activeElement).toBe(button);
+  });
+
   it("reflects the disabled property onto the attribute and the inner button", () => {
     const host = createIconButton();
     const button = getControl(host) as HTMLButtonElement;

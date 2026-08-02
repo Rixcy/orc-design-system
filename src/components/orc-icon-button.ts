@@ -149,9 +149,13 @@ export class OrcIconButton extends HTMLElementBase {
     if (!el || el.tagName.toLowerCase() !== wantsTag) {
       const next = document.createElement(wantsTag);
       next.append(document.createElement("slot"));
+      // Swapping the element drops focus to <body>, so a control that was
+      // focused when href/disabled changed has to be refocused by hand.
+      const wasFocused = el !== null && shadow.activeElement === el;
       if (el) el.replaceWith(next);
       else shadow.append(next);
       el = next;
+      if (wasFocused && !disabled) next.focus();
     }
 
     if (wantsLink) {
@@ -167,9 +171,16 @@ export class OrcIconButton extends HTMLElementBase {
       button.disabled = disabled;
     }
 
+    // No label means no name to give: leave the attributes off rather than
+    // asserting an empty one, which reads as a deliberate blank name.
     const label = this.getAttribute("label")?.trim() ?? "";
-    el.setAttribute("aria-label", label);
-    el.title = label;
+    if (label) {
+      el.setAttribute("aria-label", label);
+      el.title = label;
+    } else {
+      el.removeAttribute("aria-label");
+      el.removeAttribute("title");
+    }
   }
 }
 
