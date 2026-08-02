@@ -109,7 +109,7 @@ describe("Orc theme contract", () => {
       expect(source, path).not.toContain("var(--orc-focus-offset, 2px)");
     }
 
-    const outlineOnlyFallbacks = ["src/components/orc-tabs.ts", "src/components/orc-segmented.ts"];
+    const outlineOnlyFallbacks = ["src/components/orc-segmented.ts"];
     for (const path of outlineOnlyFallbacks) {
       const source = await readFile(resolve(root, path), "utf8");
       expect(source, path).toContain("var(--orc-focus-ring, 1px solid #9dc76b)");

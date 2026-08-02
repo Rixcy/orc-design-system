@@ -80,6 +80,68 @@ export const Default: Story = {
   },
 };
 
+export const Focused: Story = {
+  globals: { theme: "light" },
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector("orc-tabs")!;
+    const shadow = host.shadowRoot!;
+    const tabs = [
+      ...shadow.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
+    ];
+    const selectedRectBeforeFocus = tabs[0].getBoundingClientRect();
+
+    tabs[0].focus();
+    await expect(tabs[0].getBoundingClientRect().width).toBe(
+      selectedRectBeforeFocus.width,
+    );
+    await expect(tabs[0].getBoundingClientRect().height).toBe(
+      selectedRectBeforeFocus.height,
+    );
+
+    await userEvent.keyboard("{ArrowRight}");
+    await expect(shadow.activeElement).toBe(tabs[1]);
+    await expect(tabs[1]).toHaveAttribute("aria-selected", "true");
+
+    const selectedPanel = shadow.querySelector<HTMLElement>(
+      '#orc-tab-panel-1',
+    )!;
+    selectedPanel.focus();
+    const selectedRectWithoutFocus = tabs[1].getBoundingClientRect();
+    tabs[1].focus();
+
+    await expect(tabs[1].matches(":focus-visible")).toBe(true);
+    const focusedStyle = getComputedStyle(tabs[1]);
+    await expect(focusedStyle.outlineStyle).toBe("none");
+    await expect(focusedStyle.boxShadow).toBe("none");
+    await expect(focusedStyle.backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
+    await expect(tabs[1].getBoundingClientRect().width).toBe(
+      selectedRectWithoutFocus.width,
+    );
+    await expect(tabs[1].getBoundingClientRect().height).toBe(
+      selectedRectWithoutFocus.height,
+    );
+    await expect(focusedStyle.borderBottomWidth).toBe("2px");
+
+    tabs[2].focus();
+    await expect(shadow.activeElement).toBe(tabs[2]);
+    await expect(tabs[2]).toHaveAttribute("aria-selected", "false");
+    await expect(tabs[2].matches(":focus-visible")).toBe(true);
+    const unselectedFocusedStyle = getComputedStyle(tabs[2]);
+    await expect(unselectedFocusedStyle.outlineStyle).toBe("none");
+    await expect(unselectedFocusedStyle.boxShadow).toBe("none");
+    await expect(unselectedFocusedStyle.backgroundColor).not.toBe(
+      "rgba(0, 0, 0, 0)",
+    );
+    await expect(tabs[1]).toHaveAttribute("tabindex", "0");
+    await expect(tabs[2]).toHaveAttribute("tabindex", "-1");
+  },
+};
+
+export const FocusedDark: Story = {
+  globals: { theme: "dark" },
+  play: Focused.play,
+};
+
 export const ClickAndKeyboardNavigation: Story = {
   play: async ({ canvasElement }) => {
     const host = canvasElement.querySelector("orc-tabs");

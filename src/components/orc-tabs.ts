@@ -39,13 +39,10 @@ const template = `
     }
 
     [role="tab"]:focus-visible {
-      outline: var(--orc-focus-ring, 1px solid #9dc76b);
-      outline-offset: -2px;
+      outline: none;
+      background: color-mix(in srgb, var(--orc-green, #9dc76b) 12%, transparent);
     }
 
-    /* Green, not accent: selecting a tab is an interaction, and the ring this
-       tab focuses with is already green. The 2px underline stays twice the
-       weight of the 1px focus ring so the two states never read as one. */
     [role="tab"][aria-selected="true"] {
       color: var(--orc-green-text, var(--orc-green, #9dc76b));
       font-weight: 600;
