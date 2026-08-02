@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.3.0](https://github.com/Rixcy/orc-design-system/compare/v5.2.0...v5.3.0) (2026-08-02)
+
+
+### Features
+
+* **combobox:** add reusable action foundation ([f8b3e47](https://github.com/Rixcy/orc-design-system/commit/f8b3e47ee38122186c13d982d2e8b814335c9a8f))
+* **copy-button:** add orc-copy-button ([9cbe86a](https://github.com/Rixcy/orc-design-system/commit/9cbe86a7ec77425c236bb50f25016401581b121d))
+* **menu:** add reusable floating layer foundation ([c154450](https://github.com/Rixcy/orc-design-system/commit/c15445057a55b7382e4ca998fc1999e0df821b40))
+* **orc-icon-button:** add icon-only button with link support ([1ad27de](https://github.com/Rixcy/orc-design-system/commit/1ad27de0533da201219fbc6d787d681449b3495f))
+* **prose:** add opt-in .orc-prose stylesheet ([78dc496](https://github.com/Rixcy/orc-design-system/commit/78dc496fe4cd93a220c6c29261a2cce49789976b))
+* **select:** add disable-search override ([4aed134](https://github.com/Rixcy/orc-design-system/commit/4aed13499e484f7fd23045411a2543ff2b0ceea2))
+* **site:** add recent components to landing page ([d095ab5](https://github.com/Rixcy/orc-design-system/commit/d095ab5fb3b472915349e69233a88fd4013464a0))
+
+
+### Bug Fixes
+
+* **combobox:** align focus offset fallback ([5079322](https://github.com/Rixcy/orc-design-system/commit/50793224d7514630d14d89732ea5f21120dbdec7))
+* **combobox:** close interaction gaps ([8730eea](https://github.com/Rixcy/orc-design-system/commit/8730eea1511aacd2a0c97be73b8eb95630965892))
+* **copy-button:** clear the outcome state when the button is removed ([d74f137](https://github.com/Rixcy/orc-design-system/commit/d74f137fc0047393bb37b411fd5e80319bbc4971))
+* **menu:** correct empty-state semantics ([704f680](https://github.com/Rixcy/orc-design-system/commit/704f680134168b51be7db193f7f1cba1ff0bf898))
+* **menu:** restore floating layer after reconnect ([2f9ac7f](https://github.com/Rixcy/orc-design-system/commit/2f9ac7f618b0eb0dc324fb0e3048cd5968caa3d3))
+* **orc-icon-button:** keep focus across control swap, drop empty accessible name ([75175ef](https://github.com/Rixcy/orc-design-system/commit/75175ef6d96a0b108b3d1ad4abaf9f0672aeefc4))
+* **orc-icon-button:** refocus the swapped control after its href lands ([e1ca945](https://github.com/Rixcy/orc-design-system/commit/e1ca9459b63d17523ced64a7b125ade718d1867c))
+* **prose:** underline links and document the table trade-off ([45f39d9](https://github.com/Rixcy/orc-design-system/commit/45f39d9628afb6d4cab2e40365b142b23cc67331))
+* **select:** name the open listbox, stop the open-animation opacity dip, correct multi-select order assertion ([cf5f302](https://github.com/Rixcy/orc-design-system/commit/cf5f302596cf23b08327b5f0c0080846bdf0fdb9))
+* **select:** stabilize loading height ([9098066](https://github.com/Rixcy/orc-design-system/commit/9098066c92ef55d6d81c6483cba761b33da3187e))
+
 ## [5.1.0](https://github.com/Rixcy/orc-design-system/compare/v5.0.0...v5.1.0) (2026-08-01)
 
 
