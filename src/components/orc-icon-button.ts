@@ -146,16 +146,19 @@ export class OrcIconButton extends HTMLElementBase {
     const wantsTag = wantsLink ? "a" : "button";
 
     let el = this.control;
+    // Swapping the element drops focus to <body>, so a control that was focused
+    // when href/disabled changed has to be refocused by hand — but only after
+    // the attributes below land: an <a> without an href is not a focusable
+    // area, so focusing it here would silently do nothing. happy-dom does not
+    // enforce that rule, so only a real browser catches a regression.
+    let refocus = false;
     if (!el || el.tagName.toLowerCase() !== wantsTag) {
       const next = document.createElement(wantsTag);
       next.append(document.createElement("slot"));
-      // Swapping the element drops focus to <body>, so a control that was
-      // focused when href/disabled changed has to be refocused by hand.
-      const wasFocused = el !== null && shadow.activeElement === el;
+      refocus = el !== null && shadow.activeElement === el && !disabled;
       if (el) el.replaceWith(next);
       else shadow.append(next);
       el = next;
-      if (wasFocused && !disabled) next.focus();
     }
 
     if (wantsLink) {
@@ -181,6 +184,8 @@ export class OrcIconButton extends HTMLElementBase {
       el.removeAttribute("aria-label");
       el.removeAttribute("title");
     }
+
+    if (refocus) el.focus();
   }
 }
 
