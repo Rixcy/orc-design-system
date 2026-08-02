@@ -3,6 +3,7 @@ export {
   OrcChip,
   OrcCopyButton,
   OrcDialog,
+  OrcIconButton,
   OrcInput,
   OrcLogomark,
   OrcNavbar,
