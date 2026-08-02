@@ -1,6 +1,7 @@
 export {
   OrcButton,
   OrcChip,
+  OrcCombobox,
   OrcCopyButton,
   OrcDialog,
   OrcIconButton,
@@ -17,6 +18,10 @@ export {
   defineOrcElements,
 } from "./define";
 export type { OrcCopyDetail } from "./components/orc-copy-button";
+export type {
+  OrcComboboxGroup,
+  OrcComboboxOption,
+} from "./components/orc-combobox";
 export {
   createThemeController,
   type ResolvedTheme,

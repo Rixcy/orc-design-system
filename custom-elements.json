@@ -242,6 +242,140 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/orc-combobox.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-combobox>` is an inline action picker that keeps DOM focus on its text\ninput while `aria-activedescendant` identifies the active listbox option.\nConsumers provide grouped action data and retain ownership of execution,\nrouting, dialog state, and destructive confirmation.\n\nOption IDs are consumer-owned identity and should be unique within the\ncurrent option set. Setting `options`, `value`, or `loading` rerenders the\ncurrent results without emitting user-intent events.",
+          "name": "OrcCombobox",
+          "members": [
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement | null"
+              },
+              "description": "The native text input that retains DOM focus during navigation.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "type": {
+                "text": "readonly OrcComboboxGroup[]"
+              },
+              "description": "Grouped action options. Replacing the array updates results immediately."
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "description": "The current filter query. Programmatic updates do not emit `input`."
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the consumer is loading action options."
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "name": "activate",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "`CustomEvent<OrcComboboxOption>` carrying the exact activated option."
+            },
+            {
+              "description": "Native composed input event after a user changes the query.",
+              "name": "input"
+            },
+            {
+              "description": "Non-bubbling, cancelable, composed event expressing Escape intent.",
+              "name": "cancel"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Visible label text."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible input name used when no visible label is set."
+            },
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "description": "Input placeholder text."
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "description": "Current filter query; reflected by the `value` property."
+            },
+            {
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Shows the loading state and marks the listbox busy."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-combobox.ts"
+          },
+          "tagName": "orc-combobox",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcCombobox",
+          "declaration": {
+            "name": "OrcCombobox",
+            "module": "src/components/orc-combobox.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-copy-button.ts",
       "declarations": [
         {

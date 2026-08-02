@@ -42,6 +42,7 @@ describe("defineOrcElements", () => {
   it("is idempotent", () => {
     expect(() => defineOrcElements()).not.toThrow();
     expect(() => defineOrcElements()).not.toThrow();
+    expect(customElements.get("orc-combobox")).toBeDefined();
     expect(customElements.get("orc-input")).toBeDefined();
     expect(customElements.get("orc-navbar")).toBeDefined();
     expect(customElements.get("orc-theme-toggle")).toBeDefined();
