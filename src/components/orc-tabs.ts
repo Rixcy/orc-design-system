@@ -40,7 +40,7 @@ const template = `
 
     [role="tab"]:focus-visible {
       outline: none;
-      box-shadow: inset 0 -1px 0 var(--orc-green, #9dc76b);
+      background: color-mix(in srgb, var(--orc-green, #9dc76b) 12%, transparent);
     }
 
     [role="tab"][aria-selected="true"] {

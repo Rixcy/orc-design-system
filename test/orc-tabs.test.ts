@@ -55,7 +55,7 @@ describe("orc-tabs", () => {
     ]);
   });
 
-  it("reinforces the bottom edge for keyboard focus without changing selection", () => {
+  it("uses a green surface tint for keyboard focus without changing geometry", () => {
     const host = createTabs();
     const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
     const focused = css.slice(css.indexOf('[role="tab"]:focus-visible'));
@@ -65,8 +65,12 @@ describe("orc-tabs", () => {
 
     expect(focusBlock).toContain("outline: none");
     expect(focusBlock).toContain(
-      "box-shadow: inset 0 -1px 0 var(--orc-green, #9dc76b)",
+      "background: color-mix(in srgb, var(--orc-green, #9dc76b) 12%, transparent)",
     );
+    expect(focusBlock).not.toContain("box-shadow");
+    expect(focusBlock).not.toContain("border");
+    expect(focusBlock).not.toContain("padding");
+    expect(focusBlock).not.toContain("margin");
     expect(focusBlock).not.toContain("--orc-focus-ring");
     expect(focusBlock).not.toContain("outline-offset");
 
