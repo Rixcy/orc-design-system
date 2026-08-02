@@ -23,8 +23,9 @@ values around.
   `<orc-input>`, `<orc-navbar>`, `<orc-status-dot>`, `<orc-stepper>`,
   `<orc-tabs>`, `<orc-textarea>`, and `<orc-theme-toggle>`, defined via
   `defineOrcElements()` and driven by an exported `createThemeController()`.
-- **Utility CSS** — opt-in `scrollbar.css` (`.orc-scrollbar`) and
-  `typography.css` (`--orc-type-*` variables + `.orc-type-*` classes).
+- **Utility CSS** — opt-in `scrollbar.css` (`.orc-scrollbar`), `typography.css`
+  (`--orc-type-*` variables + `.orc-type-*` classes), and `prose.css`
+  (`.orc-prose`, the Markdown typography block).
 - **Fonts** — opt-in Inter (body) and JetBrains Mono (code); the platform sans
   and mono stacks are the default so nothing is required.
 - **Preflight & assets** — the theme preflight snippet plus the packaged Orc

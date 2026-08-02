@@ -56,6 +56,7 @@ const requiredPaths = [
   'dist/tokens.css',
   'dist/components.css',
   'dist/fonts.css',
+  'dist/prose.css',
   'dist/scrollbar.css',
   'dist/typography.css',
   'dist/preflight.js',
