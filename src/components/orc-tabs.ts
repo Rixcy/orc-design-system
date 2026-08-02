@@ -40,10 +40,9 @@ const template = `
 
     [role="tab"]:focus-visible {
       outline: none;
-      box-shadow: inset 0 1px 0 var(--orc-green, #9dc76b);
+      box-shadow: inset 0 -1px 0 var(--orc-green, #9dc76b);
     }
 
-    /* The selected edge stays below while keyboard focus sits above it. */
     [role="tab"][aria-selected="true"] {
       color: var(--orc-green-text, var(--orc-green, #9dc76b));
       font-weight: 600;

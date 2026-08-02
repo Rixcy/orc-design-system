@@ -95,7 +95,9 @@ export const Focused: Story = {
     await expect(tabs[1]).toHaveAttribute("aria-selected", "true");
     await expect(tabs[1].matches(":focus-visible")).toBe(true);
     await expect(getComputedStyle(tabs[1]).outlineStyle).toBe("none");
-    await expect(getComputedStyle(tabs[1]).boxShadow).not.toBe("none");
+    await expect(getComputedStyle(tabs[1]).boxShadow).toContain(
+      "0px -1px 0px 0px inset",
+    );
     await expect(getComputedStyle(tabs[1]).borderBottomWidth).toBe("2px");
 
     tabs[2].focus();
@@ -103,7 +105,9 @@ export const Focused: Story = {
     await expect(tabs[2]).toHaveAttribute("aria-selected", "false");
     await expect(tabs[2].matches(":focus-visible")).toBe(true);
     await expect(getComputedStyle(tabs[2]).outlineStyle).toBe("none");
-    await expect(getComputedStyle(tabs[2]).boxShadow).not.toBe("none");
+    await expect(getComputedStyle(tabs[2]).boxShadow).toContain(
+      "0px -1px 0px 0px inset",
+    );
     await expect(tabs[1]).toHaveAttribute("tabindex", "0");
     await expect(tabs[2]).toHaveAttribute("tabindex", "-1");
   },

@@ -55,7 +55,7 @@ describe("orc-tabs", () => {
     ]);
   });
 
-  it("draws keyboard focus on the top edge without changing the selected bottom edge", () => {
+  it("reinforces the bottom edge for keyboard focus without changing selection", () => {
     const host = createTabs();
     const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
     const focused = css.slice(css.indexOf('[role="tab"]:focus-visible'));
@@ -65,7 +65,7 @@ describe("orc-tabs", () => {
 
     expect(focusBlock).toContain("outline: none");
     expect(focusBlock).toContain(
-      "box-shadow: inset 0 1px 0 var(--orc-green, #9dc76b)",
+      "box-shadow: inset 0 -1px 0 var(--orc-green, #9dc76b)",
     );
     expect(focusBlock).not.toContain("--orc-focus-ring");
     expect(focusBlock).not.toContain("outline-offset");
