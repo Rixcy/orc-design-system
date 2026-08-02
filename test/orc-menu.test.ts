@@ -244,6 +244,7 @@ describe("orc-menu", () => {
     expect(css).toContain("calc(100vw - 16px)");
     expect(css).toContain("max-block-size");
     expect(css).toContain("prefers-reduced-motion: no-preference");
+    expect(css).not.toContain("opacity: 0;");
     expect(css).not.toContain("box-shadow");
   });
 
@@ -257,5 +258,30 @@ describe("orc-menu", () => {
     window.dispatchEvent(new PointerEvent("pointerdown"));
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
     expect(closed).not.toHaveBeenCalled();
+  });
+
+  it("restores dismissal when an open menu reconnects without reopening", () => {
+    const host = createMenu();
+    const opened = vi.fn();
+    const closed = vi.fn<EventListener>();
+    host.addEventListener("open", opened);
+    host.addEventListener("close", closed);
+    host.show();
+
+    host.remove();
+    document.body.append(host);
+
+    expect(host.open).toBe(true);
+    expect(host.menu?.classList.contains("open")).toBe(true);
+    expect(host.trigger?.getAttribute("aria-expanded")).toBe("true");
+    expect(opened).toHaveBeenCalledOnce();
+
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+
+    expect(host.open).toBe(false);
+    expect(host.menu?.classList.contains("open")).toBe(false);
+    expect((closed.mock.calls[0]?.[0] as CustomEvent<OrcMenuCloseDetail>).detail).toEqual({
+      reason: "escape",
+    });
   });
 });

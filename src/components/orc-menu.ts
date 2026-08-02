@@ -124,7 +124,6 @@ const template = `
 
     @keyframes orc-menu-in {
       from {
-        opacity: 0;
         transform: translateY(-4px);
       }
     }
@@ -428,7 +427,8 @@ export class OrcMenu extends HTMLElementBase {
 
     if (this.open && !this.disabled && this.isConnected) {
       if (menu.classList.contains("open")) {
-        this.floatingLayer?.update();
+        if (this.floatingLayer?.isOpen) this.floatingLayer.update();
+        else this.floatingLayer?.open();
         return;
       }
       menu.classList.add("open");
