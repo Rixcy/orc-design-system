@@ -242,6 +242,148 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/orc-copy-button.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-copy-button>` writes its `value` to the clipboard and reports the\nresult in place: the slotted label is replaced by \"Copied\" or \"Copy failed\"\nfor 1.2s, and the same text is announced through a live region. Every other\nbehaviour — variants, sizes, `disabled`, focus ring — comes from\n`<orc-button>`, which it extends.",
+          "name": "OrcCopyButton",
+          "slots": [
+            {
+              "description": "Button label content, hidden while the outcome shows.",
+              "name": "",
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "textContent",
+              "default": "` :host([state]) slot { display: none; } .state-label { display: none; } :host([state]) .state-label { display: inline; } :host([state]) button, :host([state]) button:hover:not(:disabled) { background: color-mix(in srgb, var(--orc-text, #c7cfca) 6%, transparent); } :host([state=\"copied\"]) button, :host([state=\"copied\"]) button:hover:not(:disabled) { border-color: var(--orc-green, #9dc76b); color: var(--orc-green-text, var(--orc-green, #9dc76b)); } :host([state=\"failed\"]) button, :host([state=\"failed\"]) button:hover:not(:disabled) { border-color: var(--orc-red, #e87878); color: var(--orc-red-text, var(--orc-red, #e87878)); } .live { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } `"
+            },
+            {
+              "kind": "field",
+              "name": "className",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"live\""
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "orc-copy",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "`CustomEvent<OrcCopyDetail>` after every copy attempt."
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The text written to the clipboard.",
+              "name": "value"
+            },
+            {
+              "type": {
+                "text": "\"primary\"|\"ghost\""
+              },
+              "description": "Visual weight. Defaults to `primary`.",
+              "name": "variant",
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
+            },
+            {
+              "type": {
+                "text": "\"default\"|\"compact\""
+              },
+              "description": "Control density. Defaults to `default`.",
+              "name": "size",
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the button; a disabled button never copies.",
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
+            },
+            {
+              "type": {
+                "text": "\"copied\"|\"failed\""
+              },
+              "description": "Set by the component while the outcome shows. Read-only to consumers.",
+              "name": "state"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "\"button\"|\"submit\""
+              },
+              "description": "Native button type. Defaults to `button`.",
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "OrcButton",
+            "module": "/src/components/orc-button"
+          },
+          "tagName": "orc-copy-button",
+          "customElement": true,
+          "cssProperties": [
+            {
+              "description": "Label colour. Defaults to the variant's own colour, so setting it is the supported way to recolour one button family.",
+              "name": "--orc-button-text",
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcCopyButton",
+          "declaration": {
+            "name": "OrcCopyButton",
+            "module": "src/components/orc-copy-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-dialog.ts",
       "declarations": [
         {
