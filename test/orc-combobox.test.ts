@@ -87,7 +87,14 @@ describe("orc-combobox", () => {
       host.shadowRoot!.querySelector("label")!.id,
     );
     expect(control.getAttribute("aria-expanded")).toBe("true");
-    expect(host.shadowRoot!.querySelectorAll('[role="group"]')).toHaveLength(2);
+    const renderedGroups = [
+      ...host.shadowRoot!.querySelectorAll<HTMLElement>('[role="group"]'),
+    ];
+    expect(renderedGroups).toHaveLength(2);
+    expect(renderedGroups.map((group) => group.getAttribute("aria-label"))).toEqual([
+      "Recent runs",
+      "Actions",
+    ]);
     expect(host.shadowRoot!.querySelectorAll('[role="option"]')).toHaveLength(3);
     expect(host.shadowRoot!.getElementById(control.getAttribute("aria-activedescendant")!)).toBe(
       row(host, "open-run"),
@@ -158,12 +165,22 @@ describe("orc-combobox", () => {
     expect(control.getAttribute("aria-activedescendant")).toBe(row(host, "new-run").id);
   });
 
-  it("activates the exact option once from Enter or pointer input", () => {
+  it("activates the exact option once from Enter or pointer input outside IME composition", () => {
     const host = createCombobox();
     const activated: OrcComboboxOption[] = [];
     host.addEventListener("activate", (event) => {
       activated.push((event as CustomEvent<OrcComboboxOption>).detail);
     });
+
+    const composingEnter = new KeyboardEvent("keydown", {
+      key: "Enter",
+      bubbles: true,
+      cancelable: true,
+      isComposing: true,
+    });
+    input(host).dispatchEvent(composingEnter);
+    expect(activated).toHaveLength(0);
+    expect(composingEnter.defaultPrevented).toBe(false);
 
     input(host).dispatchEvent(
       new KeyboardEvent("keydown", { key: "Enter", bubbles: true }),
@@ -176,22 +193,69 @@ describe("orc-combobox", () => {
     expect(activated).toEqual([openRun, newRun]);
     expect(host.shadowRoot?.activeElement).toBe(input(host));
 
-    row(host, "archived-run").click();
+    const disabled = row(host, "archived-run");
+    const pointerdown = new Event("pointerdown", { bubbles: true, cancelable: true });
+    disabled.dispatchEvent(pointerdown);
+    expect(pointerdown.defaultPrevented).toBe(true);
+
+    const outside = document.createElement("button");
+    document.body.append(outside);
+    outside.focus();
+    disabled.click();
     expect(activated).toHaveLength(2);
+    expect(host.shadowRoot?.activeElement).toBe(input(host));
   });
 
-  it("emits Escape intent without clearing the consumer-controlled query", () => {
+  it("emits one non-bubbling cancelable Escape intent and prevents key default", () => {
     const host = createCombobox();
     host.value = "open";
-    const onCancel = vi.fn();
-    host.addEventListener("cancel", onCancel);
+    const ancestorCancel = vi.fn();
+    const cancelEvents: Event[] = [];
+    document.body.addEventListener("cancel", ancestorCancel);
+    host.addEventListener("cancel", (event) => cancelEvents.push(event));
 
-    input(host).dispatchEvent(
-      new KeyboardEvent("keydown", { key: "Escape", bubbles: true }),
-    );
+    const escape = new KeyboardEvent("keydown", {
+      key: "Escape",
+      bubbles: true,
+      cancelable: true,
+    });
+    input(host).dispatchEvent(escape);
+    document.body.removeEventListener("cancel", ancestorCancel);
 
-    expect(onCancel).toHaveBeenCalledOnce();
+    expect(escape.defaultPrevented).toBe(true);
+    expect(cancelEvents).toHaveLength(1);
+    expect(cancelEvents[0]?.bubbles).toBe(false);
+    expect(cancelEvents[0]?.cancelable).toBe(true);
+    expect(cancelEvents[0]?.composed).toBe(true);
+    expect(ancestorCancel).not.toHaveBeenCalled();
     expect(host.value).toBe("open");
+  });
+
+  it("scrolls a valid active option into view after filter and option rerenders", () => {
+    const host = createCombobox();
+    const originalScrollIntoView = HTMLElement.prototype.scrollIntoView;
+    const scrollIntoView = vi.fn();
+    HTMLElement.prototype.scrollIntoView = scrollIntoView;
+
+    try {
+      host.value = "new";
+      expect(scrollIntoView).toHaveBeenLastCalledWith({
+        block: "nearest",
+        behavior: "auto",
+      });
+
+      scrollIntoView.mockClear();
+      host.options = [
+        { id: "updated", label: "Updated actions", options: [newRun] },
+      ];
+      expect(scrollIntoView).toHaveBeenCalledOnce();
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "nearest",
+        behavior: "auto",
+      });
+    } finally {
+      HTMLElement.prototype.scrollIntoView = originalScrollIntoView;
+    }
   });
 
   it("updates loading and option data at runtime without stale active IDs", () => {

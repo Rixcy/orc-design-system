@@ -203,7 +203,7 @@ function matchesOption(option: OrcComboboxOption, query: string): boolean {
  * @attr {boolean} loading - Shows the loading state and marks the listbox busy.
  * @fires input - Native composed input event after a user changes the query.
  * @fires activate - `CustomEvent<OrcComboboxOption>` carrying the exact activated option.
- * @fires cancel - Composed event expressing the consumer-owned Escape intent.
+ * @fires cancel - Non-bubbling, cancelable, composed event expressing Escape intent.
  */
 export class OrcCombobox extends HTMLElementBase {
   static get observedAttributes(): string[] {
@@ -223,7 +223,7 @@ export class OrcCombobox extends HTMLElementBase {
     if (input.value) this.setAttribute("value", input.value);
     else this.removeAttribute("value");
     this.reflectingValue = false;
-    this.renderResults();
+    this.renderResults(true);
   };
 
   private readonly onKeydown = (event: KeyboardEvent): void => {
@@ -245,13 +245,20 @@ export class OrcCombobox extends HTMLElementBase {
         this.moveToBoundary("end");
         break;
       case "Enter":
-        if (this.activeIndex >= 0) {
+        if (!event.isComposing && this.activeIndex >= 0) {
           event.preventDefault();
           this.activate(this.activeIndex);
         }
         break;
       case "Escape":
-        this.dispatchEvent(new Event("cancel", { bubbles: true, composed: true }));
+        event.preventDefault();
+        this.dispatchEvent(
+          new Event("cancel", {
+            bubbles: false,
+            cancelable: true,
+            composed: true,
+          }),
+        );
         break;
       default:
         break;
@@ -269,13 +276,17 @@ export class OrcCombobox extends HTMLElementBase {
 
   private readonly onPointerDown = (event: Event): void => {
     const row = (event.target as Element | null)?.closest<HTMLElement>(".option");
-    if (row?.getAttribute("aria-disabled") !== "true") event.preventDefault();
+    if (row) event.preventDefault();
   };
 
   private readonly onClick = (event: Event): void => {
     const row = (event.target as Element | null)?.closest<HTMLElement>(".option");
     const index = Number(row?.dataset.index);
-    if (!row || row.getAttribute("aria-disabled") === "true" || !Number.isInteger(index)) {
+    if (!row || !Number.isInteger(index)) {
+      return;
+    }
+    if (row.getAttribute("aria-disabled") === "true") {
+      this.input?.focus();
       return;
     }
     this.activate(index);
@@ -317,11 +328,11 @@ export class OrcCombobox extends HTMLElementBase {
     if (name === "value" && !this.reflectingValue) {
       const input = this.input;
       if (input) input.value = this.getAttribute("value") ?? "";
-      this.renderResults();
+      this.renderResults(true);
       return;
     }
     if (name === "loading") {
-      this.renderResults();
+      this.renderResults(true);
       return;
     }
     this.syncAttributes();
@@ -339,7 +350,7 @@ export class OrcCombobox extends HTMLElementBase {
 
   set options(next: readonly OrcComboboxGroup[]) {
     this.groups = next.map((group) => ({ ...group, options: [...group.options] }));
-    this.renderResults();
+    this.renderResults(true);
   }
 
   /** The current filter query. Programmatic updates do not emit `input`. */
@@ -398,7 +409,7 @@ export class OrcCombobox extends HTMLElementBase {
     }
   }
 
-  private renderResults(): void {
+  private renderResults(scrollActive: boolean = false): void {
     const input = this.input;
     const results = this.results;
     const status = this.status;
@@ -424,16 +435,16 @@ export class OrcCombobox extends HTMLElementBase {
 
     let visibleIndex = 0;
     results.replaceChildren(
-      ...matchingGroups.map(({ group, options }, groupIndex) => {
+      ...matchingGroups.map(({ group, options }) => {
         const groupElement = document.createElement("div");
-        const heading = document.createElement("h3");
-        const headingId = `${this.elementId}-group-${groupIndex}`;
+        const heading = document.createElement("div");
         groupElement.className = "group";
         groupElement.role = "group";
-        groupElement.setAttribute("aria-labelledby", headingId);
+        groupElement.setAttribute("aria-label", group.label);
         groupElement.dataset.groupId = group.id;
         heading.className = "group-label";
-        heading.id = headingId;
+        heading.role = "presentation";
+        heading.setAttribute("aria-hidden", "true");
         heading.textContent = group.label;
         groupElement.append(heading);
 
@@ -468,6 +479,7 @@ export class OrcCombobox extends HTMLElementBase {
     results.setAttribute("aria-busy", String(this.loading));
     input.setAttribute("aria-expanded", String(!results.hidden));
     this.syncActiveDescendant();
+    if (scrollActive && this.isConnected) this.scrollActiveIntoView();
 
     if (this.loading) status.textContent = "Loading actions";
     else if (this.visibleOptions.length === 0) {
@@ -516,10 +528,14 @@ export class OrcCombobox extends HTMLElementBase {
     if (index < 0 || this.visibleOptions[index]?.disabled) return;
     this.activeIndex = index;
     this.syncActiveDescendant();
-    if (scroll) {
-      const row = this.results?.querySelector<HTMLElement>(`[data-index="${index}"]`);
-      row?.scrollIntoView?.({ block: "nearest" });
-    }
+    if (scroll) this.scrollActiveIntoView();
+  }
+
+  private scrollActiveIntoView(): void {
+    const row = this.results?.querySelector<HTMLElement>(
+      `[data-index="${this.activeIndex}"]`,
+    );
+    row?.scrollIntoView?.({ block: "nearest", behavior: "auto" });
   }
 
   private syncActiveDescendant(): void {

@@ -134,6 +134,18 @@ export const KeyboardActivation: Story = {
   play: async ({ canvasElement }) => {
     const host = getHost(canvasElement);
     host.input?.focus();
+
+    host.input?.dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "Enter",
+        bubbles: true,
+        isComposing: true,
+      }),
+    );
+    await expect(canvasElement.querySelector('[data-story="activation"]')).toHaveTextContent(
+      "No action activated",
+    );
+
     await userEvent.keyboard("{ArrowDown}{Enter}");
     await expect(host.shadowRoot?.activeElement).toBe(host.input);
     await expect(canvasElement.querySelector('[data-story="activation"]')).toHaveTextContent(
@@ -149,10 +161,33 @@ export const DisabledOption: Story = {
       '[data-option-id="archived-run"]',
     );
     await expect(disabled).toHaveAttribute("aria-disabled", "true");
+    host.input?.focus();
     await userEvent.click(disabled!);
+    await expect(host.shadowRoot?.activeElement).toBe(host.input);
     await expect(canvasElement.querySelector('[data-story="activation"]')).toHaveTextContent(
       "No action activated",
     );
+  },
+};
+
+export const EscapeIntent: Story = {
+  play: async ({ canvasElement }) => {
+    const host = getHost(canvasElement);
+    const events: Event[] = [];
+    host.addEventListener("cancel", (event) => events.push(event));
+    const escape = new KeyboardEvent("keydown", {
+      key: "Escape",
+      bubbles: true,
+      cancelable: true,
+    });
+
+    host.input?.dispatchEvent(escape);
+
+    await expect(escape.defaultPrevented).toBe(true);
+    await expect(events).toHaveLength(1);
+    await expect(events[0]?.bubbles).toBe(false);
+    await expect(events[0]?.cancelable).toBe(true);
+    await expect(events[0]?.composed).toBe(true);
   },
 };
 

@@ -314,7 +314,7 @@
               "name": "input"
             },
             {
-              "description": "Composed event expressing the consumer-owned Escape intent.",
+              "description": "Non-bubbling, cancelable, composed event expressing Escape intent.",
               "name": "cancel"
             }
           ],
