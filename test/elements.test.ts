@@ -4,6 +4,7 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { createThemeController } from "../src/theme/controller";
 import { defineOrcElements } from "../src/define";
+import { OrcMenu } from "../src/index";
 
 let storage: Storage;
 
@@ -44,6 +45,7 @@ describe("defineOrcElements", () => {
     expect(() => defineOrcElements()).not.toThrow();
     expect(customElements.get("orc-combobox")).toBeDefined();
     expect(customElements.get("orc-input")).toBeDefined();
+    expect(customElements.get("orc-menu")).toBe(OrcMenu);
     expect(customElements.get("orc-navbar")).toBeDefined();
     expect(customElements.get("orc-theme-toggle")).toBeDefined();
   });

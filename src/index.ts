@@ -7,6 +7,7 @@ export {
   OrcIconButton,
   OrcInput,
   OrcLogomark,
+  OrcMenu,
   OrcNavbar,
   OrcSegmented,
   OrcSelect,

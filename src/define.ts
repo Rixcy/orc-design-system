@@ -6,6 +6,7 @@ import { OrcDialog } from "./components/orc-dialog";
 import { OrcIconButton } from "./components/orc-icon-button";
 import { OrcInput } from "./components/orc-input";
 import { OrcLogomark } from "./components/orc-logomark";
+import { OrcMenu } from "./components/orc-menu";
 import { OrcNavbar } from "./components/orc-navbar";
 import { OrcSegmented } from "./components/orc-segmented";
 import { OrcSelect } from "./components/orc-select";
@@ -24,6 +25,7 @@ export {
   OrcIconButton,
   OrcInput,
   OrcLogomark,
+  OrcMenu,
   OrcNavbar,
   OrcSegmented,
   OrcSelect,
@@ -43,6 +45,7 @@ const ELEMENTS: ReadonlyArray<[string, CustomElementConstructor]> = [
   ["orc-icon-button", OrcIconButton],
   ["orc-input", OrcInput],
   ["orc-logomark", OrcLogomark],
+  ["orc-menu", OrcMenu],
   ["orc-navbar", OrcNavbar],
   ["orc-segmented", OrcSegmented],
   ["orc-select", OrcSelect],

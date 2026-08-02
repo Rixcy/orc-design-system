@@ -143,9 +143,14 @@ const template = `
       animation: orc-select-in 0.12s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    /* Slide only, no opacity ramp: an opacity keyframe starting at 0 makes
+       getComputedStyle(menu).opacity read "0" synchronously right after
+       open() adds this class (the animation's own from-state), so anything
+       that reads content/contrast immediately after open — including the
+       a11y scan and the empty-state visibility check — could see a
+       transiently invisible, contrast-blended menu. */
     @keyframes orc-select-in {
       from {
-        opacity: 0;
         transform: translateY(-4px);
       }
     }
@@ -678,6 +683,9 @@ export class OrcSelect extends HTMLElementBase {
     // value of its own, so the current selection is folded into the name.
     const ids = [label.id, value?.id].filter(Boolean).join(" ");
     if (ids) trigger.setAttribute("aria-labelledby", ids);
+    // The listbox names itself after the field label alone (not the current
+    // value) — same id, reused rather than duplicated as a literal string.
+    if (this.listboxEl) this.listboxEl.setAttribute("aria-labelledby", label.id);
     if (this.searchEl) {
       this.searchEl.setAttribute("aria-label", `Search ${text || "options"}`);
     }
