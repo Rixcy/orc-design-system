@@ -19,10 +19,12 @@ values around.
   an explicit `data-theme="light"` / `data-theme="dark"` on the root wins either
   way. A parser-time `preflight.js` avoids the first-paint flash for persisted
   choices.
-- **Web Components** — `<orc-button>`, `<orc-chip>`, `<orc-dialog>`,
-  `<orc-input>`, `<orc-navbar>`, `<orc-status-dot>`, `<orc-stepper>`,
-  `<orc-tabs>`, `<orc-textarea>`, and `<orc-theme-toggle>`, defined via
-  `defineOrcElements()` and driven by an exported `createThemeController()`.
+- **Web Components** — `<orc-button>`, `<orc-chip>`, `<orc-copy-button>`,
+  `<orc-dialog>`, `<orc-icon-button>`, `<orc-input>`, `<orc-logomark>`,
+  `<orc-navbar>`, `<orc-segmented>`, `<orc-select>`, `<orc-status-dot>`,
+  `<orc-stepper>`, `<orc-tabs>`, `<orc-textarea>`, and `<orc-theme-toggle>`,
+  defined via `defineOrcElements()` and driven by an exported
+  `createThemeController()`.
 - **Utility CSS** — opt-in `scrollbar.css` (`.orc-scrollbar`), `typography.css`
   (`--orc-type-*` variables + `.orc-type-*` classes), and `prose.css`
   (`.orc-prose`, the Markdown typography block).

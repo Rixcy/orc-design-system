@@ -224,6 +224,69 @@ world, no concept tournament (direction settled at the Orc plan gate).
 &lt;orc-textarea label="Release notes"&gt;&lt;/orc-textarea&gt;</code></pre>
         </article>
 
+        <article class="demo" aria-labelledby="d-select">
+          <div class="demo-head">
+            <h3 id="d-select">Select</h3>
+            <p>A light-DOM option list with a labelled trigger, native value holder, and full keyboard path.</p>
+          </div>
+          <div class="demo-stage demo-stage-block">
+            <orc-select label="Release channel">
+              <option value="stable" selected>Stable</option>
+              <option value="preview">Preview</option>
+              <option value="nightly">Nightly</option>
+            </orc-select>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-select label="Release channel"&gt;
+  &lt;option value="stable" selected&gt;Stable&lt;/option&gt;
+  &lt;option value="preview"&gt;Preview&lt;/option&gt;
+  &lt;option value="nightly"&gt;Nightly&lt;/option&gt;
+&lt;/orc-select&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-icon-button">
+          <div class="demo-head">
+            <h3 id="d-icon-button">Icon button</h3>
+            <p>Icon-only actions stay native: plain and ghost weights render as a button or link, each with its own name.</p>
+          </div>
+          <div class="demo-stage">
+            <orc-icon-button label="More actions">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="5" cy="12" r="1.75" />
+                <circle cx="12" cy="12" r="1.75" />
+                <circle cx="19" cy="12" r="1.75" />
+              </svg>
+            </orc-icon-button>
+            <orc-icon-button label="Jump to install" variant="ghost" href="#consume">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </orc-icon-button>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-icon-button label="More actions"&gt;
+  &lt;svg aria-hidden="true"&gt;…&lt;/svg&gt;
+&lt;/orc-icon-button&gt;
+&lt;orc-icon-button label="Jump to install" variant="ghost" href="#consume"&gt;
+  &lt;svg aria-hidden="true"&gt;…&lt;/svg&gt;
+&lt;/orc-icon-button&gt;</code></pre>
+        </article>
+
+        <article class="demo" aria-labelledby="d-copy-button">
+          <div class="demo-head">
+            <h3 id="d-copy-button">Copy button</h3>
+            <p>Clipboard success or failure replaces the label briefly and is announced in place.</p>
+          </div>
+          <div class="demo-stage">
+            <orc-copy-button
+              value="npm install @orc-tools/orc-design-system"
+              variant="ghost"
+            >Copy install command</orc-copy-button>
+          </div>
+          <pre class="demo-code"><code>&lt;orc-copy-button
+  value="npm install @orc-tools/orc-design-system"
+  variant="ghost"
+&gt;Copy install command&lt;/orc-copy-button&gt;</code></pre>
+        </article>
+
         <article class="demo" aria-labelledby="d-chip">
           <div class="demo-head">
             <h3 id="d-chip">Chip &amp; status dot</h3>
@@ -314,7 +377,7 @@ world, no concept tournament (direction settled at the Orc plan gate).
         <h2 id="utilities-h">Utilities</h2>
         <p class="section-lede">
           Opt-in CSS, exported from the package like everything else. This page
-          uses both.
+          uses the first two.
         </p>
         <ul class="util-list">
           <li>
@@ -324,6 +387,10 @@ world, no concept tournament (direction settled at the Orc plan gate).
           <li>
             <code>scrollbar.css</code>: orc's bordered scrollbar; add
             <code>.orc-scrollbar</code> to any scroll container.
+          </li>
+          <li>
+            <code>prose.css</code>: Markdown typography for headings, lists,
+            tables, code, and quotes inside <code>.orc-prose</code>.
           </li>
         </ul>
       </section>
