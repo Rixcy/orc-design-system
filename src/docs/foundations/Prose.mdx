@@ -1,0 +1,114 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+import tokensCss from "../../styles/tokens.css?raw";
+import proseCss from "../../styles/prose.css?raw";
+
+<Meta title="Foundations/Prose" />
+
+export const MARKUP = `
+<h1>Prose specimen</h1>
+<p>Everything here is plain HTML of the kind a Markdown renderer emits. The only
+thing applied to it is <code>.orc-prose</code> on the wrapper.</p>
+<h2>A section heading</h2>
+<p>Body copy sits at <code>line-height: 1.6</code>, with <strong>strong text</strong>
+lifted to the heading colour and <a href="#specimen">links</a> in the accent text
+colour.</p>
+<blockquote><p>A blockquote carries the accent wash and a left rule.</p></blockquote>
+<h3>Lists</h3>
+<ul>
+  <li>An unordered item</li>
+  <li>A nested list
+    <ul><li>Sits tighter than a top-level gap</li></ul>
+  </li>
+</ul>
+<ul>
+  <li><input type="checkbox" checked disabled> A finished task</li>
+  <li><input type="checkbox" disabled> An unfinished one</li>
+</ul>
+<h3>Code</h3>
+<p>Inline <code>orc-quick</code> and a block:</p>
+<pre><code>orc-ui open --gate '&lt;run-id&gt;/plan.html'</code></pre>
+<h3>Tables</h3>
+<table>
+  <thead><tr><th>Phase</th><th>Gate</th></tr></thead>
+  <tbody>
+    <tr><td>Plan</td><td>Exact approval</td></tr>
+    <tr><td>Ship</td><td>Delivery consent</td></tr>
+  </tbody>
+</table>
+<h4>A minor heading</h4>
+<p>Closing paragraph.</p>
+<hr>
+`;
+
+{/* Storybook's docs stylesheet restyles bare headings, tables, and body copy
+    inside a docs page, so an inline specimen would show the docs theme rather
+    than this stylesheet. The frame carries nothing but tokens.css, prose.css,
+    and the markup, which is also exactly what a consumer imports. */}
+export const Specimen = () => (
+  <iframe
+    title="Rendered Markdown styled by .orc-prose"
+    style={{
+      display: "block",
+      width: "100%",
+      height: "860px",
+      border: "1px solid var(--orc-border)",
+      borderRadius: "var(--orc-radius-md)",
+      colorScheme: "normal",
+    }}
+    srcDoc={`<!doctype html><html><head><style>${tokensCss}${proseCss}
+      body { margin: 0; padding: 20px 22px; background: var(--orc-bg);
+             color: var(--orc-text); font-family: var(--orc-font-sans); font-size: 14px; }
+    </style></head><body><article class="orc-prose">${MARKUP}</article>
+    <script>
+      var sync = function () {
+        var theme = parent.document.documentElement.dataset.theme;
+        if (theme) document.documentElement.dataset.theme = theme;
+        else document.documentElement.removeAttribute("data-theme");
+      };
+      sync();
+      new MutationObserver(sync).observe(parent.document.documentElement,
+        { attributes: true, attributeFilter: ["data-theme"] });
+    </script></body></html>`}
+  />
+);
+
+<div style={{ padding: "clamp(20px, 5vw, 56px)", maxWidth: "90ch" }}>
+
+# Prose
+
+One class for a block of rendered Markdown. `.orc-prose` styles the elements a
+renderer produces — headings, paragraphs, lists, task checkboxes, code, tables,
+links, blockquotes, images, and rules — entirely from `--orc-*` tokens, so the
+same block reads correctly in both themes.
+
+<Specimen />
+
+## Using it
+
+`src/styles/prose.css` is opt-in. Import it, then put the class on whatever
+wraps the rendered output:
+
+```js
+import "@orc-tools/orc-design-system/tokens.css"; // --orc-* palette and fonts
+import "@orc-tools/orc-design-system/prose.css";  // .orc-prose
+```
+
+```html
+<article class="orc-prose">
+  <!-- rendered Markdown -->
+</article>
+```
+
+## What it does not do
+
+`.orc-prose` sets rhythm and colour, never container chrome: no width, padding,
+background, or border. The measure and the frame belong to the surface hosting
+the prose — a document page wants a different measure to a sidebar preview, and
+baking one in would only be overridden.
+
+Product-specific treatments stay with the product for the same reason. Severity
+pills, ticket tables, callouts, lightboxes, and diff views are not prose; they
+are components that happen to appear inside it.
+
+</div>

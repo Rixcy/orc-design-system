@@ -46,6 +46,7 @@
     "./tokens.css": "./dist/tokens.css",
     "./components.css": "./dist/components.css",
     "./fonts.css": "./dist/fonts.css",
+    "./prose.css": "./dist/prose.css",
     "./scrollbar.css": "./dist/scrollbar.css",
     "./typography.css": "./dist/typography.css",
     "./preflight.js": "./dist/preflight.js",

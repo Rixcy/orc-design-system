@@ -1,0 +1,197 @@
+/*
+ * Orc prose utility (opt-in).
+ *
+ * `.orc-prose` styles a block of rendered Markdown — the generic half of the
+ * typography that orc-ui kept as two hand-maintained `.md` copies (the shell
+ * in ui/index.html and the gate-page template in ui/serve.py). Wrap the
+ * renderer's output in the class and the headings, paragraphs, lists, task
+ * checkboxes, code, tables, links, blockquotes, images, and rules take Orc's
+ * treatment from `--orc-*` tokens alone.
+ *
+ * What is deliberately absent: container chrome. `.orc-prose` sets rhythm and
+ * colour, never width, padding, background, or border — the measure and the
+ * frame belong to the surface that hosts the prose, and baking them in would
+ * force every consumer to override them first.
+ *
+ * Product chrome stays with the product too: severity pills, ticket tables,
+ * callouts, lightboxes, and diff views are Orc-specific and are not part of
+ * this file.
+ *
+ * Usage: requires src/styles/tokens.css for the `--orc-*` names; import
+ * src/styles/fonts.css as well for the packaged Inter / JetBrains Mono faces.
+ *
+ *   import "@orc-tools/orc-design-system/tokens.css";
+ *   import "@orc-tools/orc-design-system/prose.css";
+ */
+
+.orc-prose {
+  line-height: 1.6;
+}
+
+.orc-prose > *:first-child {
+  margin-top: 0;
+}
+
+.orc-prose h1,
+.orc-prose h2,
+.orc-prose h3,
+.orc-prose h4 {
+  line-height: 1.3;
+  color: var(--orc-heading);
+  font-weight: 600;
+}
+
+.orc-prose h1 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  line-height: 1.6;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.orc-prose h2 {
+  margin: 32px 0 10px;
+  font-size: 16px;
+}
+
+.orc-prose h3 {
+  margin: 20px 0 8px;
+  font-size: 14.5px;
+}
+
+.orc-prose h4 {
+  margin: 16px 0 6px;
+  font-size: 13px;
+  color: var(--orc-muted-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.orc-prose p {
+  margin: 0 0 12px;
+}
+
+.orc-prose ul,
+.orc-prose ol {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+
+.orc-prose li {
+  margin: 3px 0;
+}
+
+.orc-prose li > ul,
+.orc-prose li > ol {
+  margin: 4px 0;
+}
+
+/* Task lists: the checkbox replaces the marker, so the item reclaims the
+   list's own indent rather than sitting a bullet-width further in. */
+.orc-prose li:has(> input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -22px;
+}
+
+.orc-prose input[type="checkbox"] {
+  margin-right: 7px;
+  accent-color: var(--orc-accent);
+}
+
+.orc-prose hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid var(--orc-border);
+}
+
+.orc-prose strong {
+  color: var(--orc-heading);
+}
+
+.orc-prose pre {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: var(--orc-code);
+  border: 1px solid var(--orc-border);
+  border-radius: 8px;
+}
+
+.orc-prose code {
+  padding: 1px 5px;
+  font-family: var(--orc-font-mono);
+  font-size: 12.5px;
+  background: var(--orc-code);
+  border-radius: 4px;
+}
+
+.orc-prose pre code {
+  padding: 0;
+  background: none;
+}
+
+/* A wide table scrolls inside its own box instead of widening the page. */
+.orc-prose table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 16px;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border: 1px solid var(--orc-border);
+  border-radius: 8px;
+}
+
+.orc-prose th,
+.orc-prose td {
+  padding: 7px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--orc-border);
+  border-right: 1px solid var(--orc-border);
+}
+
+.orc-prose th:last-child,
+.orc-prose td:last-child {
+  border-right: none;
+}
+
+.orc-prose tr:last-child td {
+  border-bottom: none;
+}
+
+.orc-prose th {
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--orc-muted-strong);
+  background: var(--orc-panel);
+}
+
+.orc-prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.orc-prose a {
+  color: var(--orc-accent-text);
+  text-decoration: none;
+}
+
+.orc-prose a:hover {
+  text-decoration: underline;
+}
+
+.orc-prose blockquote {
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  color: var(--orc-heading);
+  background: var(--orc-accent-soft);
+  border-left: 3px solid var(--orc-accent);
+  border-radius: 0 6px 6px 0;
+}
+
+.orc-prose blockquote p:last-child {
+  margin-bottom: 0;
+}
