@@ -96,6 +96,7 @@ describe("Orc theme contract", () => {
     const bothFallbacks = [
       "src/components/orc-button.ts",
       "src/components/orc-chip.ts",
+      "src/components/orc-combobox.ts",
       "src/components/orc-dialog.ts",
       "src/components/orc-theme-toggle.ts",
       "src/components/orc-navbar.ts",
