@@ -165,12 +165,22 @@ export class OrcCheckbox extends HTMLElementBase {
     if (!this.checkedSeeded) {
       this.checkedSeeded = true;
       const input = this.input;
-      if (input) input.checked = this.hasAttribute("checked");
+      if (input) {
+        input.checked = this.hasAttribute("checked");
+        input.indeterminate = this.hasAttribute("indeterminate");
+      }
     }
     this.render();
   }
 
-  attributeChangedCallback(): void {
+  attributeChangedCallback(name: string): void {
+    // `indeterminate` is applied only when its own attribute moves. Syncing it
+    // on every render would reset a property-set mixed state the next time any
+    // unrelated attribute (say `disabled`) changed.
+    if (name === "indeterminate") {
+      const input = this.input;
+      if (input) input.indeterminate = this.hasAttribute("indeterminate");
+    }
     this.render();
   }
 
@@ -225,7 +235,6 @@ export class OrcCheckbox extends HTMLElementBase {
 
     input.disabled = this.hasAttribute("disabled");
     input.required = this.hasAttribute("required");
-    input.indeterminate = this.hasAttribute("indeterminate");
 
     syncDescription(
       this.shadowRoot,

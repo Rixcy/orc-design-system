@@ -99,6 +99,20 @@ describe("orc-checkbox", () => {
     expect(field.shadowRoot!.querySelector("input")!.indeterminate).toBe(true);
   });
 
+  it("keeps a property-set checked/indeterminate through an unrelated attribute change", () => {
+    const field = document.createElement("orc-checkbox") as OrcCheckbox;
+    document.body.append(field);
+    const input = field.shadowRoot!.querySelector("input")!;
+
+    field.checked = true;
+    field.indeterminate = true;
+    field.setAttribute("disabled", "");
+
+    expect(input.disabled).toBe(true);
+    expect(input.checked).toBe(true);
+    expect(input.indeterminate).toBe(true);
+  });
+
   // React 19 assigns to a matching property instead of setting the attribute,
   // and a getter-only accessor named after a public attribute makes that a
   // strict-mode TypeError. Any internal element accessor must not shadow one.
