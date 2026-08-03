@@ -19,6 +19,9 @@ const template = `
       font-family: var(--orc-font-sans, Inter, ui-sans-serif, system-ui, sans-serif);
     }
 
+    /* Toggling the label repeatedly is a double-click, and a double-click
+       selects text. Suppress it on the label only — the description below
+       stays selectable, because that one is prose worth copying. */
     label {
       position: relative;
       display: inline-flex;
@@ -30,6 +33,8 @@ const template = `
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     input {

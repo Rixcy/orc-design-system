@@ -157,4 +157,17 @@ describe("orc-switch", () => {
     expect(description?.hidden).toBe(true);
     expect(input.hasAttribute("aria-describedby")).toBe(false);
   });
+
+  // Repeated toggling is a double-click, which would otherwise leave the label
+  // text highlighted. The description stays selectable — it is prose, not a
+  // click target.
+  it("makes the label unselectable without touching the description", () => {
+    const host = createSwitch({ label: "Auto-merge" });
+
+    const css = host.shadowRoot!.querySelector("style")!.textContent!;
+    const labelRule = css.match(/\blabel\s*\{[^}]*\}/)![0];
+    expect(labelRule).toMatch(/(?<!-webkit-)user-select:\s*none/);
+    expect(labelRule).toMatch(/-webkit-user-select:\s*none/);
+    expect(css.match(/\.sr-only\s*\{[^}]*\}/)![0]).not.toMatch(/user-select/);
+  });
 });
