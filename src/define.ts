@@ -1,4 +1,5 @@
 import { OrcButton } from "./components/orc-button";
+import { OrcCallout } from "./components/orc-callout";
 import { OrcCheckbox } from "./components/orc-checkbox";
 import { OrcChip } from "./components/orc-chip";
 import { OrcCombobox } from "./components/orc-combobox";
@@ -19,6 +20,7 @@ import { OrcThemeToggle } from "./components/orc-theme-toggle";
 
 export {
   OrcButton,
+  OrcCallout,
   OrcCheckbox,
   OrcChip,
   OrcCombobox,
@@ -40,6 +42,7 @@ export {
 
 const ELEMENTS: ReadonlyArray<[string, CustomElementConstructor]> = [
   ["orc-button", OrcButton],
+  ["orc-callout", OrcCallout],
   ["orc-checkbox", OrcCheckbox],
   ["orc-chip", OrcChip],
   ["orc-combobox", OrcCombobox],
