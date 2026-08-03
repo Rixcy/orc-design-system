@@ -39,4 +39,18 @@ describe("orc-input", () => {
       (field as unknown as { label: string }).label = "Nickname";
     }).not.toThrow();
   });
+
+  it("offers an opt-in 36px compact density without changing the default", () => {
+    const field = document.createElement("orc-input");
+    document.body.append(field);
+
+    const css = field.shadowRoot!.querySelector("style")!.textContent;
+    expect(css).toContain(':host([size="compact"]) .field');
+    expect(css).toContain("block-size: 36px");
+    expect(css).toContain("padding: 10px 14px");
+
+    field.setAttribute("size", "compact");
+    expect(field.getAttribute("size")).toBe("compact");
+    expect(field.shadowRoot!.querySelector("input")).toBeTruthy();
+  });
 });

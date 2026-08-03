@@ -62,6 +62,26 @@ describe("orc-menu", () => {
     expect(host.trigger?.hasAttribute("aria-label")).toBe(false);
   });
 
+  it("offers compact density and hides only the decorative chevron", () => {
+    const host = createMenu();
+    const trigger = host.trigger!;
+    const chevron = host.shadowRoot!.querySelector<SVGElement>(".chevron")!;
+    const css = host.shadowRoot!.querySelector("style")!.textContent;
+
+    expect(css).toContain(':host([size="compact"]) .trigger');
+    expect(css).toContain("block-size: 36px");
+    expect(css).toContain("gap: 5px");
+    expect(css).toContain("font-size: 12px");
+    expect(chevron).toBeTruthy();
+
+    host.setAttribute("size", "compact");
+    host.setAttribute("no-chevron", "");
+    expect(trigger.tagName).toBe("BUTTON");
+    expect(trigger.getAttribute("aria-haspopup")).toBe("menu");
+    expect(css).toContain(':host([no-chevron]) .chevron');
+    expect(css).toContain("display: none");
+  });
+
   it("reflects open state through property, methods, ARIA, and events", () => {
     const host = createMenu();
     const opened = vi.fn();

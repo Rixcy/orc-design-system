@@ -16,6 +16,16 @@ const template = `
       font-size: var(--orc-input-font-size, 13px);
       padding: 10px 14px;
     }
+
+    :host([size="compact"]) .field {
+      box-sizing: border-box;
+      block-size: 36px;
+    }
+
+    :host([size="compact"]) input {
+      block-size: 100%;
+      padding-block: 0;
+    }
   </style>
   <label></label>
   <div class="field">
@@ -45,6 +55,7 @@ const TYPES = new Set([
  * @attr {string} type - Native text-entry input type; anything else falls back to `text`.
  * @attr {string} placeholder - Native placeholder text.
  * @attr {string} description - Extra hint announced with the input (rendered visually hidden).
+ * @attr {"default"|"compact"} size - Control density. Defaults to `default`.
  * @attr {boolean} disabled - Disables the inner input.
  * @cssprop [--orc-input-font-size=13px] - Font size of the input.
  * @cssprop [--orc-beam-angle] - Current beam rotation angle (animated).

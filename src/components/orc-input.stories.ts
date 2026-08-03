@@ -10,6 +10,7 @@ interface InputArgs {
   placeholder: string;
   type: string;
   disabled: boolean;
+  size: "default" | "compact";
 }
 
 function renderInput(args: InputArgs): HTMLElement {
@@ -20,6 +21,7 @@ function renderInput(args: InputArgs): HTMLElement {
   field.setAttribute("placeholder", args.placeholder);
   if (args.type) field.setAttribute("type", args.type);
   if (args.disabled) field.setAttribute("disabled", "");
+  if (args.size === "compact") field.setAttribute("size", "compact");
   surface.append(field);
   return surface;
 }
@@ -41,6 +43,7 @@ const meta = {
     placeholder: "add-token-export",
     type: "text",
     disabled: false,
+    size: "default",
   },
   argTypes: {
     label: { control: "text" },
@@ -50,6 +53,7 @@ const meta = {
       options: ["text", "email", "number", "password", "search", "tel", "url"],
     },
     disabled: { control: "boolean" },
+    size: { control: "select", options: ["default", "compact"] },
   },
   render: (args) => renderInput(args),
 } satisfies Meta<InputArgs>;
@@ -82,6 +86,27 @@ export const Search: Story = {
     const field = canvasElement.querySelector("orc-input");
     await expect(getInput(field)).toHaveAccessibleName("Search runs");
     await expect(field?.shadowRoot?.querySelector("label")?.hidden).toBe(true);
+  },
+};
+
+export const CompactSearch: Story = {
+  args: {
+    label: "",
+    type: "search",
+    placeholder: "Search runs…",
+    size: "compact",
+  },
+  render: (args) => {
+    const surface = renderInput(args);
+    surface.querySelector("orc-input")?.setAttribute("aria-label", "Search runs");
+    return surface;
+  },
+  play: async ({ canvasElement }) => {
+    const field = canvasElement.querySelector("orc-input")!;
+    const input = getInput(field);
+    await expect(input).toHaveAccessibleName("Search runs");
+    await expect(field.getBoundingClientRect().height).toBe(36);
+    await expect(field.shadowRoot!.querySelector(".field")!.getBoundingClientRect().height).toBe(36);
   },
 };
 

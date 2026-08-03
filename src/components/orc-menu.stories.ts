@@ -10,6 +10,8 @@ interface MenuArgs {
   disabled: boolean;
   label: string;
   trigger: string;
+  size: "default" | "compact";
+  noChevron: boolean;
 }
 
 function item(
@@ -30,6 +32,8 @@ function renderMenu(args: MenuArgs, content?: HTMLElement[]): HTMLElement {
   const menu = document.createElement("orc-menu") as OrcMenu;
   menu.setAttribute("label", args.label);
   if (args.disabled) menu.setAttribute("disabled", "");
+  if (args.size === "compact") menu.setAttribute("size", "compact");
+  if (args.noChevron) menu.setAttribute("no-chevron", "");
   const trigger = document.createElement("span");
   trigger.slot = "trigger";
   trigger.textContent = args.trigger;
@@ -52,11 +56,15 @@ const meta = {
     disabled: false,
     label: "Run actions",
     trigger: "Actions",
+    size: "default",
+    noChevron: false,
   },
   argTypes: {
     disabled: { control: "boolean" },
     label: { control: "text" },
     trigger: { control: "text" },
+    size: { control: "select", options: ["default", "compact"] },
+    noChevron: { control: "boolean" },
   },
   render: (args) => renderMenu(args),
 } satisfies Meta<MenuArgs>;
@@ -78,6 +86,19 @@ export const PointerInteraction: Story = {
     await userEvent.click(copy!);
     await waitFor(() => expect(menu.trigger).toHaveAttribute("aria-expanded", "false"));
     await expect(menu.shadowRoot?.activeElement).toBe(menu.trigger);
+  },
+};
+
+export const CompactNoChevron: Story = {
+  args: { size: "compact", noChevron: true },
+  play: async ({ canvasElement }) => {
+    const menu = getMenu(canvasElement);
+    await expect(menu.trigger).toHaveAccessibleName("Actions");
+    await expect(menu.trigger!.getBoundingClientRect().height).toBe(36);
+    const chevron = menu.shadowRoot!.querySelector<SVGElement>(".chevron")!;
+    await expect(getComputedStyle(chevron).display).toBe("none");
+    await userEvent.click(menu.trigger!);
+    await waitFor(() => expect(menu.trigger).toHaveAttribute("aria-expanded", "true"));
   },
 };
 

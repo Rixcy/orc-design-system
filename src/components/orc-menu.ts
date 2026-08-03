@@ -57,6 +57,15 @@ const template = `
       cursor: pointer;
     }
 
+    :host([size="compact"]) .trigger {
+      box-sizing: border-box;
+      block-size: 36px;
+      min-block-size: 36px;
+      gap: 5px;
+      padding: 0 12px;
+      font-size: 12px;
+    }
+
     .trigger:hover:not(:disabled),
     .trigger[aria-expanded="true"] {
       border-color: var(--orc-green, #9dc76b);
@@ -76,6 +85,10 @@ const template = `
     .chevron {
       flex: none;
       color: var(--orc-muted-strong, #aeb5b0);
+    }
+
+    :host([no-chevron]) .chevron {
+      display: none;
     }
 
     .trigger[aria-expanded="true"] .chevron {
@@ -231,6 +244,8 @@ const template = `
  * @attr {boolean} open - Reflects and controls menu visibility.
  * @attr {string} label - Accessible name for the menu surface. Falls back to the trigger text.
  * @attr {string} trigger-label - Accessible name for an icon-only trigger.
+ * @attr {"default"|"compact"} size - Trigger density. Defaults to `default`.
+ * @attr {boolean} no-chevron - Omits the decorative trigger chevron.
  * @attr {boolean} disabled - Disables the trigger and closes the menu.
  * @slot trigger - Trigger label or icon content. The component owns the native button.
  * @slot - Menu items. Use native buttons or links with `menuitem` or `menuitemradio` roles.

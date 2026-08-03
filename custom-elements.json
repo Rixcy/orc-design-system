@@ -976,6 +976,13 @@
                 "text": "string"
               },
               "description": "Extra hint announced with the input (rendered visually hidden)."
+            },
+            {
+              "type": {
+                "text": "\"default\"|\"compact\""
+              },
+              "description": "Control density. Defaults to `default`.",
+              "name": "size"
             }
           ],
           "superclass": {
@@ -1217,6 +1224,20 @@
                 "text": "string"
               },
               "description": "Accessible name for an icon-only trigger."
+            },
+            {
+              "type": {
+                "text": "\"default\"|\"compact\""
+              },
+              "description": "Trigger density. Defaults to `default`.",
+              "name": "size"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Omits the decorative trigger chevron.",
+              "name": "no-chevron"
             }
           ],
           "superclass": {

@@ -107,8 +107,8 @@ try {
         "purple-text": resolved === "light" ? `color-mix(in srgb, ${palette.purple} 65%, ${heading})` : palette.purple,
         "accent-strong": accentStrong,
         "control-border": `color-mix(in srgb, ${palette.border} 65%, ${heading})`,
-        "button-hover": `color-mix(in srgb, ${palette.accent} 10%, ${palette.bg})`,
-        "button-hover-chip": `color-mix(in srgb, ${palette.accent} 12%, ${palette.chip})`,
+        "button-hover": `color-mix(in srgb, ${palette.green} 10%, ${palette.bg})`,
+        "button-hover-chip": `color-mix(in srgb, ${palette.green} 12%, ${palette.chip})`,
         "button-hover-strong": `color-mix(in srgb, ${accentStrong} 86%, ${heading})`,
       };
       const colorOf = (value) => {
