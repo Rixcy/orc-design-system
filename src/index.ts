@@ -13,6 +13,7 @@ export {
   OrcSelect,
   OrcStatusDot,
   OrcStepper,
+  OrcSwitch,
   OrcTabs,
   OrcTextarea,
   OrcThemeToggle,
