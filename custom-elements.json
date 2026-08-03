@@ -272,6 +272,136 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/orc-checkbox.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-checkbox>` wraps a native `<input type=\"checkbox\">` with Orc's field\nchrome. Set `label` for visible label text, or `aria-label` alone for a\nbare surface.",
+          "name": "OrcCheckbox",
+          "cssProperties": [
+            {
+              "description": "Focus ring applied to the checkbox on `:focus-visible`.",
+              "name": "--orc-focus-ring"
+            },
+            {
+              "description": "Border colour of the resting checkbox.",
+              "name": "--orc-control-border"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement | null"
+              },
+              "description": "The native input, so an app can wire its own listeners to it.",
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "description": "`CustomEvent<{ checked: boolean }>` on toggle.",
+              "name": "change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Visible label text, wired to the input via for/id."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name used when no visible label is set."
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the inner input."
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Marks the inner input as required."
+            },
+            {
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflects the native mixed/indeterminate state."
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "description": "Extra hint announced with the input (rendered visually hidden)."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-checkbox.ts"
+          },
+          "tagName": "orc-checkbox",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcCheckbox",
+          "declaration": {
+            "name": "OrcCheckbox",
+            "module": "src/components/orc-checkbox.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-chip.ts",
       "declarations": [
         {
