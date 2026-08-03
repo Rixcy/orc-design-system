@@ -272,6 +272,74 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/orc-callout.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-callout>` is a block-level notice in one of the token colour\nfamilies, with an optional bold heading above a slotted body.",
+          "name": "OrcCallout",
+          "cssProperties": [
+            {
+              "description": "Soft Fill behind the neutral callout. Set it to `transparent` for an outline-only callout.",
+              "name": "--orc-chip"
+            },
+            {
+              "description": "Corner radius.",
+              "name": "--orc-radius-callout",
+              "default": "16px"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Callout body content.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "\"neutral\"|\"green\"|\"yellow\"|\"red\"|\"purple\"|\"cyan\"|\"orange\"|\"accent\""
+              },
+              "description": "Colour family. Unknown values fall back to `neutral`."
+            },
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "description": "Bold heading line shown above the body. Hidden when absent or empty."
+            },
+            {
+              "name": "live",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Opts the callout into `role=\"status\"` and `aria-live=\"polite\"` for assistive-tech announcement. Off by default."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-callout.ts"
+          },
+          "tagName": "orc-callout",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcCallout",
+          "declaration": {
+            "name": "OrcCallout",
+            "module": "src/components/orc-callout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-chip.ts",
       "declarations": [
         {
