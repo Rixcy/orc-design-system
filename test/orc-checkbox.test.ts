@@ -113,6 +113,20 @@ describe("orc-checkbox", () => {
     expect(input.indeterminate).toBe(true);
   });
 
+  // Repeated toggling is a double-click, which would otherwise leave the label
+  // text highlighted. The description stays selectable — it is prose, not a
+  // click target.
+  it("makes the label unselectable without touching the description", () => {
+    const field = document.createElement("orc-checkbox");
+    document.body.append(field);
+
+    const css = field.shadowRoot!.querySelector("style")!.textContent!;
+    const labelRule = css.match(/\blabel\s*\{[^}]*\}/)![0];
+    expect(labelRule).toMatch(/(?<!-webkit-)user-select:\s*none/);
+    expect(labelRule).toMatch(/-webkit-user-select:\s*none/);
+    expect(css.match(/\.sr-only\s*\{[^}]*\}/)![0]).not.toMatch(/user-select/);
+  });
+
   // React 19 assigns to a matching property instead of setting the attribute,
   // and a getter-only accessor named after a public attribute makes that a
   // strict-mode TypeError. Any internal element accessor must not shadow one.

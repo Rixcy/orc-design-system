@@ -69,10 +69,15 @@ const template = `
       outline-offset: 2px;
     }
 
+    /* Toggling the label repeatedly is a double-click, and a double-click
+       selects text. Suppress it on the label only — the description below
+       stays selectable, because that one is prose worth copying. */
     label {
       color: var(--orc-text, #c7cfca);
       font-size: 13px;
       cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     label[hidden] {
