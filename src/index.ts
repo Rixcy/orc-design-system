@@ -1,5 +1,6 @@
 export {
   OrcButton,
+  OrcCheckbox,
   OrcChip,
   OrcCombobox,
   OrcCopyButton,

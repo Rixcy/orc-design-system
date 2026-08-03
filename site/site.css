@@ -400,6 +400,13 @@ h3 {
   display: block;
 }
 
+/* Checkbox hosts are inline-flex, so a block stage would still run them into
+   one line and blur which label belongs to which box. flex keeps each box
+   beside its own label while the hosts stack. */
+.demo-stage-block > orc-checkbox {
+  display: flex;
+}
+
 .dot-row {
   display: inline-flex;
   align-items: center;
