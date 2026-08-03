@@ -58,7 +58,10 @@ describe("orc-callout", () => {
     expect(calloutBlock).toContain(
       "padding: var(--orc-space-4, 16px) var(--orc-space-5, 24px)",
     );
-    expect(calloutBlock).toContain("border-radius: var(--orc-radius-md, 16px)");
+    // A component-scoped custom property, deliberately not defined in
+    // tokens.css, exactly like the chip's --orc-radius-chip: the fallback is
+    // the real rendered value, and it exceeds the chip's 12px, per In-2.
+    expect(calloutBlock).toContain("border-radius: var(--orc-radius-callout, 16px)");
 
     const chipCss = chip.shadowRoot?.querySelector("style")?.textContent ?? "";
     const chipBlock = chipCss.slice(
@@ -75,13 +78,13 @@ describe("orc-callout", () => {
     expect(16).toBeGreaterThan(12);
   });
 
-  it("reuses the chip's color-mix variant recipe including the cyan/orange text fallback", () => {
+  it("reuses the chip's color-mix background/border recipe, keeping body text neutral", () => {
     const callout = document.createElement("orc-callout");
     callout.setAttribute("variant", "green");
     document.body.append(callout);
 
     const css = callout.shadowRoot?.querySelector("style")?.textContent ?? "";
-    const green = css.slice(css.indexOf('[variant="green"]'));
+    const green = css.slice(css.indexOf('[variant="green"]) .callout'));
     const block = green.slice(0, green.indexOf("}"));
     expect(block).toContain(
       "background: color-mix(in srgb, var(--orc-green, #9dc76b) 15%, transparent)",
@@ -89,18 +92,42 @@ describe("orc-callout", () => {
     expect(block).toContain(
       "border-color: color-mix(in srgb, var(--orc-green, #9dc76b) 40%, transparent)",
     );
+    // Tone lives in the fill/border/heading, never in the body: a whole
+    // paragraph painted --orc-green would read like a chip label blown up to
+    // prose size, so .callout carries no per-variant `color`.
+    expect(block).not.toContain("color: var(--orc-green-text");
 
-    const cyan = css.slice(css.indexOf('[variant="cyan"]'));
-    const cyanBlock = cyan.slice(0, cyan.indexOf("}"));
-    expect(cyanBlock).toContain(
+    const greenHeading = css.slice(css.indexOf('[variant="green"]) .heading'));
+    const headingBlock = greenHeading.slice(0, greenHeading.indexOf("}"));
+    expect(headingBlock).toContain("color: var(--orc-green-text, #9dc76b)");
+
+    const cyanHeading = css.slice(css.indexOf('[variant="cyan"]) .heading'));
+    const cyanHeadingBlock = cyanHeading.slice(0, cyanHeading.indexOf("}"));
+    expect(cyanHeadingBlock).toContain(
       "color-mix(in srgb, var(--orc-cyan, #77b8b1) 55%, var(--orc-heading, #e0e5e2))",
     );
 
-    const orange = css.slice(css.indexOf('[variant="orange"]'));
-    const orangeBlock = orange.slice(0, orange.indexOf("}"));
-    expect(orangeBlock).toContain(
+    const orangeHeading = css.slice(css.indexOf('[variant="orange"]) .heading'));
+    const orangeHeadingBlock = orangeHeading.slice(0, orangeHeading.indexOf("}"));
+    expect(orangeHeadingBlock).toContain(
       "color-mix(in srgb, var(--orc-orange, #e69257) 55%, var(--orc-heading, #e0e5e2))",
     );
+  });
+
+  it("keeps the body text token-neutral in a coloured variant", () => {
+    const callout = document.createElement("orc-callout");
+    callout.setAttribute("variant", "green");
+    document.body.append(callout);
+
+    const css = callout.shadowRoot?.querySelector("style")?.textContent ?? "";
+    const baseBlock = css.slice(
+      css.indexOf(".callout {"),
+      css.indexOf("}", css.indexOf(".callout {")),
+    );
+    // The base .callout rule applies to every variant (including green), and
+    // no per-variant rule overrides `color` on .callout (verified above), so
+    // the body stays --orc-text regardless of variant.
+    expect(baseBlock).toContain("color: var(--orc-text, #c7cfca)");
   });
 
   it("uses the neutral chip fill, border and text tokens", () => {
