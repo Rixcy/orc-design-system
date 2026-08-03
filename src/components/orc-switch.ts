@@ -81,12 +81,11 @@ const template = `
       cursor: not-allowed;
     }
 
-    input:disabled + .track {
-      opacity: 0.72;
-    }
-
+    /* Dim the whole control, not just the track: a track-only fade reads as
+       "off" rather than "disabled" next to a real off switch. */
     label:has(input:disabled) {
       cursor: not-allowed;
+      opacity: 0.55;
     }
 
     .text[hidden] {
