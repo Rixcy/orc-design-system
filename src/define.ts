@@ -14,6 +14,7 @@ import { OrcSegmented } from "./components/orc-segmented";
 import { OrcSelect } from "./components/orc-select";
 import { OrcStatusDot } from "./components/orc-status-dot";
 import { OrcStepper } from "./components/orc-stepper";
+import { OrcSwitch } from "./components/orc-switch";
 import { OrcTabs } from "./components/orc-tabs";
 import { OrcTextarea } from "./components/orc-textarea";
 import { OrcThemeToggle } from "./components/orc-theme-toggle";
@@ -35,6 +36,7 @@ export {
   OrcSelect,
   OrcStatusDot,
   OrcStepper,
+  OrcSwitch,
   OrcTabs,
   OrcTextarea,
   OrcThemeToggle,
@@ -57,6 +59,7 @@ const ELEMENTS: ReadonlyArray<[string, CustomElementConstructor]> = [
   ["orc-select", OrcSelect],
   ["orc-status-dot", OrcStatusDot],
   ["orc-stepper", OrcStepper],
+  ["orc-switch", OrcSwitch],
   ["orc-tabs", OrcTabs],
   ["orc-textarea", OrcTextarea],
   ["orc-theme-toggle", OrcThemeToggle],
