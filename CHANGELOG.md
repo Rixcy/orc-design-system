@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.4.0](https://github.com/Rixcy/orc-design-system/compare/v5.3.0...v5.4.0) (2026-08-04)
+
+
+### Features
+
+* **callout:** add orc-callout notice component (Ticket-1) ([d6f42b5](https://github.com/Rixcy/orc-design-system/commit/d6f42b50895c63a9d897eee8d3e44a71e67cbddc))
+* **checkbox:** add orc-checkbox component (Ticket-1) ([fddf680](https://github.com/Rixcy/orc-design-system/commit/fddf680a120bb6bb98279de80bfbf595679095e5))
+* **controls:** add compact input and menu APIs (Ticket-1) ([07680ad](https://github.com/Rixcy/orc-design-system/commit/07680ad0495082522581fc6ede691ad6782b8645))
+* **site:** add checkbox demo to the homepage (Ticket-2) ([aeeb8e6](https://github.com/Rixcy/orc-design-system/commit/aeeb8e63e10e693b8753abb8f10ab96a3050d6f0))
+* **site:** add the callout demo to the homepage (Ticket-2) ([34c4736](https://github.com/Rixcy/orc-design-system/commit/34c473682be00aa302afbfe7f63cf3ab7f0dd873))
+* **site:** add the switch demo to the homepage (Ticket-2) ([dcbf8b8](https://github.com/Rixcy/orc-design-system/commit/dcbf8b8639f7c531b76a9f32f477666091cd1403))
+* **switch:** add orc-switch toggle component (Ticket-1) ([ee4b5bd](https://github.com/Rixcy/orc-design-system/commit/ee4b5bdfbae0b4d0b2a712d3a1410e945f92d236))
+
+
+### Bug Fixes
+
+* **callout:** keep body text neutral and radius above chip (Ticket-1) ([a1ccacf](https://github.com/Rixcy/orc-design-system/commit/a1ccacf3eacf0c67769b1553368ba9e957e5bbf0))
+* **checkbox:** keep property-set state through attribute changes (Ticket-1) ([482b748](https://github.com/Rixcy/orc-design-system/commit/482b74871bdd6dcdb4f3a1ba29f463e217a3cea5))
+* **checkbox:** stop the label selecting its own text (Ticket-3) ([9956a74](https://github.com/Rixcy/orc-design-system/commit/9956a74adefce7077f719cd20d8ab40203dba074))
+* **site:** stack checkbox demos in the block stage (Ticket-2) ([810bf9b](https://github.com/Rixcy/orc-design-system/commit/810bf9bcfaa4f7d45fe8fcb495e5ec7a651eb89f))
+* **switch:** dim the whole control when disabled (Ticket-1) ([c52a016](https://github.com/Rixcy/orc-design-system/commit/c52a01692e6c9139a17b8eddfb77cf2cff116090))
+* **switch:** stop the label selecting its own text (Ticket-3) ([e0c4994](https://github.com/Rixcy/orc-design-system/commit/e0c4994ffb21b65eecda11d5e17bf6d000e223bd))
+* **tabs:** integrate focus with bottom edge (Ticket-1) ([ab8397c](https://github.com/Rixcy/orc-design-system/commit/ab8397caaf81a1ffc8d18434a2a67a5772d70bd2))
+* **tabs:** prevent focus treatment growth (Ticket-1) ([6dcda0e](https://github.com/Rixcy/orc-design-system/commit/6dcda0eb15047be861477a78404a88d9a6de3f51))
+* **tabs:** refine focus styling (Ticket-1) ([60db5fc](https://github.com/Rixcy/orc-design-system/commit/60db5fcd79d145cb9f11e2cfcb819b7b4b27d1f7))
+
 ## [5.3.0](https://github.com/Rixcy/orc-design-system/compare/v5.2.0...v5.3.0) (2026-08-02)
 
 
