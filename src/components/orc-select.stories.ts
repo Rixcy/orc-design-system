@@ -13,6 +13,7 @@ interface SelectArgs {
   disableSearch: boolean;
   multiple: boolean;
   disabled: boolean;
+  size: "default" | "compact";
 }
 
 const FRUIT = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
@@ -43,6 +44,7 @@ function renderSelect(
   if (args.disableSearch) select.setAttribute("disable-search", "");
   if (args.multiple) select.setAttribute("multiple", "");
   if (args.disabled) select.setAttribute("disabled", "");
+  if (args.size === "compact") select.setAttribute("size", "compact");
 
   for (const value of options) {
     const option = document.createElement("option");
@@ -72,6 +74,7 @@ const meta = {
     disableSearch: false,
     multiple: false,
     disabled: false,
+    size: "default",
   },
   argTypes: {
     label: { control: "text" },
@@ -79,6 +82,7 @@ const meta = {
     disableSearch: { control: "boolean" },
     multiple: { control: "boolean" },
     disabled: { control: "boolean" },
+    size: { control: "select", options: ["default", "compact"] },
   },
   render: (args) => renderSelect(args, FRUIT, ["Banana"]),
 } satisfies Meta<SelectArgs>;
@@ -213,6 +217,17 @@ export const StableHeightAcrossAsyncContent: Story = {
     const contentHeight = trigger.getBoundingClientRect().height;
     expect(loadingHeight).toBe(emptyHeight);
     expect(contentHeight).toBe(emptyHeight);
+  },
+};
+
+export const Compact: Story = {
+  args: { size: "compact" },
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector("orc-select");
+    const trigger = getTrigger(host);
+    await expect(trigger).toHaveAccessibleName("Fruit Banana");
+    await userEvent.click(trigger);
+    await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "true"));
   },
 };
 
