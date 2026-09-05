@@ -539,6 +539,29 @@ describe("orc-select", () => {
     expect(host.shadowRoot!.activeElement).toBe(trigger(host));
   });
 
+  describe("size", () => {
+    it("carries the compact trigger rule with chip geometry and leaves the menu on --orc-panel", () => {
+      const host = createSelect();
+      host.setAttribute("size", "compact");
+      const css = host.shadowRoot?.querySelector("style")?.textContent ?? "";
+
+      const compactBlock = css.slice(css.indexOf('[size="compact"]) .trigger'));
+      expect(compactBlock.slice(0, compactBlock.indexOf("}"))).toContain("padding: 3px 10px");
+      expect(compactBlock.slice(0, compactBlock.indexOf("}"))).toContain("font-size: 12px");
+      expect(compactBlock.slice(0, compactBlock.indexOf("}"))).toContain("font-weight: 600");
+      expect(compactBlock.slice(0, compactBlock.indexOf("}"))).toContain(
+        "border-radius: var(--orc-radius-chip, 12px)",
+      );
+      expect(compactBlock.slice(0, compactBlock.indexOf("}"))).toContain(
+        "background: var(--orc-select-compact-bg, var(--orc-panel, #16181b))",
+      );
+
+      const menuBlock = css.slice(css.indexOf(".menu {"), css.indexOf(".menu.open"));
+      expect(menuBlock).toContain("background: var(--orc-panel, #16181b)");
+      expect(menuBlock).not.toContain("--orc-select-compact-bg");
+    });
+  });
+
   // React 19 assigns to a matching property instead of setting the attribute,
   // and a getter-only accessor named after a public attribute makes that a
   // strict-mode TypeError. Any internal element accessor must not shadow one.

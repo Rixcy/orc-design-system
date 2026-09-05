@@ -12,6 +12,24 @@ const CHEVRON = `
   </svg>
 `;
 
+const COMPACT_TRIGGER = `
+  :host([size="compact"]) .trigger {
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    border-radius: var(--orc-radius-chip, 12px);
+    min-height: 0;
+    block-size: auto;
+    background: var(--orc-select-compact-bg, var(--orc-panel, #16181b));
+  }
+
+  :host([size="compact"]) .chevron {
+    width: 8px;
+    height: 8px;
+  }
+`;
+
 // A themed trigger + manually-positioned listbox in front of a real <select>,
 // mirrored from light-DOM <option> data into the shadow root. Ported from
 // orc-ui's enhanceSelect(); manual positioning (no Popover API) because
@@ -79,6 +97,8 @@ const template = `
       gap: 8px;
       text-align: left;
     }
+
+    ${COMPACT_TRIGGER}
 
     .trigger:hover:not(:disabled) {
       border-color: var(--orc-green, #9dc76b);
@@ -342,7 +362,11 @@ function matchesQuery(text: string, query: string): boolean {
  * @attr {boolean} disabled - Reflected. Disables the trigger and the mirrored select.
  * @attr {boolean} multiple - Reflected. Enables multi-select with checkbox-style options.
  * @attr {string} description - Extra hint announced with the trigger (rendered visually hidden).
+ * @attr {"default"|"compact"} size - Trigger density. Defaults to `default`.
  * @fires change - Fired when the selection changes, mirroring the native `<select>` `change` event.
+ * @cssprop [--orc-select-compact-bg] - Compact-trigger background. Defaults to
+ *   `--orc-panel`; set it to `transparent` for a borderless badge trigger. The
+ *   open menu keeps reading `--orc-panel` directly and ignores this property.
  */
 export class OrcSelect extends HTMLElementBase {
   static get observedAttributes(): string[] {
