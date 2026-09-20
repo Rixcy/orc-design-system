@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.5.0](https://github.com/Rixcy/orc-design-system/compare/v5.4.0...v5.5.0) (2026-09-20)
+
+
+### Features
+
+* **select:** add a compact badge-sized trigger (Ticket-1) ([c2224a8](https://github.com/Rixcy/orc-design-system/commit/c2224a8b7620abe534d13e08926d4348ec005bfc))
+* **split-button:** add orc-split-button with a chevron menu on any button ([61a4112](https://github.com/Rixcy/orc-design-system/commit/61a41122bddd5df0d25c9f98f472746ca5e43c6f))
+
 ## [5.4.0](https://github.com/Rixcy/orc-design-system/compare/v5.3.0...v5.4.0) (2026-08-04)
 
 
