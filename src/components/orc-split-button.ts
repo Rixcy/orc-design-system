@@ -12,6 +12,9 @@ const template = `
   <style>
     :host {
       --orc-split-button-radius: var(--orc-radius-md, 8px);
+      --orc-split-button-fill: var(--orc-green, #9dc76b);
+      --orc-split-button-fill-hover: color-mix(in srgb, var(--orc-green, #9dc76b) 86%, var(--orc-heading, #e0e5e2));
+      --orc-split-button-ink: var(--orc-button-text, var(--orc-panel, #16181b));
       display: inline-flex;
       align-items: stretch;
       max-inline-size: 100%;
@@ -50,8 +53,8 @@ const template = `
       border-end-start-radius: 0;
       border-start-end-radius: var(--orc-split-button-radius);
       border-end-end-radius: var(--orc-split-button-radius);
-      background: var(--orc-green, #9dc76b);
-      color: var(--orc-button-text, var(--orc-panel, #16181b));
+      background: var(--orc-split-button-fill);
+      color: var(--orc-split-button-ink);
     }
 
     /* The divider is a tinted line inside the fill rather than a border
@@ -65,11 +68,17 @@ const template = `
       background: color-mix(in srgb, currentColor 28%, transparent);
     }
 
-    orc-menu::part(trigger):hover:not(:disabled),
+    /* Hovering either half lights both: the primary is the consumer's, so it
+       reads the same hover fill through the token the host flips here. */
+    :host(:hover) orc-menu::part(trigger):not(:disabled),
     :host([open]) orc-menu::part(trigger) {
-      background: color-mix(in srgb, var(--orc-green, #9dc76b) 86%, var(--orc-heading, #e0e5e2));
+      background: var(--orc-split-button-fill-hover);
       border-color: transparent;
-      color: var(--orc-button-text, var(--orc-panel, #16181b));
+      color: var(--orc-split-button-ink);
+    }
+
+    :host(:hover) {
+      --orc-split-button-fill: var(--orc-split-button-fill-hover);
     }
 
     :host([variant="ghost"]) orc-menu::part(trigger) {
@@ -79,7 +88,7 @@ const template = `
       color: var(--orc-button-text, var(--orc-heading, #e0e5e2));
     }
 
-    :host([variant="ghost"]) orc-menu::part(trigger):hover:not(:disabled),
+    :host([variant="ghost"]:hover) orc-menu::part(trigger):not(:disabled),
     :host([variant="ghost"][open]) orc-menu::part(trigger) {
       background: color-mix(in srgb, var(--orc-green, #9dc76b) 12%, transparent);
       border-color: var(--orc-green, #9dc76b);
@@ -106,7 +115,7 @@ const template = `
     }
   </style>
   <slot></slot>
-  <orc-menu label="More actions" trigger-label="More actions">
+  <orc-menu label="More actions" trigger-label="More actions" exportparts="trigger, chevron, menu">
     <span slot="trigger" hidden></span>
     <slot name="menu"></slot>
   </orc-menu>
@@ -137,6 +146,14 @@ const template = `
  * @fires cancel - Cancelable; fired before Escape, outside-pointer, or scroll dismissal.
  * @cssprop [--orc-split-button-radius] - Outer corner radius shared by both halves.
  *   Defaults to `--orc-radius-md`.
+ * @cssprop [--orc-split-button-fill] - Chevron fill for the `primary` variant.
+ *   Set it to whatever paints the primary button so the two halves never
+ *   drift; the host swaps it for the hover fill while either half is hovered.
+ * @cssprop [--orc-split-button-fill-hover] - Chevron fill while hovered or open.
+ * @cssprop [--orc-split-button-ink] - Chevron colour for the `primary` variant.
+ * @csspart trigger - The chevron button, re-exported from the composed menu.
+ * @csspart chevron - The chevron icon.
+ * @csspart menu - The floating menu layer.
  */
 export class OrcSplitButton extends HTMLElementBase {
   static get observedAttributes(): string[] {

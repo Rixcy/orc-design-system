@@ -1624,6 +1624,12 @@
           "kind": "class",
           "description": "`<orc-select>` is Orc's custom select: a themed trigger button and a\nmanually-positioned listbox in front of a real `<select>` mirrored into the\nshadow root, so every ARIA IDREF stays inside one shadow tree. Ported from\norc-ui's `enhanceSelect`.\n\nContent API: provide light-DOM `<option>` children, exactly as with a\nnative `<select>`. They are read as data — hidden from the a11y tree and\nmirrored into the shadow-root `<select>`, which is the real value holder.\nRead/write selection through this element's `value`/`selectedOptions`\nproperties or its mirrored `select`, not the light-DOM options directly.\nAfter mutating the light-DOM options from JS (e.g. an async fetch), call\n`syncCustomSelect()` to refresh the mirror; a `MutationObserver` also does\nthis automatically for simple childList changes.",
           "name": "OrcSelect",
+          "cssProperties": [
+            {
+              "description": "Compact-trigger background. Defaults to `--orc-panel`; set it to `transparent` for a borderless badge trigger. The open menu keeps reading `--orc-panel` directly and ignores this property.",
+              "name": "--orc-select-compact-bg"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1793,6 +1799,13 @@
                 "text": "boolean"
               },
               "description": "Reflected. Hides search and overrides `searchable`."
+            },
+            {
+              "type": {
+                "text": "\"default\"|\"compact\""
+              },
+              "description": "Trigger density. Defaults to `default`.",
+              "name": "size"
             }
           ],
           "superclass": {
@@ -1826,6 +1839,32 @@
             {
               "description": "Outer corner radius shared by both halves. Defaults to `--orc-radius-md`.",
               "name": "--orc-split-button-radius"
+            },
+            {
+              "description": "Chevron fill for the `primary` variant. Set it to whatever paints the primary button so the two halves never drift; the host swaps it for the hover fill while either half is hovered.",
+              "name": "--orc-split-button-fill"
+            },
+            {
+              "description": "Chevron fill while hovered or open.",
+              "name": "--orc-split-button-fill-hover"
+            },
+            {
+              "description": "Chevron colour for the `primary` variant.",
+              "name": "--orc-split-button-ink"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The chevron button, re-exported from the composed menu.",
+              "name": "trigger"
+            },
+            {
+              "description": "The chevron icon.",
+              "name": "chevron"
+            },
+            {
+              "description": "The floating menu layer.",
+              "name": "menu"
             }
           ],
           "slots": [
