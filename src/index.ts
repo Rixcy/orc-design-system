@@ -13,6 +13,7 @@ export {
   OrcNavbar,
   OrcSegmented,
   OrcSelect,
+  OrcSplitButton,
   OrcStatusDot,
   OrcStepper,
   OrcSwitch,

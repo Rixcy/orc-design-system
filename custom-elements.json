@@ -204,6 +204,10 @@
             {
               "description": "Label colour. Defaults to the variant's own colour, so setting it is the supported way to recolour one button family.",
               "name": "--orc-button-text"
+            },
+            {
+              "description": "Corner radius, so a wrapper such as `<orc-split-button>` can square the edge that meets its chevron.",
+              "name": "--orc-button-radius"
             }
           ],
           "slots": [
@@ -811,6 +815,14 @@
                 "name": "OrcButton",
                 "module": "src/components/orc-button.ts"
               }
+            },
+            {
+              "description": "Corner radius, so a wrapper such as `<orc-split-button>` can square the edge that meets its chevron.",
+              "name": "--orc-button-radius",
+              "inheritedFrom": {
+                "name": "OrcButton",
+                "module": "src/components/orc-button.ts"
+              }
             }
           ]
         }
@@ -1271,13 +1283,27 @@
               "default": "22rem"
             }
           ],
+          "cssParts": [
+            {
+              "description": "The native trigger button.",
+              "name": "trigger"
+            },
+            {
+              "description": "The decorative trigger chevron.",
+              "name": "chevron"
+            },
+            {
+              "description": "The floating menu layer.",
+              "name": "menu"
+            }
+          ],
           "slots": [
             {
               "description": "Trigger label or icon content. The component owns the native button.",
               "name": "trigger"
             },
             {
-              "description": "Menu items. Use native buttons or links with `menuitem` or `menuitemradio` roles.",
+              "description": "Menu items. Use native buttons or links with `menuitem` or `menuitemradio` roles. An item that calls `preventDefault()` on its click keeps the menu open.",
               "name": ""
             }
           ],
@@ -1790,6 +1816,181 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/orc-split-button.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-split-button>` joins a chevron side trigger to the consumer's own\nprimary button and opens a menu of further actions from it. The primary\nbutton keeps its own semantics and styling; the wrapper owns only the\nchevron and the menu, which is an `<orc-menu>` composed in the shadow root.",
+          "name": "OrcSplitButton",
+          "cssProperties": [
+            {
+              "description": "Outer corner radius shared by both halves. Defaults to `--orc-radius-md`.",
+              "name": "--orc-split-button-radius"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The primary action: a native button or an `<orc-button>`.",
+              "name": ""
+            },
+            {
+              "description": "Menu items. Use native buttons or links with `menuitem` or `menuitemradio` roles; an item that calls `preventDefault()` on its click keeps the menu open.",
+              "name": "menu"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "menu",
+              "type": {
+                "text": "OrcMenu | null"
+              },
+              "description": "The composed `<orc-menu>` that owns the chevron and the floating layer.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "type": {
+                "text": "HTMLButtonElement | null"
+              },
+              "description": "The native chevron button.",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "show",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "focus",
+                  "default": "\"first\"",
+                  "type": {
+                    "text": "\"first\" | \"last\""
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "reason",
+                  "default": "\"programmatic\"",
+                  "type": {
+                    "text": "OrcMenuCloseDetail[\"reason\"]"
+                  }
+                },
+                {
+                  "name": "restoreFocus",
+                  "default": "false"
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "description": "Fired after the menu opens.",
+              "name": "open"
+            },
+            {
+              "description": "Fired after close with an `OrcMenuCloseDetail` reason.",
+              "name": "close"
+            },
+            {
+              "description": "Cancelable; fired before Escape, outside-pointer, or scroll dismissal.",
+              "name": "cancel"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the chevron trigger and closes the menu. The primary button is the consumer's to disable."
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for the menu surface. Defaults to `More actions`."
+            },
+            {
+              "name": "menu-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name for the icon-only chevron trigger. Defaults to `More actions`."
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Reflects and controls menu visibility."
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"default\"|\"compact\""
+              },
+              "description": "Chevron density. Defaults to `default`."
+            },
+            {
+              "type": {
+                "text": "\"primary\"|\"ghost\""
+              },
+              "description": "Chevron fill, matching the `<orc-button>` variant of the primary. Defaults to `primary`.",
+              "name": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-split-button.ts"
+          },
+          "tagName": "orc-split-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcSplitButton",
+          "declaration": {
+            "name": "OrcSplitButton",
+            "module": "src/components/orc-split-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/orc-status-dot.ts",
       "declarations": [
         {
@@ -1896,6 +2097,127 @@
           "declaration": {
             "name": "OrcStepper",
             "module": "src/components/orc-stepper.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/orc-switch.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "`<orc-switch>` is Orc's boolean toggle: a native `<input type=\"checkbox\"\nrole=\"switch\">` styled as a track/thumb. It stays a real checkbox — Space,\ndisabled, and label-click reach come from the platform, not a reimplemented\n`keydown` handler.\n\n```html\n<orc-switch label=\"Auto-merge\" checked></orc-switch>\n```\n\n`checked` reflects to/from the `checked` property. The native `change`\nevent does not cross a shadow boundary, so the host re-dispatches a\ncomposed `change` CustomEvent with `detail: { checked }`.",
+          "name": "OrcSwitch",
+          "cssProperties": [
+            {
+              "description": "Track colour when off.",
+              "name": "--orc-control-border"
+            },
+            {
+              "description": "Track colour when on.",
+              "name": "--orc-green"
+            },
+            {
+              "description": "Focus outline on the track.",
+              "name": "--orc-focus-ring"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the switch is on. Mirrors the `checked` attribute."
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement | null"
+              },
+              "description": "The native input, so an app can wire its own listeners to it.",
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "description": "`CustomEvent<{ checked: boolean }>` when the switch is toggled.",
+              "name": "change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Visible label text, wired to the input via for/id."
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessible name used when no visible label is set."
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "description": "Extra hint announced with the input (rendered visually hidden)."
+            },
+            {
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the switch is on; mirrors the `checked` property."
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disables the inner input."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElementBase",
+            "module": "src/components/orc-switch.ts"
+          },
+          "tagName": "orc-switch",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OrcSwitch",
+          "declaration": {
+            "name": "OrcSwitch",
+            "module": "src/components/orc-switch.ts"
           }
         }
       ]

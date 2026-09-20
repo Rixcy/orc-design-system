@@ -20,7 +20,7 @@ const template = `
       max-inline-size: 100%;
       padding: var(--orc-space-2, 0.5rem) var(--orc-space-3, 0.75rem);
       border: 1px solid transparent;
-      border-radius: var(--orc-radius-md, 8px);
+      border-radius: var(--orc-button-radius, var(--orc-radius-md, 8px));
       background: transparent;
       color: inherit;
       font: inherit;
@@ -115,6 +115,8 @@ const template = `
  * @attr {"button"|"submit"} type - Native button type. Defaults to `button`.
  * @cssprop [--orc-button-text] - Label colour. Defaults to the variant's own
  *   colour, so setting it is the supported way to recolour one button family.
+ * @cssprop [--orc-button-radius] - Corner radius, so a wrapper such as
+ *   `<orc-split-button>` can square the edge that meets its chevron.
  * @slot - Button label content.
  */
 export class OrcButton extends HTMLElementBase {

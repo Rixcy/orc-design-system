@@ -21,7 +21,7 @@ export interface OrcMenuCloseDetail {
 }
 
 const CHEVRON = `
-  <svg class="chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+  <svg class="chevron" part="chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
     <path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
   </svg>
 `;
@@ -222,11 +222,11 @@ const template = `
       }
     }
   </style>
-  <button type="button" class="trigger" aria-haspopup="menu" aria-expanded="false">
+  <button type="button" class="trigger" part="trigger" aria-haspopup="menu" aria-expanded="false">
     <slot name="trigger">Menu</slot>
     ${CHEVRON}
   </button>
-  <div class="menu">
+  <div class="menu" part="menu">
     <div class="menu-surface" role="menu">
       <slot></slot>
     </div>
@@ -249,6 +249,10 @@ const template = `
  * @attr {boolean} disabled - Disables the trigger and closes the menu.
  * @slot trigger - Trigger label or icon content. The component owns the native button.
  * @slot - Menu items. Use native buttons or links with `menuitem` or `menuitemradio` roles.
+ *   An item that calls `preventDefault()` on its click keeps the menu open.
+ * @csspart trigger - The native trigger button.
+ * @csspart chevron - The decorative trigger chevron.
+ * @csspart menu - The floating menu layer.
  * @fires open - Fired after the menu opens.
  * @fires close - Fired after close with an `OrcMenuCloseDetail` reason.
  * @fires cancel - Cancelable; fired before Escape, outside-pointer, or scroll dismissal.
@@ -307,9 +311,11 @@ export class OrcMenu extends HTMLElementBase {
     }
   };
 
+  // An item that calls preventDefault() on its click keeps the menu open, so
+  // a two-step item (arm, then confirm) can finish where it started.
   private readonly onMenuClick = (event: Event): void => {
     const item = this.itemFromEvent(event);
-    if (!item || this.itemIsDisabled(item)) return;
+    if (!item || this.itemIsDisabled(item) || event.defaultPrevented) return;
     this.close("item", true);
   };
 
@@ -501,12 +507,16 @@ export class OrcMenu extends HTMLElementBase {
     });
   }
 
+  // Items are read through the default slot, flattened, so a menu composed
+  // inside another element's shadow root (orc-split-button forwards its
+  // `menu` slot here) sees the same items a light-DOM consumer would.
   private items(): HTMLElement[] {
-    return [
-      ...this.querySelectorAll<HTMLElement>(
-        '[role="menuitem"], [role="menuitemradio"]',
-      ),
-    ].filter((item) => !item.hidden);
+    const selector = '[role="menuitem"], [role="menuitemradio"]';
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>("slot:not([name])");
+    const roots = slot ? slot.assignedElements({ flatten: true }) : [...this.children];
+    return roots
+      .flatMap((root) => (root.matches(selector) ? [root] : [...root.querySelectorAll(selector)]))
+      .filter((item): item is HTMLElement => item instanceof HTMLElement && !item.hidden);
   }
 
   private enabledItems(): HTMLElement[] {

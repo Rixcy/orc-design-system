@@ -12,6 +12,7 @@ import { OrcMenu } from "./components/orc-menu";
 import { OrcNavbar } from "./components/orc-navbar";
 import { OrcSegmented } from "./components/orc-segmented";
 import { OrcSelect } from "./components/orc-select";
+import { OrcSplitButton } from "./components/orc-split-button";
 import { OrcStatusDot } from "./components/orc-status-dot";
 import { OrcStepper } from "./components/orc-stepper";
 import { OrcSwitch } from "./components/orc-switch";
@@ -34,6 +35,7 @@ export {
   OrcNavbar,
   OrcSegmented,
   OrcSelect,
+  OrcSplitButton,
   OrcStatusDot,
   OrcStepper,
   OrcSwitch,
@@ -57,6 +59,7 @@ const ELEMENTS: ReadonlyArray<[string, CustomElementConstructor]> = [
   ["orc-navbar", OrcNavbar],
   ["orc-segmented", OrcSegmented],
   ["orc-select", OrcSelect],
+  ["orc-split-button", OrcSplitButton],
   ["orc-status-dot", OrcStatusDot],
   ["orc-stepper", OrcStepper],
   ["orc-switch", OrcSwitch],
