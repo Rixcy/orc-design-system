@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.5.1](https://github.com/Rixcy/orc-design-system/compare/v5.5.0...v5.5.1) (2026-09-20)
+
+
+### Bug Fixes
+
+* **split-button:** let the chevron follow the primary's fill and hover ([7f616ee](https://github.com/Rixcy/orc-design-system/commit/7f616eeed8bf1f0c01e3c43727f794b9a450e9b3))
+
 ## [5.5.0](https://github.com/Rixcy/orc-design-system/compare/v5.4.0...v5.5.0) (2026-09-20)
 
 
