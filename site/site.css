@@ -48,7 +48,7 @@ body {
 }
 
 a {
-  color: var(--orc-accent-text, var(--orc-accent));
+  color: var(--orc-green-text, var(--orc-green));
 }
 
 code,
@@ -102,7 +102,7 @@ orc-navbar nav a {
 }
 
 orc-navbar nav a:hover {
-  color: var(--orc-accent-text, var(--orc-accent));
+  color: var(--orc-green-text, var(--orc-green));
   border-bottom-color: currentColor;
 }
 
